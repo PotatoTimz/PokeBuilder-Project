@@ -12,3 +12,7 @@ def protected(user_data):
 @test_bp.route("/unprotected", methods=["GET"])
 def unprotected():
     return jsonify({"message": "unprotected page!"})
+
+@test_bp.route("/", methods=["GET"])
+def test():
+    return "test"

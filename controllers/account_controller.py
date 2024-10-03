@@ -35,5 +35,4 @@ def register():
 @account_bp.route("/users", methods=["GET"])
 def get_users():
     accounts = Account.query.all()
-    print(accounts)
     return jsonify([{"id": account.id, "username": account.username, "password": account.hashed_password.decode("utf-8")} for account in accounts])

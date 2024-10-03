@@ -6,6 +6,7 @@ from config import Config
 
 from controllers.account_controller import account_bp
 from controllers.test_controller import test_bp
+from controllers.types_controller import type_bp
 
 sys.dont_write_bytecode = True
 
@@ -21,6 +22,7 @@ def create_app():
 
     app.register_blueprint(account_bp)
     app.register_blueprint(test_bp)
+    app.register_blueprint(type_bp)
 
     return app
 
