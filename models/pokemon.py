@@ -8,7 +8,8 @@ class Pokemon(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True) 
     creator: Mapped[int]
     name: Mapped[str] = mapped_column(unique=True, nullable=False)
-    
+    image: Mapped[str] = mapped_column(default="https://static.vecteezy.com/system/resources/thumbnails/022/493/595/small_2x/3d-question-mark-icon-or-ask-faq-answer-solution-isolated-on-transparent-background-file-png.png")
+
     # Foreign key linking to account
     account_id: Mapped[int] = mapped_column(ForeignKey('account.id'), nullable=False)
 
