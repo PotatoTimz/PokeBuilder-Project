@@ -20,6 +20,24 @@ def create_account(username, hashed_password, salt):
     db.session.add(new_account)
     db.session.commit()
 
+    return jsonify({"message": "User registered successfully!"}), 201
+
 def get_all_accounts():
     accounts = Account.query.all()
     return jsonify([{"id": account.id, "username": account.username} for account in accounts])
+
+def get_account(account):
+    return jsonify({"id": account.id, "username": account.username})
+
+def delete_account(account):
+    db.session.delete(account)
+    db.session.commit()
+
+    return jsonify({"message": "Successfully delete account!"}), 201
+
+def update_password(account, hashed_password, salt):
+    account.hashed_password = hashed_password
+    account.salt = salt
+    db.session.commit()
+    
+    return jsonify({"message": "Successfully updated password!"}), 201

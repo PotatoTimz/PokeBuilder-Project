@@ -5,4 +5,6 @@ from sqlalchemy import String, ForeignKey
 class Type(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True) 
     name: Mapped[str] = mapped_column(unique=True, nullable=False)
-    pokemons = relationship("Pokemon", secondary="pokemon_type")
+
+    # Relationships
+    pokemons = db.relationship("Pokemon", secondary="pokemon_type")
