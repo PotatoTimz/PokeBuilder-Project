@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from services.jwt_token_service import token_required
-from services.type_service import validate_type, create_type, get_all_types
+from services.type_service import validate_data, create_type, get_all_types
 
 
 type_bp = Blueprint("type_bp", __name__)
@@ -11,6 +11,6 @@ def manage_types():
         return get_all_types()
     if request.method == "POST":
         data = request.json
-        name = validate_type(data)
+        name = validate_data(data)
         return create_type(name)
 

@@ -7,4 +7,4 @@ class Type(db.Model):
     name: Mapped[str] = mapped_column(unique=True, nullable=False)
 
     # Relationships
-    pokemons = db.relationship("Pokemon", secondary="pokemon_type")
+    pokemons = db.relationship("Pokemon", secondary="pokemon_type", back_populates="types")

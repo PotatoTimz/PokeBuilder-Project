@@ -6,7 +6,6 @@ class Pokemon(db.Model):
     __tablename__ = "pokemon"
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True) 
-    creator: Mapped[int]
     name: Mapped[str] = mapped_column(unique=True, nullable=False)
     image: Mapped[str] = mapped_column(default="https://static.vecteezy.com/system/resources/thumbnails/022/493/595/small_2x/3d-question-mark-icon-or-ask-faq-answer-solution-isolated-on-transparent-background-file-png.png")
 
@@ -15,6 +14,6 @@ class Pokemon(db.Model):
 
     # Relationships
     account: Mapped["Account"] = relationship("Account", back_populates="pokemons")
-    types = db.relationship("Type", secondary='pokemon_type')
+    types = db.relationship("Type", secondary='pokemon_type', back_populates="pokemons")
     #types = relationship("Type", secondary="pokemon_type")
 
