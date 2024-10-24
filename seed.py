@@ -2,7 +2,10 @@ from extensions import db
 from models.account import Account
 from models.type import Type
 from models.pokemon import Pokemon
-from models.pokemontype import PokemonType
+from models.association_pokemon_type import PokemonType
+from models.move import Move
+from models.movelist import MoveList
+from models.association_move_movelist import MoveListMove
 
 from services.account_service import create_account
 from services.hashing_service import hash_password
@@ -72,6 +75,23 @@ def seed_pokemon():
 
         print("Empty Pokemon Table --> Created Pokemons")
 
+def seed_moves():
+    if not Move.query.first():
+        moves = [
+            Move(name="Flamethrower", description="A powerful fire attack that may burn the target.", accuracy=100, power=90, pp=15),
+            Move(name="Hydro Pump", description="A high-pressure water attack that has a chance to miss.", accuracy=80, power=110, pp=5),
+            Move(name="Thunderbolt", description="A strong electric attack that may paralyze the target.", accuracy=100, power=90, pp=15),
+            Move(name="Earthquake", description="A powerful ground attack that damages all Pokémon in battle.", accuracy=100, power=100, pp=10),
+            Move(name="Psychic", description="A psychic attack that may lower the target's Special Defense.", accuracy=100, power=90, pp=10),
+            Move(name="Ice Beam", description="A beam of icy energy that may freeze the target.", accuracy=100, power=90, pp=10),
+            Move(name="Giga Drain", description="A grass-type move that drains the target's energy to heal the user.", accuracy=100, power=75, pp=10),
+            Move(name="Stone Edge", description="A rock-type move that has a high critical-hit ratio.", accuracy=80, power=100, pp=5)
+        ]
+
+        db.session.add_all(moves)
+        db.session.commit()
+
+        print("Empty Move Table --> Created Moves")
 
 if __name__ == "__main__":
     from app import app  # Import the app to initialize the Flask context
@@ -80,15 +100,4 @@ if __name__ == "__main__":
         seed_account()
         seed_type()
         seed_pokemon()
-        
-        #.query.join(Account, Account.id == Pokemon.id, isouter=True))
-        # print(db.session.query(Pokemon, Account)
-        #       .filter(Pokemon.account_id == Account.id).join) 
-
-        print(db.session.query(Pokemon, Account, PokemonType, Type)
-              .with_entities(Pokemon.id, Pokemon.name, Account.username.label("creator"), func.group_concat(Type.name).label("types"), Pokemon.image)
-              .join(Account)
-              .join(PokemonType)
-              .join(Type)
-              .group_by(Pokemon.name)
-              ) 
+        seed_moves()

@@ -1,5 +1,5 @@
 from models.pokemon import Pokemon
-from models.pokemontype import PokemonType
+from models.association_pokemon_type import PokemonType
 from models.type import Type
 from models.account import Account
 
