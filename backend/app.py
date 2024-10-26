@@ -1,6 +1,7 @@
 import sys
 
 from flask import Flask
+from flask_cors import CORS
 from extensions import db, migrate
 from config import Config
 
@@ -14,6 +15,7 @@ sys.dont_write_bytecode = True
 
 def create_app():
     app = Flask(__name__)
+    CORS(app, supports_credentials=True)
     
     app.config.from_object(Config)  # Load configuration from Config class
 
