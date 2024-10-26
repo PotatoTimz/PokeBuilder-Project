@@ -8,6 +8,7 @@ from controllers.account_controller import account_bp
 from controllers.test_controller import test_bp
 from controllers.types_controller import type_bp
 from controllers.pokemon_controller import pokemon_bp
+from controllers.move_controller import move_bp
 
 sys.dont_write_bytecode = True
 
@@ -25,6 +26,8 @@ def create_app():
     app.register_blueprint(test_bp)
     app.register_blueprint(type_bp)
     app.register_blueprint(pokemon_bp)
+    app.register_blueprint(move_bp)
+
 
     return app
 

@@ -1,6 +1,7 @@
 from flask import Blueprint, abort, request, jsonify
+from services.account_service import get_account_name
 from services.jwt_token_service import token_required
-from services.pokemon_service import delete_pokemon, update_pokemon, is_created_by_user, get_pokemon_by_id, get_all_pokemons, add_pokemon, validate_data, get_pokemon_by_user
+from services.pokemon_service import delete_pokemon, update_pokemon, is_created_by_user, get_pokemon_by_id, get_all_pokemons, add_pokemon, validate_data
 
 pokemon_bp = Blueprint("pokemon_bp", __name__)
 
@@ -8,27 +9,19 @@ pokemon_bp = Blueprint("pokemon_bp", __name__)
 @pokemon_bp.route("/pokemon", methods=["GET"])
 def manage_pokemon():
     if request.method == "GET":
-        pokemons = get_all_pokemons()
-        return jsonify([{
-                            "id": pokemon[0], 
-                            "name": pokemon[1],
-                            "creator": pokemon[2],
-                            "types": pokemon[3],
-                            "image": pokemon[4]
-                        } for pokemon in pokemons])
+        name = "" if not request.args.get("name") else request.args.get("name")
+        creator = "" if not request.args.get("creator") else request.args.get("creator")
+        
+        pokemon_data = get_all_pokemons(name, creator, {i for i in range(1, 14)})
+        
+        return pokemon_data
     
 # Get pokemon from id
 @pokemon_bp.route("/pokemon/<int:pokemon_id>", methods=["GET"])
 def manage_by_id_pokemon(pokemon_id):
     if request.method == "GET":
-        pokemon = get_pokemon_by_id(pokemon_id)
-        return jsonify({ 
-                            "id": pokemon[0], 
-                            "name": pokemon[1],
-                            "creator": pokemon[2],
-                            "types": pokemon[3],
-                            "image": pokemon[4]
-                        })
+        pokemon_data = get_pokemon_by_id(pokemon_id)
+        return  pokemon_data
     
 # Update and Delete Pokemon
 @pokemon_bp.route("/pokemon/<int:pokemon_id>", methods=["PUT", "DELETE"])
@@ -56,32 +49,25 @@ def manage_user_pokemon(user_data):
     if request.method == "POST":
         # Check user body
         data = request.json
-        types, name, image = validate_data(data)
+        types, name, image, hp, attack, defense, sp_attack, sp_defense, speed = validate_data(data)
         
         # Check if types are valid
-        add_pokemon(types, name, image, user_data.username)
+        add_pokemon(types, name, image, user_data.username, hp, attack, defense, sp_attack, sp_defense, speed)
 
         return jsonify({"message": "pokemon successfully added!"})
     
     if request.method == "GET":
-        pokemons = get_pokemon_by_user(user_data.username)
-        return jsonify([{
-                            "id": pokemon[0], 
-                            "name": pokemon[1],
-                            "creator": pokemon[2],
-                            "types": pokemon[3],
-                            "image": pokemon[4]
-                        } for pokemon in pokemons])
+        print(user_data.username)
+        pokemon_data = get_all_pokemons("", user_data.username, {i for i in range(1, 14)})
 
+        return pokemon_data
+    
 # Get pokemon from other users
 @pokemon_bp.route("/user/pokemon/<int:user_id>", methods=["GET"])
 def manage_other_user_pokemon(user_id):
     if request.method == "GET":
-        pokemons = get_pokemon_by_user(user_id)
-        return jsonify([{
-                            "id": pokemon[0], 
-                            "name": pokemon[1],
-                            "creator": pokemon[2],
-                            "types": pokemon[3],
-                            "image": pokemon[4]
-                        } for pokemon in pokemons])
+        #get name from id
+        username = get_account_name(user_id)
+
+        pokemon_data = get_all_pokemons("", username, {i for i in range(1, 14)})
+        return pokemon_data

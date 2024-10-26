@@ -83,8 +83,8 @@ def seed_pokemon():
 
         # Create Pokemon
         pokemon = [
-            Pokemon(name="Charmander", account_id=account.id, image="https://assets.pokemon.com/assets/cms2/img/pokedex/full//004.png"),
-            Pokemon(name="Charizard", account_id=account.id, image="https://assets.pokemon.com/assets/cms2/img/pokedex/full//006.png")
+            Pokemon(name="Charmander", account_id=account.id, image="https://assets.pokemon.com/assets/cms2/img/pokedex/full//004.png", hp=78, attack=84, defense=78, sp_attack=109, sp_defense=85, speed=100),
+            Pokemon(name="Charizard", account_id=account.id, image="https://assets.pokemon.com/assets/cms2/img/pokedex/full//006.png", hp=39, attack=52, defense=43, sp_attack=60, sp_defense=50, speed=65)
         ]
         db.session.add_all(pokemon)
         db.session.commit()
@@ -126,17 +126,3 @@ if __name__ == "__main__":
         seed_type()
         seed_moves()
         seed_pokemon()
-        print(db.session.query(Pokemon, Account, PokemonType, Type)
-                .with_entities(Pokemon.id, Pokemon.name, Account.username.label("creator"), func.group_concat(Type.name).label("types"), Pokemon.image)
-                .join(Account)
-                .join(PokemonType)
-                .join(PokemonMove)
-                .join(Move)
-                .join(Type)
-                .group_by(Pokemon.name)
-                .distinct()
-                .all()
-              )
-        # print(db.session.query(Move)
-        #         .join(PokemonMove)
-        #       )

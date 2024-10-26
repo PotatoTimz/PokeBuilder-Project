@@ -41,3 +41,6 @@ def update_password(account, hashed_password, salt):
     db.session.commit()
     
     return jsonify({"message": "Successfully updated password!"}), 201
+
+def get_account_name(id):
+    return Account.query.filter(id==id).first().username

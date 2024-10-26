@@ -9,6 +9,13 @@ class Pokemon(db.Model):
     name: Mapped[str] = mapped_column(unique=True, nullable=False)
     image: Mapped[str] = mapped_column(default="https://static.vecteezy.com/system/resources/thumbnails/022/493/595/small_2x/3d-question-mark-icon-or-ask-faq-answer-solution-isolated-on-transparent-background-file-png.png")
 
+    hp: Mapped[int] = mapped_column(nullable=False)
+    attack: Mapped[int] = mapped_column(nullable=False)
+    defense: Mapped[int] = mapped_column(nullable=False)
+    sp_attack: Mapped[int] = mapped_column(nullable=False)
+    sp_defense: Mapped[int] = mapped_column(nullable=False)
+    speed: Mapped[int] = mapped_column(nullable=False)
+
     # Foreign key linking to account
     account_id: Mapped[int] = mapped_column(ForeignKey('account.id'), nullable=False)
 
