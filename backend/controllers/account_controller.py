@@ -15,11 +15,14 @@ def login():
     check_account_created(username)
 
     account = Account.query.filter_by(username=username).first()
+    if not account:
+        return jsonify({"message": "Invalid Username"}), 401
+    
     if verify_password(password, account.hashed_password, account.salt):
         token = generate_token(username)
         return jsonify({"token": token})
     else:
-        return jsonify({"message": "Invalid credentials"}), 401
+        return jsonify({"message": "Invalid Password"}), 401
     
 @account_bp.route("/register", methods=["POST"])
 def register():

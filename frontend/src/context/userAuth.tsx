@@ -10,6 +10,10 @@ interface UserContextInterface {
   isLoggedIn: () => boolean;
 }
 
+interface ErrorResponse {
+  message?: string;
+}
+
 type Props = { children: React.ReactNode };
 
 export const UserContext = createContext<UserContextInterface>(
@@ -63,7 +67,10 @@ export const UserProvider = ({ children }: Props) => {
         setToken(username);
       })
       .catch((err: AxiosError) => {
-        console.log(err.response);
+        const errorMessage =
+          (err.response?.data as ErrorResponse)?.message ??
+          "An unknown error occurred";
+        alert(errorMessage);
       });
   };
 
