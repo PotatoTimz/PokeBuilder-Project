@@ -1,9 +1,10 @@
-import axios, { AxiosError } from "axios";
+import axios, { Axios, AxiosError } from "axios";
 import { createContext, useEffect, useState } from "react";
 
 interface UserContextInterface {
   username: string | null;
   token: string | null;
+  axiosFetch: Axios;
   registerUser: (username: string, password: string) => void;
   loginUser: (username: string, password: string) => void;
   logout: () => void;
@@ -24,6 +25,12 @@ export const UserProvider = ({ children }: Props) => {
   const [username, setUsername] = useState<string | null>(null);
   const [token, setToken] = useState<string | null>(null);
   const [isReady, setIsReady] = useState<boolean>(false);
+  const axiosFetch = axios.create({
+    headers: {
+      baseURL: "http://127.0.0.1:5000",
+      Authorization: `Bearer ${token}`,
+    },
+  });
 
   useEffect(() => {
     const user = localStorage.getItem("username");
@@ -38,8 +45,8 @@ export const UserProvider = ({ children }: Props) => {
   }, []);
 
   const registerUser = async (username: string, password: string) => {
-    await axios
-      .post("http://127.0.0.1:5000/register", {
+    await axiosFetch
+      .post("/register", {
         username: username,
         password: password,
       })
@@ -55,8 +62,8 @@ export const UserProvider = ({ children }: Props) => {
   };
 
   const loginUser = async (username: string, password: string) => {
-    await axios
-      .post("http://127.0.0.1:5000/login", {
+    await axiosFetch
+      .post("/login", {
         username: username,
         password: password,
       })
@@ -65,6 +72,7 @@ export const UserProvider = ({ children }: Props) => {
         localStorage.setItem("username", username);
         setToken(response?.data.token);
         setToken(username);
+        axios.defaults.headers.common = { Authorization: `Bearer ${token}` };
       })
       .catch((err: AxiosError) => {
         const errorMessage =
@@ -87,7 +95,15 @@ export const UserProvider = ({ children }: Props) => {
 
   return (
     <UserContext.Provider
-      value={{ loginUser, username, token, logout, isLoggedIn, registerUser }}
+      value={{
+        loginUser,
+        axiosFetch,
+        username,
+        token,
+        logout,
+        isLoggedIn,
+        registerUser,
+      }}
     >
       {isReady ? children : null}
     </UserContext.Provider>
