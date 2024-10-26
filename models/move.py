@@ -12,6 +12,10 @@ class Move(db.Model):
     accuracy: Mapped[int] = mapped_column(nullable=True)
     pp: Mapped[int] = mapped_column(nullable=False)
 
-    movelists = db.relationship("MoveList", secondary="movelist_move", back_populates="moves")
+    type_id: Mapped[int] = mapped_column(ForeignKey("type.id"), nullable=False)
+
+    # relationships
+    type: Mapped["Type"] = relationship("Type", back_populates="")
+    pokemons = db.relationship("Pokemon", secondary="pokemon_move", back_populates="moves")
 
     

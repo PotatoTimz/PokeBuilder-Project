@@ -8,3 +8,4 @@ class Type(db.Model):
 
     # Relationships
     pokemons = db.relationship("Pokemon", secondary="pokemon_type", back_populates="types")
+    moves: Mapped[list["Move"]] = relationship("Move", back_populates="type", cascade="all, delete-orphan")

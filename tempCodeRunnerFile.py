@@ -1,0 +1,8 @@
+        print(db.session.query(Pokemon, Account, PokemonType, Type)
+                .with_entities(Pokemon.id, Pokemon.name, Account.username.label("creator"), func.group_concat(Type.name).label("types"), Pokemon.image)
+                .join(Account)
+                .join(PokemonType)
+                .join(Type)
+                .filter(Pokemon.id == id)
+                .group_by(Pokemon.name)
+              )

@@ -15,5 +15,6 @@ class Pokemon(db.Model):
     # Relationships
     account: Mapped["Account"] = relationship("Account", back_populates="pokemons")
     types = db.relationship("Type", secondary='pokemon_type', back_populates="pokemons")
+    moves = db.relationship("Move", secondary='pokemon_move', back_populates="pokemons")
     #types = relationship("Type", secondary="pokemon_type")
 
