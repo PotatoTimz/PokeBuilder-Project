@@ -12,5 +12,4 @@ class Account(db.Model):
 
     # one-to-many relationship (one account can create multiple pokemon)
     pokemons: Mapped[list["Pokemon"]] = relationship("Pokemon", back_populates="account", cascade="all, delete-orphan")
-
-    
+    moves: Mapped[list["Move"]] = relationship("Move", back_populates="account", cascade="all, delete-orphan")

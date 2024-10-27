@@ -12,9 +12,12 @@ class Move(db.Model):
     accuracy: Mapped[int] = mapped_column(nullable=True)
     pp: Mapped[int] = mapped_column(nullable=False)
 
+    # Foreign key linking to account and type
     type_id: Mapped[int] = mapped_column(ForeignKey("type.id"), nullable=False)
+    account_id: Mapped[int] = mapped_column(ForeignKey('account.id'), nullable=False)
 
     # relationships
+    account: Mapped["Account"] = relationship("Account", back_populates="moves")
     type: Mapped["Type"] = relationship("Type", back_populates="")
     pokemons = db.relationship("Pokemon", secondary="pokemon_move", back_populates="moves")
 

@@ -5,18 +5,41 @@ from services.move_service import delete_move, get_all_moves, get_move_by_id, va
 
 move_bp = Blueprint("move_bp", __name__)
 
-@move_bp.route("/move", methods=["GET", "POST"])
+@move_bp.route("/move", methods=["GET"])
 def manage_moves():
     if request.method == "GET":
-        move_data = get_all_moves()
+        name = "" if not request.args.get("name") else request.args.get("name")
+        creator = "" if not request.args.get("creator") else request.args.get("creator")
+
+        move_data = get_all_moves(name, creator)
 
         return move_data
+
+@move_bp.route("/user/move", methods=["POST", "GET"])
+@token_required
+def manage_user_move(user_data):
+    if request.method == "GET":
+           move_data = get_all_moves("", user_data.username)
+
+           return move_data
+    
     if request.method == "POST":
         data = request.json
         name, power, description, accuracy, pp, type = validate_data(data)
-        add_move(name, power, description, accuracy, pp, type)
+        add_move(name, power, description, accuracy, pp, type, user_data.username)
 
         return jsonify({"message": "move successfully added!"})
+
+# Get Move from other users
+@move_bp.route("/user/move/<int:user_id>", methods=["POST", "GET"])
+def manage_other_user_move(user_id):
+    if request.method == "GET":
+        print(user_id)
+        username = get_account_name(user_id)
+        print(username)
+        move_data = get_all_moves("", username)
+
+        return move_data
 
     
 @move_bp.route("/move/<int:move_id>", methods=["GET", "DELETE"])

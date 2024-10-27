@@ -61,15 +61,17 @@ def seed_moves():
         normal_id = Type.query.filter_by(name="normal").first().id
         rock_id = Type.query.filter_by(name="rock").first().id
 
+        account = Account.query.first()
+
         moves = [
-            Move(name="Flamethrower", type_id=fire_id, description="A powerful fire attack that may burn the target.", accuracy=100, power=90, pp=15),
-            Move(name="Hydro Pump", type_id=water_id, description="A high-pressure water attack that has a chance to miss.", accuracy=80, power=110, pp=5),
-            Move(name="Thunderbolt", type_id=electric_id, description="A strong electric attack that may paralyze the target.", accuracy=100, power=90, pp=15),
-            Move(name="Earthquake", type_id=ground_id, description="A powerful ground attack that damages all Pokémon in battle.", accuracy=100, power=100, pp=10),
-            Move(name="Psychic", type_id=psychic_id, description="A psychic attack that may lower the target's Special Defense.", accuracy=100, power=90, pp=10),
-            Move(name="Ice Beam", type_id=ice_id, description="A beam of icy energy that may freeze the target.", accuracy=100, power=90, pp=10),
-            Move(name="Giga Drain", type_id=normal_id, description="A grass-type move that drains the target's energy to heal the user.", accuracy=100, power=75, pp=10),
-            Move(name="Stone Edge", type_id=rock_id, description="A rock-type move that has a high critical-hit ratio.", accuracy=80, power=100, pp=5)
+            Move(name="Flamethrower", account_id=account.id, type_id=fire_id, description="A powerful fire attack that may burn the target.", accuracy=100, power=90, pp=15),
+            Move(name="Hydro Pump", account_id=account.id, type_id=water_id, description="A high-pressure water attack that has a chance to miss.", accuracy=80, power=110, pp=5),
+            Move(name="Thunderbolt", account_id=account.id, type_id=electric_id, description="A strong electric attack that may paralyze the target.", accuracy=100, power=90, pp=15),
+            Move(name="Earthquake", account_id=account.id, type_id=ground_id, description="A powerful ground attack that damages all Pokémon in battle.", accuracy=100, power=100, pp=10),
+            Move(name="Psychic", account_id=account.id, type_id=psychic_id, description="A psychic attack that may lower the target's Special Defense.", accuracy=100, power=90, pp=10),
+            Move(name="Ice Beam", account_id=account.id, type_id=ice_id, description="A beam of icy energy that may freeze the target.", accuracy=100, power=90, pp=10),
+            Move(name="Giga Drain", account_id=account.id, type_id=normal_id, description="A grass-type move that drains the target's energy to heal the user.", accuracy=100, power=75, pp=10),
+            Move(name="Stone Edge", account_id=account.id, type_id=rock_id, description="A rock-type move that has a high critical-hit ratio.", accuracy=80, power=100, pp=5)
         ]
 
         db.session.add_all(moves)

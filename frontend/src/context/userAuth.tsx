@@ -36,8 +36,8 @@ export const UserProvider = ({ children }: Props) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const user = localStorage.getItem("username");
-    const token = localStorage.getItem("token");
+    const user = sessionStorage.getItem("username");
+    const token = sessionStorage.getItem("token");
 
     if (user && token) {
       setUsername(user);
@@ -54,8 +54,8 @@ export const UserProvider = ({ children }: Props) => {
         password: password,
       })
       .then((response) => {
-        localStorage.setItem("token", response?.data.token);
-        localStorage.setItem("username", username);
+        sessionStorage.setItem("token", response?.data.token);
+        sessionStorage.setItem("username", username);
         setToken(response?.data.token);
         setToken(username);
       })
@@ -71,8 +71,8 @@ export const UserProvider = ({ children }: Props) => {
         password: password,
       })
       .then((response) => {
-        localStorage.setItem("token", response?.data.token);
-        localStorage.setItem("username", username);
+        sessionStorage.setItem("token", response?.data.token);
+        sessionStorage.setItem("username", username);
         setToken(response?.data.token);
         setToken(username);
         axios.defaults.headers.common = { Authorization: `Bearer ${token}` };
@@ -91,8 +91,8 @@ export const UserProvider = ({ children }: Props) => {
   };
 
   const logout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("username");
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("username");
     setToken(null);
     setUsername(null);
   };

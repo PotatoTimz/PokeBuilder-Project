@@ -19,7 +19,7 @@ function CreatePokemon() {
     pokemon_id: 0,
     pokemon_image: "",
     pokemon_name: "",
-    pokemon_type: ["Grass"],
+    pokemon_type: ["grass"],
     pokemon_move: [],
   });
   const navigate = useNavigate();
@@ -67,7 +67,7 @@ function CreatePokemon() {
         speed: pokemonData.base_stat.speed,
       })
       .then((response) => {
-        navigate("/home");
+        navigate("/");
       })
       .catch((err: AxiosError) => {
         console.log(err.response);
