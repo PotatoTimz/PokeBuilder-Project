@@ -49,8 +49,8 @@ def manage_user_pokemon(user_data):
     if request.method == "POST":
         # Check user body
         data = request.json
+        print("test")
         types, name, image, hp, attack, defense, sp_attack, sp_defense, speed = validate_data(data)
-        
         # Check if types are valid
         add_pokemon(types, name, image, user_data.username, hp, attack, defense, sp_attack, sp_defense, speed)
 

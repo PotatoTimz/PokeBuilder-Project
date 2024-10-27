@@ -1,14 +1,22 @@
-import { useContext, useState } from "react";
-import { UserContext } from "../context/userAuth";
+import { useContext, useEffect, useState } from "react";
+import { UserContext } from "../context/UserAuth";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
-  const { loginUser } = useContext(UserContext);
+  const { loginUser, isLoggedIn } = useContext(UserContext);
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const navigate = useNavigate();
 
-  const submitLogin = (e: React.FormEvent) => {
+  useEffect(() => {
+    if (isLoggedIn()) {
+      navigate("/");
+    }
+  }, []);
+
+  const submitLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    loginUser(username, password);
+    await loginUser(username, password);
   };
 
   return (

@@ -1,9 +1,15 @@
 import { Route, Routes } from "react-router-dom";
-import Login from "./components/login";
-import { UserProvider } from "./context/userAuth";
-import Register from "./components/register";
-import UserPage from "./components/userpage";
-import ProtectedRoute from "./components/protected";
+import { UserProvider } from "./context/UserAuth";
+
+import Register from "./components/Register";
+import UserPage from "./components/ProfilePage";
+import ProtectedRoute from "./components/Protected";
+import Login from "./components/Login";
+import PokemonInfo from "./components/PokemonInfo";
+import PageNotFound from "./components/PageNotFound";
+import Home from "./components/Home";
+import CreateMoves from "./components/CreateMoves";
+import CreatePokemon from "./components/CreatePokemon";
 
 function App() {
   return (
@@ -12,6 +18,8 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/pokemon/:id" element={<PokemonInfo />} />
           <Route
             path="/user"
             element={
@@ -20,6 +28,23 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/move/create"
+            element={
+              <ProtectedRoute>
+                <CreateMoves />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/pokemon/create"
+            element={
+              <ProtectedRoute>
+                <CreatePokemon />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="*" element={<PageNotFound />}></Route>
         </Routes>
       </UserProvider>
     </>

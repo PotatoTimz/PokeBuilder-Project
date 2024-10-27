@@ -1,5 +1,6 @@
 import axios, { Axios, AxiosError } from "axios";
 import { createContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface UserContextInterface {
   username: string | null;
@@ -26,11 +27,13 @@ export const UserProvider = ({ children }: Props) => {
   const [token, setToken] = useState<string | null>(null);
   const [isReady, setIsReady] = useState<boolean>(false);
   const axiosFetch = axios.create({
+    baseURL: "http://127.0.0.1:5000",
     headers: {
-      baseURL: "http://127.0.0.1:5000",
       Authorization: `Bearer ${token}`,
     },
   });
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const user = localStorage.getItem("username");
@@ -73,6 +76,7 @@ export const UserProvider = ({ children }: Props) => {
         setToken(response?.data.token);
         setToken(username);
         axios.defaults.headers.common = { Authorization: `Bearer ${token}` };
+        navigate("/");
       })
       .catch((err: AxiosError) => {
         const errorMessage =

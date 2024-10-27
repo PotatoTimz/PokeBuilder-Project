@@ -17,9 +17,9 @@ export interface Move {
   move_accuracy: number;
   move_description: string;
   move_name: string;
-  move_power: string;
+  move_power: number;
   move_pp: number;
-  type: Type;
+  type: Type | string;
 }
 
 export interface ExtensivePokemonData {
@@ -28,7 +28,7 @@ export interface ExtensivePokemonData {
   pokemon_id: number;
   pokemon_image: string;
   pokemon_name: string;
-  pokemon_type: Type[];
+  pokemon_type: Type[] | string[];
   pokemon_move: Move[];
 }
 

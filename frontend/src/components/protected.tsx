@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { UserContext } from "../context/userAuth";
+import { UserContext } from "../context/UserAuth";
 import { Navigate } from "react-router-dom";
 
 type Props = { children: React.ReactNode };

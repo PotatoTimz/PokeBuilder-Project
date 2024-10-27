@@ -1,9 +1,9 @@
 import axios, { AxiosError } from "axios";
 import { useContext, useEffect, useState } from "react";
-import { SimplePokemonData } from "../interfaces/pokemon_data_interface";
-import { UserContext } from "../context/userAuth";
+import { SimplePokemonData } from "../interfaces/PokemonInterfaces";
+import { UserContext } from "../context/UserAuth";
 
-function UserPage() {
+function ProfilePage() {
   const { axiosFetch } = useContext(UserContext);
   const [userPokemon, setUserPokemon] = useState<SimplePokemonData[] | null>(
     null
@@ -11,7 +11,7 @@ function UserPage() {
 
   useEffect(() => {
     axiosFetch
-      .get("http://127.0.0.1:5000/user/pokemon", {})
+      .get("/user/pokemon", {})
       .then((response) => {
         console.log(response);
         setUserPokemon(response.data);
@@ -30,4 +30,4 @@ function UserPage() {
   );
 }
 
-export default UserPage;
+export default ProfilePage;
