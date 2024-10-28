@@ -6,7 +6,7 @@ import { AxiosError } from "axios";
 import { fetchTypes } from "../utilities/fetchTypes";
 
 function CreateMoves() {
-  const { axiosFetch, isLoggedIn } = useContext(UserContext);
+  const { axiosFetch } = useContext(UserContext);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [types, setTypes] = useState<Type[]>([]);
   const [moveData, setMoveData] = useState<Move>({
@@ -21,9 +21,6 @@ function CreateMoves() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!isLoggedIn()) {
-      navigate("/");
-    }
     async function getAllTypes() {
       const response = await fetchTypes(axiosFetch);
       setTypes(response);
