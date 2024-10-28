@@ -86,3 +86,6 @@ def delete_move(id):
     delete_move = Move.query.filter_by(id=id).first()
     db.session.delete(delete_move)
     db.session.commit()
+
+def valid_move(move):
+    return False if not Move.query.filter_by(name=move).first() else True

@@ -6,6 +6,7 @@ from models.account import Account
 from models.move import Move
 
 from services.type_service import valid_type
+from services.move_service import valid_move
 
 from extensions import db
 from flask import abort, jsonify
@@ -156,4 +157,36 @@ def update_pokemon(types, name, image, pokemon_id, hp, attack, defense, sp_attac
 def delete_pokemon(pokemon_id):
     delete_pokemon = Pokemon.query.filter_by(id=pokemon_id).first()
     db.session.delete(delete_pokemon)
+    db.session.commit()
+
+def add_moves(data, pokemon_id):
+    if not data or not data.get("moves"):
+        abort(400, "Invalid Input!")
+    move_names = data.get("moves")
+
+    # Check if all given moves are valid
+    for move in move_names:
+        if not valid_move(move):
+            abort(400, "Type not found")
+
+    pokemonMove = []
+    for move in move_names:
+        move_id = Move.query.filter_by(name=move).first().id
+        pokemonMove.append(PokemonMove(pokemon_id=pokemon_id, move_id=move_id))
+
+    db.session.add_all(pokemonMove)
+    db.session.commit()
+
+def remove_move(data, pokemon_id):
+    if not data or not data.get("move"):
+        abort(400, "Invalid Input!")
+    move_name = data.get("move")
+
+    move_id = Move.query.filter_by(name=move_name).first().id
+    delete_move = PokemonMove.query.filter_by(pokemon_id=pokemon_id).filter_by(move_id=move_id).first()
+
+    if not delete_move:
+        abort(400, "Pokemon does not have this move!")
+    
+    db.session.delete(delete_move)
     db.session.commit()

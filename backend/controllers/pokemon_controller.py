@@ -1,7 +1,7 @@
 from flask import Blueprint, abort, request, jsonify
 from services.account_service import get_account_name
 from services.jwt_token_service import token_required
-from services.pokemon_service import delete_pokemon, update_pokemon, is_created_by_user, get_pokemon_by_id, get_all_pokemons, add_pokemon, validate_data
+from services.pokemon_service import remove_move, add_moves, delete_pokemon, update_pokemon, is_created_by_user, get_pokemon_by_id, get_all_pokemons, add_pokemon, validate_data
 
 pokemon_bp = Blueprint("pokemon_bp", __name__)
 
@@ -70,3 +70,18 @@ def manage_other_user_pokemon(user_id):
 
         pokemon_data = get_all_pokemons("", username, {i for i in range(1, 14)})
         return pokemon_data
+
+# Add a new move to pokemon
+@token_required
+@pokemon_bp.route("/user/pokemon/<int:pokemon_id>/move", methods=["POST", "DELETE"])
+def manage_pokemon_moves(pokemon_id):
+    if request.method == "POST":
+        data = request.json
+        add_moves(data, pokemon_id)
+
+        return jsonify({"message": "move successfully added to pokemon"})
+    if request.method == "DELETE":
+        data = request.json
+        remove_move(data, pokemon_id)
+
+        return jsonify({"message": "move successfully removed"})
