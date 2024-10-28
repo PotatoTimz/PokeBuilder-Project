@@ -23,15 +23,11 @@ function CreatePokemon() {
     pokemon_image: "",
     pokemon_name: "",
     pokemon_type: ["normal", ""],
-    pokemon_move: [],
+    pokemon_moves: [],
   });
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!isLoggedIn()) {
-      navigate("/");
-    }
-
     async function getAllTypes() {
       const response = await fetchTypes(axiosFetch);
       setTypes(response);

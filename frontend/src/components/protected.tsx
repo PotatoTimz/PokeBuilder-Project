@@ -8,9 +8,11 @@ function ProtectedRoute({ children }: Props) {
   const { checkToken } = useContext(UserContext);
   const [checkedToken, setCheckedToken] = useState<boolean>(false);
   useEffect(() => {
-    checkToken();
-    setCheckedToken(true);
-  }, []);
+    (async () => {
+      await checkToken();
+      setCheckedToken(true);
+    })();
+  }, [checkToken]);
 
   return checkedToken ? <> {children}</> : <div>Checking Token</div>;
 }

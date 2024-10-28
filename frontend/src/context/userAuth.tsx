@@ -9,7 +9,8 @@ interface UserContextInterface {
   registerUser: (username: string, password: string) => void;
   loginUser: (username: string, password: string) => void;
   logout: () => void;
-  checkToken: () => void;
+  isLoggedIn: () => boolean;
+  checkToken: () => Promise<boolean>;
 }
 
 interface ErrorResponse {
@@ -86,19 +87,28 @@ export const UserProvider = ({ children }: Props) => {
       });
   };
 
+  const isLoggedIn = () => {
+    return !!username;
+  };
+
   const checkToken = async () => {
-    if (username == null) {
+    console.log("test");
+    if (!isLoggedIn) {
+      console.log("You must be logged in to access this page");
+      return false;
     }
 
     await axiosFetch
       .get("/protected")
       .then((response) => {})
       .catch((err: AxiosError) => {
-        console.log(err);
         console.log("Your token has expired!");
         logout();
         navigate("/login");
+        return false;
       });
+
+    return true;
   };
 
   const logout = () => {
@@ -117,6 +127,7 @@ export const UserProvider = ({ children }: Props) => {
         token,
         logout,
         checkToken,
+        isLoggedIn,
         registerUser,
       }}
     >

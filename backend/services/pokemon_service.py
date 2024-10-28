@@ -160,21 +160,18 @@ def delete_pokemon(pokemon_id):
     db.session.commit()
 
 def add_moves(data, pokemon_id):
-    if not data or not data.get("moves"):
+    if not data or not data.get("move"):
         abort(400, "Invalid Input!")
-    move_names = data.get("moves")
+    move_name = data.get("move")
 
     # Check if all given moves are valid
-    for move in move_names:
-        if not valid_move(move):
-            abort(400, "Type not found")
+    if not valid_move(move_name):
+        abort(400, "Type not found")
 
-    pokemonMove = []
-    for move in move_names:
-        move_id = Move.query.filter_by(name=move).first().id
-        pokemonMove.append(PokemonMove(pokemon_id=pokemon_id, move_id=move_id))
+    move_id = Move.query.filter_by(name=move_name).first().id
+    pokemonMove = PokemonMove(pokemon_id=pokemon_id, move_id=move_id)
 
-    db.session.add_all(pokemonMove)
+    db.session.add(pokemonMove)
     db.session.commit()
 
 def remove_move(data, pokemon_id):
