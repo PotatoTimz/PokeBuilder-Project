@@ -33,9 +33,9 @@ export interface ExtensivePokemonData {
 }
 
 export interface SimplePokemonData {
-  base_stat: BaseStats;
   pokemon_creator: string;
   pokemon_id: number;
   pokemon_image: string;
   pokemon_name: string;
+  pokemon_type: Type[] | string[];
 }

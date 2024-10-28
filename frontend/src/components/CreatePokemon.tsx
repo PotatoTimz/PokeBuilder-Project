@@ -1,11 +1,14 @@
 import { useContext, useEffect, useState } from "react";
-import { ExtensivePokemonData, Move } from "../interfaces/PokemonInterfaces";
+import { ExtensivePokemonData, Type } from "../interfaces/PokemonInterfaces";
 import { UserContext } from "../context/UserAuth";
 import { useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
+import { fetchTypes } from "../utilities/fetchTypes";
 
 function CreatePokemon() {
   const { axiosFetch, isLoggedIn } = useContext(UserContext);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [types, setTypes] = useState<Type[]>([]);
   const [pokemonData, setPokemonData] = useState<ExtensivePokemonData>({
     base_stat: {
       hp: 0,
@@ -19,7 +22,7 @@ function CreatePokemon() {
     pokemon_id: 0,
     pokemon_image: "",
     pokemon_name: "",
-    pokemon_type: ["grass"],
+    pokemon_type: ["normal", ""],
     pokemon_move: [],
   });
   const navigate = useNavigate();
@@ -28,32 +31,19 @@ function CreatePokemon() {
     if (!isLoggedIn()) {
       navigate("/");
     }
+
+    async function getAllTypes() {
+      const response = await fetchTypes(axiosFetch);
+      setTypes(response);
+    }
+
+    getAllTypes();
+    setIsLoading(true);
   }, []);
 
   const submitPokemon = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log({
-      name: pokemonData.pokemon_name,
-      types: pokemonData.pokemon_type,
-      image: pokemonData.pokemon_image,
-      hp: pokemonData.base_stat.hp,
-      attack: pokemonData.base_stat.attack,
-      defense: pokemonData.base_stat.defense,
-      sp_attack: pokemonData.base_stat.sp_attack,
-      sp_defense: pokemonData.base_stat.sp_defense,
-      speed: pokemonData.base_stat.speed,
-    });
-    console.log({
-      name: "Ivysaur",
-      types: ["grass", "water"],
-      image: "https://assets.pokemon.com/assets/cms2/img/pokedex/full//002.png",
-      hp: 45,
-      attack: 49,
-      defense: 49,
-      sp_attack: 65,
-      sp_defense: 65,
-      speed: 45,
-    });
+
     axiosFetch
       .post("/user/pokemon", {
         name: pokemonData.pokemon_name,
@@ -74,7 +64,7 @@ function CreatePokemon() {
       });
   };
 
-  return (
+  return isLoading ? (
     <>
       <form>
         <label>Name</label>
@@ -91,7 +81,48 @@ function CreatePokemon() {
             setPokemonData({ ...pokemonData, pokemon_image: e.target.value })
           }
         />
-        <label>Types</label>
+        <label>Type 1</label>
+        <select
+          onChange={(e) => {
+            setPokemonData({
+              ...pokemonData,
+              pokemon_type: [
+                e.target.value,
+                pokemonData.pokemon_type[0] as string,
+              ],
+            });
+          }}
+        >
+          {types.map((type, index) => {
+            return (
+              <option value={`${type.name}`} key={index}>
+                {type.name}
+              </option>
+            );
+          })}
+        </select>
+
+        <label>Type 2</label>
+        <select
+          onChange={(e) => {
+            setPokemonData({
+              ...pokemonData,
+              pokemon_type: [
+                pokemonData.pokemon_type[0] as string,
+                e.target.value,
+              ],
+            });
+          }}
+        >
+          <option value={``}>No Second Type</option>
+          {types.map((type, index) => {
+            return (
+              <option value={`${type.name}`} key={index}>
+                {type.name}
+              </option>
+            );
+          })}
+        </select>
 
         <div>Base Stats</div>
         <label>HP</label>
@@ -176,6 +207,8 @@ function CreatePokemon() {
         <input type="submit" onClick={submitPokemon} />
       </form>
     </>
+  ) : (
+    <div>loading</div>
   );
 }
 

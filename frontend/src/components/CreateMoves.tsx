@@ -1,11 +1,14 @@
 import { useContext, useEffect, useState } from "react";
-import { Move } from "../interfaces/PokemonInterfaces";
+import { Move, Type } from "../interfaces/PokemonInterfaces";
 import { UserContext } from "../context/UserAuth";
 import { useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
+import { fetchTypes } from "../utilities/fetchTypes";
 
 function CreateMoves() {
   const { axiosFetch, isLoggedIn } = useContext(UserContext);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [types, setTypes] = useState<Type[]>([]);
   const [moveData, setMoveData] = useState<Move>({
     move_id: 0,
     move_accuracy: 0,
@@ -13,7 +16,7 @@ function CreateMoves() {
     move_name: "",
     move_power: 0,
     move_pp: 0,
-    type: "",
+    type: "normal",
   });
   const navigate = useNavigate();
 
@@ -21,12 +24,18 @@ function CreateMoves() {
     if (!isLoggedIn()) {
       navigate("/");
     }
+    async function getAllTypes() {
+      const response = await fetchTypes(axiosFetch);
+      setTypes(response);
+    }
+    getAllTypes();
+    setIsLoading(true);
   }, []);
 
   const submitMove = async (e: React.FormEvent) => {
     e.preventDefault();
     axiosFetch
-      .post("/move", {
+      .post("user/move", {
         name: moveData.move_name,
         power: moveData.move_power,
         description: moveData.move_description,
@@ -35,14 +44,14 @@ function CreateMoves() {
         type: moveData.type,
       })
       .then((response) => {
-        navigate("/home");
+        navigate("/");
       })
       .catch((err: AxiosError) => {
         console.log(err.response);
       });
   };
 
-  return (
+  return isLoading ? (
     <>
       <form>
         <label>Name</label>
@@ -84,14 +93,28 @@ function CreateMoves() {
           }
         />
         <label>Type</label>
-        <input
-          type="text"
-          onChange={(e) => setMoveData({ ...moveData, type: e.target.value })}
-        />
+        <select
+          onChange={(e) =>
+            setMoveData({
+              ...moveData,
+              type: e.target.value,
+            })
+          }
+        >
+          {types.map((type, index) => {
+            return (
+              <option value={`${type.name}`} key={index}>
+                {type.name}
+              </option>
+            );
+          })}
+        </select>
 
         <input type="submit" onClick={submitMove} />
       </form>
     </>
+  ) : (
+    <div>loading</div>
   );
 }
 

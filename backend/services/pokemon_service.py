@@ -14,14 +14,12 @@ from sqlalchemy import func
 def get_all_pokemons(name, creator, filtered_types):
     pokemons = (db.session.query(Pokemon, Account, PokemonType, Type)
                         .with_entities(Pokemon.id, Pokemon.name, Account.username.label("creator"), Pokemon.image, Pokemon.hp, Pokemon.attack, Pokemon.defense, Pokemon.sp_attack, Pokemon.sp_defense, Pokemon.speed)
-                        .filter(Pokemon.name.ilike(f'%{name}%'))
                         .join(Account)
-                        .filter(Account.username.ilike(f'%{creator}%'))
                         .join(PokemonType)
-                        .filter(PokemonType.type_id.in_(filtered_types))
                         .group_by(Pokemon.name)
                         .all()
               )
+    print(pokemons)
 
     pokemon_data = jsonify(
         [
@@ -30,14 +28,6 @@ def get_all_pokemons(name, creator, filtered_types):
                 "pokemon_name": pokemon[1],
                 "creator": pokemon[2],
                 "pokemon_image": pokemon[3],
-                "base_stats":{
-                    "hp": pokemon[4],
-                    "attack": pokemon[5],
-                    "defense": pokemon[6],
-                    "sp_attack": pokemon[7],
-                    "sp_defense": pokemon[8],
-                    "speed": pokemon[9],
-                },
                 "pokemon_types": [
                     {
                         "type_id": type.id,
@@ -106,22 +96,22 @@ def validate_data(data):
     return types, name, image, hp, attack, defense, sp_attack, sp_defense, speed
 
 def add_pokemon(types, name, image, username, hp, attack, defense, sp_attack, sp_defense, speed):
-
     # Check if all given types are valid
     for type in types:
-        if not valid_type(type):
-            abort(400, type, "not found")
+        if type != "":
+            if not valid_type(type):
+                abort(400, "Type not found")
 
     account_id = Account.query.filter_by(username=username).first().id
 
     new_pokemon = Pokemon(name=name, account_id=account_id, image=image, hp=hp, attack=attack, defense=defense, sp_attack=sp_attack, sp_defense=sp_defense, speed=speed)
     db.session.add(new_pokemon)
     db.session.commit()
-
     pokemonType = []
     for type in types:
-        type_id = Type.query.filter_by(name=type).first().id
-        pokemonType.append(PokemonType(pokemon_id=new_pokemon.id, type_id=type_id))
+        if type != "":
+            type_id = Type.query.filter_by(name=type).first().id
+            pokemonType.append(PokemonType(pokemon_id=new_pokemon.id, type_id=type_id))
     
     db.session.add_all(pokemonType)
     db.session.commit()
