@@ -77,7 +77,6 @@ export const UserProvider = ({ children }: Props) => {
         setToken(response?.data.token);
         setToken(username);
         axios.defaults.headers.common = { Authorization: `Bearer ${token}` };
-        navigate("/");
       })
       .catch((err: AxiosError) => {
         const errorMessage =
@@ -92,7 +91,6 @@ export const UserProvider = ({ children }: Props) => {
   };
 
   const checkToken = async () => {
-    console.log("test");
     if (!isLoggedIn) {
       console.log("You must be logged in to access this page");
       return false;
