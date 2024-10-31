@@ -50,65 +50,108 @@ function CreateMoves() {
 
   return isLoading ? (
     <>
-      <form>
-        <label>Name</label>
-        <input
-          type="text"
-          onChange={(e) =>
-            setMoveData({ ...moveData, move_name: e.target.value })
-          }
-        />
-        <label>Description</label>
-        <input
-          type="text"
-          onChange={(e) =>
-            setMoveData({ ...moveData, move_description: e.target.value })
-          }
-        />
-        <label>Power</label>
-        <input
-          type="number"
-          onChange={(e) =>
-            setMoveData({ ...moveData, move_power: parseInt(e.target.value) })
-          }
-        />
-        <label>Accuracy</label>
-        <input
-          type="number"
-          onChange={(e) =>
-            setMoveData({
-              ...moveData,
-              move_accuracy: parseInt(e.target.value),
-            })
-          }
-        />
-        <label>PP</label>
-        <input
-          type="number"
-          onChange={(e) =>
-            setMoveData({ ...moveData, move_pp: parseInt(e.target.value) })
-          }
-        />
-        <label>Type</label>
-        <select
-          onChange={(e) =>
-            setMoveData({
-              ...moveData,
-              type: e.target.value,
-            })
-          }
-        >
-          {types.map((type, index) => {
-            return (
-              <option value={`${type.name}`} key={index}>
-                {type.name}
-              </option>
-            );
-          })}
-        </select>
-
-        <input type="submit" onClick={submitMove} />
-      </form>
+      <div className="container-fluid">
+        <div className="row fs-3 justify-content-center ">
+          <div className="col-lg-6">
+            <div className="text-center fw-bold mt-3">Create Your Move!</div>
+          </div>
+        </div>
+        <div className="row justify-content-center mt-1 mb-5">
+          <div className="col-lg-6">
+            <form>
+              <div className="form-group my-3">
+                <label>Name</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  onChange={(e) =>
+                    setMoveData({ ...moveData, move_name: e.target.value })
+                  }
+                />
+              </div>
+              <div className="form-group my-3">
+                <label>Description</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  onChange={(e) =>
+                    setMoveData({
+                      ...moveData,
+                      move_description: e.target.value,
+                    })
+                  }
+                />
+              </div>
+              <div className="form-group my-3">
+                <label>Power</label>
+                <input
+                  type="number"
+                  className="form-control"
+                  onChange={(e) =>
+                    setMoveData({
+                      ...moveData,
+                      move_power: parseInt(e.target.value),
+                    })
+                  }
+                />
+              </div>
+              <div className="form-group my-3">
+                <label>Accuracy</label>
+                <input
+                  type="number"
+                  className="form-control"
+                  onChange={(e) =>
+                    setMoveData({
+                      ...moveData,
+                      move_accuracy: parseInt(e.target.value),
+                    })
+                  }
+                />
+              </div>
+              <div className="form-group my-3">
+                <label>PP</label>
+                <input
+                  type="number"
+                  className="form-control"
+                  onChange={(e) =>
+                    setMoveData({
+                      ...moveData,
+                      move_pp: parseInt(e.target.value),
+                    })
+                  }
+                />
+              </div>
+              <div className="form-group my-3">
+                <label>Type</label>
+                <select
+                  className="form-control"
+                  onChange={(e) =>
+                    setMoveData({
+                      ...moveData,
+                      type: e.target.value,
+                    })
+                  }
+                >
+                  {types.map((type, index) => {
+                    return (
+                      <option value={`${type.name}`} key={index}>
+                        {type.name}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
+              <div className="form-group my-3">
+                <input
+                  className="form-control btn btn-primary"
+                  type="submit"
+                  onClick={submitMove}
+                />
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
     </>
   ) : (
     <div>loading</div>

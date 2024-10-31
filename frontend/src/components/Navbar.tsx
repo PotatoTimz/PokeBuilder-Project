@@ -36,6 +36,16 @@ function Navbar({ children }: Props) {
                 Moves
               </a>
             </li>
+            <li className="nav-item active">
+              <a className="nav-link" href="/pokemon/create">
+                Create Pokemon
+              </a>
+            </li>
+            <li className="nav-item active">
+              <a className="nav-link" href="/pokemon/create">
+                Create Move
+              </a>
+            </li>
           </ul>
         </div>
 
