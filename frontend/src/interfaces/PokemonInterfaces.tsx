@@ -28,14 +28,19 @@ export interface ExtensivePokemonData {
   pokemon_id: number;
   pokemon_image: string;
   pokemon_name: string;
-  pokemon_type: Type[] | string[];
-  pokemon_move: Move[];
+  pokemon_types: Type[] | string[];
+  pokemon_moves: Move[];
 }
 
 export interface SimplePokemonData {
-  pokemon_creator: string;
+  creator: string;
   pokemon_id: number;
   pokemon_image: string;
   pokemon_name: string;
-  pokemon_type: Type[] | string[];
+  pokemon_types: Type[] | string[];
+}
+
+export interface PokemonSearchQuery {
+  name: string;
+  creator: string;
 }

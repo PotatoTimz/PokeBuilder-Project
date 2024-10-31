@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { UserContext } from "../context/userAuth";
+import { UserContext } from "../context/UserAuth";
 
 type Props = { children: React.ReactNode };
 
@@ -27,12 +27,12 @@ function Navbar({ children }: Props) {
               </a>
             </li>
             <li className="nav-item active">
-              <a className="nav-link" href="/">
+              <a className="nav-link" href="/pokemon">
                 Pokemon
               </a>
             </li>
             <li className="nav-item active">
-              <a className="nav-link" href="/">
+              <a className="nav-link" href="/move">
                 Moves
               </a>
             </li>

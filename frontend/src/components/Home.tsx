@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { SimplePokemonData } from "../interfaces/PokemonInterfaces";
 import { fetchAllPokemon } from "../utilities/fetchAllPokemon";
-import { UserContext } from "../context/userAuth";
+import { UserContext } from "../context/UserAuth";
 
 function Home() {
   const { axiosFetch } = useContext(UserContext);
@@ -11,7 +11,7 @@ function Home() {
 
   useEffect(() => {
     async function getAllPokemon() {
-      const response = await fetchAllPokemon(axiosFetch);
+      const response = await fetchAllPokemon(axiosFetch, "", "");
       console.log(response);
       setPokemonData(response);
     }
@@ -41,27 +41,6 @@ function Home() {
                 </div>
               </div>
             </div>
-          </div>
-          <div className="container">
-            <div>Home Page</div>
-            {pokemonData.map((pokemon, index) => {
-              return <div key={index}>{pokemon.pokemon_name}</div>;
-            })}
-            {pokemonData.map((pokemon, index) => {
-              return <div key={index}>{pokemon.pokemon_name}</div>;
-            })}
-            {pokemonData.map((pokemon, index) => {
-              return <div key={index}>{pokemon.pokemon_name}</div>;
-            })}
-            {pokemonData.map((pokemon, index) => {
-              return <div key={index}>{pokemon.pokemon_name}</div>;
-            })}
-            {pokemonData.map((pokemon, index) => {
-              return <div key={index}>{pokemon.pokemon_name}</div>;
-            })}
-            {pokemonData.map((pokemon, index) => {
-              return <div key={index}>{pokemon.pokemon_name}</div>;
-            })}
           </div>
         </>
       ) : (

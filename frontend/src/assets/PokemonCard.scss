@@ -1,0 +1,55 @@
+$pokemon-types: (
+  normal: #a8a878,
+  fighting: #c03028,
+  flying: #a890f0,
+  poison: #a040b0,
+  ground: #e0c068,
+  rock: #b8a038,
+  bug: #a8b820,
+  ghost: #705898,
+  steel: #b8b8d0,
+  fire: #f08030,
+  water: #6890f0,
+  grass: #78c850,
+  electric: #f8d030,
+  psychic: #f85888,
+  ice: #98d8d8,
+  dragon: #7038f8,
+  dark: #705848,
+  fairy: #ee99ac,
+);
+
+@each $type, $color in $pokemon-types {
+  .bg-#{$type} {
+    background-color: $color !important;
+  }
+}
+
+#pokemonCard {
+  width: 25rem;
+  height: auto;
+  background-color: #f8f9fa;
+  border-radius: 20px;
+  &:hover {
+    background-color: #e2e6ea;
+  }
+  #pokemonImage {
+    object-fit: contain;
+    height: 15rem;
+    width: 15rem;
+  }
+  #createdBy {
+    color: grey;
+  }
+  #typeSection :not(:first-child) {
+    margin-inline: 20px;
+  }
+  #pokemonType {
+    width: 5rem;
+    height: 2rem;
+    line-height: 15px;
+    text-align: center;
+    border-radius: 20px;
+    color: white;
+  }
+}
