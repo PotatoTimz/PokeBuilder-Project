@@ -8,11 +8,17 @@ function Navbar({ children }: Props) {
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <a className="navbar-brand px-3" href="/">
-          Navbar
+      <nav className="navbar sticky-top navbar-expand-lg navbar-light bg-light px-5">
+        <a className="navbar-brand" href="/">
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/9800/9800003.png"
+            width="30"
+            height="30"
+            className="d-inline-block align-top"
+            alt=""
+          />
+          PokeBuilder
         </a>
-
         <div className="collapse navbar-collapse" id="navbarText">
           <ul className="navbar-nav">
             <li className="nav-item active">
@@ -20,10 +26,20 @@ function Navbar({ children }: Props) {
                 Home
               </a>
             </li>
+            <li className="nav-item active">
+              <a className="nav-link" href="/">
+                Pokemon
+              </a>
+            </li>
+            <li className="nav-item active">
+              <a className="nav-link" href="/">
+                Moves
+              </a>
+            </li>
           </ul>
         </div>
 
-        <ul className="navbar-nav mx-3">
+        <ul className="navbar-nav">
           <li className="nav-item justify-content-right">
             <a className="nav-link" href="/user">
               Profile

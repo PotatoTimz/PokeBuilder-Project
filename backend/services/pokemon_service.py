@@ -20,7 +20,6 @@ def get_all_pokemons(name, creator, filtered_types):
                         .group_by(Pokemon.name)
                         .all()
               )
-    print(pokemons)
 
     pokemon_data = jsonify(
         [
