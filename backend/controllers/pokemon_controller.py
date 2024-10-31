@@ -77,7 +77,6 @@ def manage_other_user_pokemon(user_id):
 def manage_pokemon_moves(pokemon_id):
     if request.method == "POST":
         data = request.json
-        print(data)
         add_moves(data, pokemon_id)
 
         return jsonify({"message": "move successfully added to pokemon"})

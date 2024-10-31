@@ -28,7 +28,7 @@ def get_all_moves(name, creator):
                 "move_pp": move[6],
                 "type":{
                     "type_id": move[7],
-                    "type_name": db.session.query(Type).filter(Type.id==move[7]).first().name
+                    "name": db.session.query(Type).filter(Type.id==move[7]).first().name
                 }
             } for move in moves
         ] 

@@ -15,7 +15,9 @@ from sqlalchemy import func
 def get_all_pokemons(name, creator, filtered_types):
     pokemons = (db.session.query(Pokemon, Account, PokemonType, Type)
                         .with_entities(Pokemon.id, Pokemon.name, Account.username.label("creator"), Pokemon.image, Pokemon.hp, Pokemon.attack, Pokemon.defense, Pokemon.sp_attack, Pokemon.sp_defense, Pokemon.speed)
+                        .filter(Pokemon.name.like(name + "%"))
                         .join(Account)
+                        .filter(Account.username.like(creator + "%"))
                         .join(PokemonType)
                         .group_by(Pokemon.name)
                         .all()
