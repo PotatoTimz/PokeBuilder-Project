@@ -4,13 +4,14 @@ import { UserContext } from "../context/UserAuth";
 import { useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
 import { fetchTypes } from "../utilities/fetchTypes";
+import { capitalizeFirstCharacter } from "../utilities/helpers";
 
 function CreatePokemon() {
   const { axiosFetch, isLoggedIn } = useContext(UserContext);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [types, setTypes] = useState<Type[]>([]);
   const [pokemonData, setPokemonData] = useState<ExtensivePokemonData>({
-    base_stat: {
+    base_stats: {
       hp: 0,
       attack: 0,
       defense: 0,
@@ -45,15 +46,15 @@ function CreatePokemon() {
         name: pokemonData.pokemon_name,
         types: pokemonData.pokemon_types,
         image: pokemonData.pokemon_image,
-        hp: pokemonData.base_stat.hp,
-        attack: pokemonData.base_stat.attack,
-        defense: pokemonData.base_stat.defense,
-        sp_attack: pokemonData.base_stat.sp_attack,
-        sp_defense: pokemonData.base_stat.sp_defense,
-        speed: pokemonData.base_stat.speed,
+        hp: pokemonData.base_stats.hp,
+        attack: pokemonData.base_stats.attack,
+        defense: pokemonData.base_stats.defense,
+        sp_attack: pokemonData.base_stats.sp_attack,
+        sp_defense: pokemonData.base_stats.sp_defense,
+        speed: pokemonData.base_stats.speed,
       })
       .then((response) => {
-        navigate("/");
+        navigate("/pokemon/create/" + response.data.id);
       })
       .catch((err: AxiosError) => {
         console.log(err.response);
@@ -119,7 +120,7 @@ function CreatePokemon() {
                       {types.map((type, index) => {
                         return (
                           <option value={`${type.name}`} key={index}>
-                            {type.name}
+                            {capitalizeFirstCharacter(type.name)}
                           </option>
                         );
                       })}
@@ -164,8 +165,8 @@ function CreatePokemon() {
                   onChange={(e) =>
                     setPokemonData({
                       ...pokemonData,
-                      base_stat: {
-                        ...pokemonData.base_stat,
+                      base_stats: {
+                        ...pokemonData.base_stats,
                         hp: parseInt(e.target.value),
                       },
                     })
@@ -180,8 +181,8 @@ function CreatePokemon() {
                   onChange={(e) =>
                     setPokemonData({
                       ...pokemonData,
-                      base_stat: {
-                        ...pokemonData.base_stat,
+                      base_stats: {
+                        ...pokemonData.base_stats,
                         attack: parseInt(e.target.value),
                       },
                     })
@@ -196,8 +197,8 @@ function CreatePokemon() {
                   onChange={(e) =>
                     setPokemonData({
                       ...pokemonData,
-                      base_stat: {
-                        ...pokemonData.base_stat,
+                      base_stats: {
+                        ...pokemonData.base_stats,
                         defense: parseInt(e.target.value),
                       },
                     })
@@ -212,8 +213,8 @@ function CreatePokemon() {
                   onChange={(e) =>
                     setPokemonData({
                       ...pokemonData,
-                      base_stat: {
-                        ...pokemonData.base_stat,
+                      base_stats: {
+                        ...pokemonData.base_stats,
                         sp_attack: parseInt(e.target.value),
                       },
                     })
@@ -228,8 +229,8 @@ function CreatePokemon() {
                   onChange={(e) =>
                     setPokemonData({
                       ...pokemonData,
-                      base_stat: {
-                        ...pokemonData.base_stat,
+                      base_stats: {
+                        ...pokemonData.base_stats,
                         sp_defense: parseInt(e.target.value),
                       },
                     })
@@ -244,8 +245,8 @@ function CreatePokemon() {
                   onChange={(e) =>
                     setPokemonData({
                       ...pokemonData,
-                      base_stat: {
-                        ...pokemonData.base_stat,
+                      base_stats: {
+                        ...pokemonData.base_stats,
                         speed: parseInt(e.target.value),
                       },
                     })

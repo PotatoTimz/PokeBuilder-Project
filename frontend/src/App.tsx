@@ -2,10 +2,10 @@ import { Route, Routes } from "react-router-dom";
 import { UserProvider } from "./context/UserAuth";
 
 import Register from "./components/LoginComponents/Register";
-import UserPage from "./components/ProfilePage";
+import UserPage from "./components/ProfileComponents/ProfilePage";
 import ProtectedRoute from "./components/LoginComponents/Protected";
 import Login from "./components/LoginComponents/Login";
-import PokemonInfo from "./components/PokemonInfo";
+import PokemonInfo from "./components/PokemonDataPage/PokemonInfo";
 import PageNotFound from "./components/PageNotFound";
 import Home from "./components/Home";
 import CreateMoves from "./components/CreateMoves";
@@ -30,7 +30,7 @@ function App() {
             <Route path="/pokemon" element={<SearchPokemon />} />
             <Route path="/move" element={<SearchMove />} />
             <Route
-              path="/user"
+              path="/user/:userId"
               element={
                 <ProtectedRoute>
                   <UserPage />

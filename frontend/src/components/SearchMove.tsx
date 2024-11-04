@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { Move, SimplePokemonData, Type } from "../interfaces/PokemonInterfaces";
 import { UserContext } from "../context/UserAuth";
 import { useNavigate } from "react-router-dom";
-import { fetchMoves } from "../utilities/fetchMoves";
+import { fetchMoves } from "../utilities/fetchMoveInfo";
 import MoveListData from "./MoveListData";
 
 function SearchPokemon() {

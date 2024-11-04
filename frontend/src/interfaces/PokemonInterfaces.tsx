@@ -23,7 +23,7 @@ export interface Move {
 }
 
 export interface ExtensivePokemonData {
-  base_stat: BaseStats;
+  base_stats: BaseStats;
   creator: string;
   pokemon_id: number;
   pokemon_image: string;
@@ -44,3 +44,37 @@ export interface PokemonSearchQuery {
   name: string;
   creator: string;
 }
+
+const defaultBaseStats: BaseStats = {
+  hp: 0,
+  attack: 0,
+  defense: 0,
+  sp_attack: 0,
+  sp_defense: 0,
+  speed: 0,
+};
+
+const defaultType: Type = {
+  type_id: 0,
+  name: "",
+};
+
+const defaultMove: Move = {
+  move_id: 0,
+  move_accuracy: 0,
+  move_description: "",
+  move_name: "",
+  move_power: 0,
+  move_pp: 0,
+  type: "",
+};
+
+export const defaultExtensivePokemonData: ExtensivePokemonData = {
+  base_stats: defaultBaseStats,
+  creator: "",
+  pokemon_id: 0,
+  pokemon_image: "",
+  pokemon_name: "",
+  pokemon_types: [defaultType],
+  pokemon_moves: [defaultMove],
+};

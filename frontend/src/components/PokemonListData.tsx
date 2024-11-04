@@ -1,5 +1,6 @@
 import { Type, SimplePokemonData } from "../interfaces/PokemonInterfaces";
 import { useNavigate } from "react-router-dom";
+import { capitalizeFirstCharacter } from "../utilities/helpers";
 
 interface Props {
   pokemonData: SimplePokemonData[];
@@ -17,7 +18,8 @@ function PokemonListData(props: Props) {
             key={i}
             id="pokemonCard"
             className="p-3 my-2 mx-4"
-            onClick={() => {
+            onClick={(e) => {
+              e.stopPropagation();
               navigate(`/pokemon/${pokemon.pokemon_id}`);
             }}
           >
@@ -38,7 +40,7 @@ function PokemonListData(props: Props) {
                     id="pokemonType"
                     className={`p-2 fs-6 bg-${curr_type.name}`}
                   >
-                    {curr_type.name}
+                    {capitalizeFirstCharacter(curr_type.name)}
                   </div>
                 );
               })}
@@ -47,7 +49,10 @@ function PokemonListData(props: Props) {
               Created By:{" "}
               <a
                 className="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
-                href="/user"
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+                href={`/user/${pokemon.creator}`}
               >
                 {pokemon.creator}
               </a>
@@ -62,8 +67,19 @@ function PokemonListData(props: Props) {
             </div>
             {props.creator ? (
               <div className="d-flex flex-row justify-content-center">
-                <i className="bi bi-pencil mx-2"></i>
-                <i className="bi bi-trash mx-2"></i>
+                <button
+                  type="button"
+                  className="btn btn-info mx-4"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigate("/pokemon/create/" + pokemon.pokemon_id);
+                  }}
+                >
+                  <i className="bi bi-pencil"></i>
+                </button>
+                <button type="button" className="btn btn-danger mx-4">
+                  <i className="bi bi-trash"></i>
+                </button>
               </div>
             ) : null}
           </div>

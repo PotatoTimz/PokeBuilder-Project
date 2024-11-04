@@ -12,7 +12,7 @@ def manage_pokemon():
         name = "" if not request.args.get("name") else request.args.get("name")
         creator = "" if not request.args.get("creator") else request.args.get("creator")
         
-        pokemon_data = get_all_pokemons(name, creator, {i for i in range(1, 14)})
+        pokemon_data = get_all_pokemons(name, creator, False)
         
         return pokemon_data
     
@@ -51,24 +51,21 @@ def manage_user_pokemon(user_data):
         data = request.json
         types, name, image, hp, attack, defense, sp_attack, sp_defense, speed = validate_data(data)
         # Check if types are valid
-        add_pokemon(types, name, image, user_data.username, hp, attack, defense, sp_attack, sp_defense, speed)
+        id = add_pokemon(types, name, image, user_data.username, hp, attack, defense, sp_attack, sp_defense, speed)
 
-        return jsonify({"message": "pokemon successfully added!"})
+        return jsonify({"message": "pokemon successfully added!", "id": id})
     
     if request.method == "GET":
         print(user_data.username)
-        pokemon_data = get_all_pokemons("", user_data.username, {i for i in range(1, 14)})
+        pokemon_data = get_all_pokemons("", user_data.username, True)
 
         return pokemon_data
     
 # Get pokemon from other users
-@pokemon_bp.route("/user/pokemon/<int:user_id>", methods=["GET"])
-def manage_other_user_pokemon(user_id):
+@pokemon_bp.route("/user/pokemon/<string:username>", methods=["GET"])
+def manage_other_user_pokemon(username):
     if request.method == "GET":
-        #get name from id
-        username = get_account_name(user_id)
-
-        pokemon_data = get_all_pokemons("", username, {i for i in range(1, 14)})
+        pokemon_data = get_all_pokemons("", username, True)
         return pokemon_data
 
 # Add a new move to pokemon

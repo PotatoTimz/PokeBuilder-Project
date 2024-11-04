@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { ExtensivePokemonData, Move } from "../interfaces/PokemonInterfaces";
-import { fetchPokemon } from "../utilities/fetchPokemonById";
+import { fetchPokemonById } from "../utilities/fetchPokemonInfo";
 import { UserContext } from "../context/UserAuth";
 import { Axios, AxiosError } from "axios";
-import { fetchMoves } from "../utilities/fetchMoves";
+import { fetchMoves } from "../utilities/fetchMoveInfo";
 
 function AddMovePokemon() {
   const { axiosFetch } = useContext(UserContext);
@@ -15,7 +15,7 @@ function AddMovePokemon() {
   const [moveData, setMoveData] = useState<Move[] | null>(null);
 
   async function getPokemonData() {
-    const response = await fetchPokemon(axiosFetch, id as string);
+    const response = await fetchPokemonById(axiosFetch, id as string);
     setPokemonData(response);
   }
   async function getMoveData() {

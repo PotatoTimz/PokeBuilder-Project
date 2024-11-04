@@ -4,7 +4,7 @@ import { UserContext } from "../context/UserAuth";
 type Props = { children: React.ReactNode };
 
 function Navbar({ children }: Props) {
-  const { isLoggedIn } = useContext(UserContext);
+  const { isLoggedIn, username } = useContext(UserContext);
 
   return (
     <>
@@ -51,7 +51,7 @@ function Navbar({ children }: Props) {
 
         <ul className="navbar-nav">
           <li className="nav-item justify-content-right">
-            <a className="nav-link" href="/user">
+            <a className="nav-link" href={`/user/${username}`}>
               Profile
             </a>
           </li>

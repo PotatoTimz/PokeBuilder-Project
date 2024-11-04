@@ -31,12 +31,9 @@ def manage_user_move(user_data):
         return jsonify({"message": "move successfully added!"})
 
 # Get Move from other users
-@move_bp.route("/user/move/<int:user_id>", methods=["POST", "GET"])
-def manage_other_user_move(user_id):
+@move_bp.route("/user/move/<string:username>", methods=["POST", "GET"])
+def manage_other_user_move(username):
     if request.method == "GET":
-        print(user_id)
-        username = get_account_name(user_id)
-        print(username)
         move_data = get_all_moves("", username)
 
         return move_data

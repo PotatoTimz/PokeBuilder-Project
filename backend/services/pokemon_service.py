@@ -12,16 +12,28 @@ from extensions import db
 from flask import abort, jsonify
 from sqlalchemy import func
 
-def get_all_pokemons(name, creator, filtered_types):
-    pokemons = (db.session.query(Pokemon, Account, PokemonType, Type)
-                        .with_entities(Pokemon.id, Pokemon.name, Account.username.label("creator"), Pokemon.image, Pokemon.hp, Pokemon.attack, Pokemon.defense, Pokemon.sp_attack, Pokemon.sp_defense, Pokemon.speed)
-                        .filter(Pokemon.name.like(name + "%"))
-                        .join(Account)
-                        .filter(Account.username.like(creator + "%"))
-                        .join(PokemonType)
-                        .group_by(Pokemon.name)
-                        .all()
-              )
+def get_all_pokemons(name, creator, checkUser):
+
+    if not checkUser:
+        pokemons = (db.session.query(Pokemon, Account, PokemonType, Type)
+                            .with_entities(Pokemon.id, Pokemon.name, Account.username.label("creator"), Pokemon.image, Pokemon.hp, Pokemon.attack, Pokemon.defense, Pokemon.sp_attack, Pokemon.sp_defense, Pokemon.speed)
+                            .filter(Pokemon.name.like(name + "%"))
+                            .join(Account)
+                            .filter(Account.username.like(creator + "%"))
+                            .join(PokemonType)
+                            .group_by(Pokemon.name)
+                            .all()
+                )
+    else:
+        pokemons = (db.session.query(Pokemon, Account, PokemonType, Type)
+                    .with_entities(Pokemon.id, Pokemon.name, Account.username.label("creator"), Pokemon.image, Pokemon.hp, Pokemon.attack, Pokemon.defense, Pokemon.sp_attack, Pokemon.sp_defense, Pokemon.speed)
+                    .filter(Pokemon.name.like(name + "%"))
+                    .join(Account)
+                    .filter(Account.username == creator)
+                    .join(PokemonType)
+                    .group_by(Pokemon.name)
+                    .all()
+        )
 
     pokemon_data = jsonify(
         [
@@ -80,7 +92,7 @@ def get_pokemon_by_id(id):
                         "move_pp": move.pp,
                         "type":{
                             "type_id": move.type_id,
-                            "type_name": db.session.query(Type).filter(Type.id==move.type_id).first().name
+                            "name": db.session.query(Type).filter(Type.id==move.type_id).first().name
                         }
                     }
                     for move in db.session.query(Move).join(PokemonMove).join(Pokemon).filter(PokemonMove.pokemon_id==id).all()
@@ -117,6 +129,8 @@ def add_pokemon(types, name, image, username, hp, attack, defense, sp_attack, sp
     
     db.session.add_all(pokemonType)
     db.session.commit()
+
+    return new_pokemon.id
 
 def is_created_by_user(pokemon_id, username):
     account_id = Account.query.filter_by(username=username).first().id

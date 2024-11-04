@@ -1,6 +1,7 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./assets/PokemonCard.scss";
+import "./assets/PokemonInfoPage.scss";
 import "./assets/MoveTable.scss";
 import "./assets/UserPage.scss";
 import App from "./App.tsx";

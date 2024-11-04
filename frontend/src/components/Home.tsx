@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { SimplePokemonData } from "../interfaces/PokemonInterfaces";
-import { fetchAllPokemon } from "../utilities/fetchAllPokemon";
+import { fetchAllPokemon } from "../utilities/fetchPokemonInfo";
 import { UserContext } from "../context/UserAuth";
 
 function Home() {
