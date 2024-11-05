@@ -1,12 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import { Move, SimplePokemonData, Type } from "../interfaces/PokemonInterfaces";
-import { UserContext } from "../context/UserAuth";
-import { useNavigate } from "react-router-dom";
-import { fetchMoves } from "../utilities/fetchMoveInfo";
 import { capitalizeFirstCharacter } from "../utilities/helpers";
 
 interface Props {
   moveData: Move[];
+  mode: string;
+  learnMove?: (moveName: string) => {};
+  removeMove?: (moveName: string) => {};
 }
 
 function MoveListData(props: Props) {
@@ -28,6 +28,11 @@ function MoveListData(props: Props) {
             PP.
           </th>
           <th scope="col">Description</th>
+          {props.mode != "default" ? (
+            <th className="text-center" scope="col">
+              <i className="bi bi-gear-fill"></i>
+            </th>
+          ) : null}
         </tr>
       </thead>
       <tbody>
@@ -44,6 +49,31 @@ function MoveListData(props: Props) {
                 <td className="text-center">{move.move_accuracy}</td>
                 <td className="text-center">{move.move_pp}</td>
                 <td>{move.move_description}</td>
+                {props.mode != "default" ? (
+                  props.mode == "add" ? (
+                    <td className="text-center">
+                      <button
+                        className="button btn-success"
+                        onClick={(e) => {
+                          props.learnMove!(move.move_name);
+                        }}
+                      >
+                        <i className="bi bi-plus-lg"></i>
+                      </button>
+                    </td>
+                  ) : (
+                    <td className="text-center">
+                      <button
+                        className="button btn-danger"
+                        onClick={(e) => {
+                          props.removeMove!(move.move_name);
+                        }}
+                      >
+                        <i className="bi bi-trash3"></i>
+                      </button>
+                    </td>
+                  )
+                ) : null}
               </tr>
             );
           })

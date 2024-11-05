@@ -10,7 +10,7 @@ import PageNotFound from "./components/PageNotFound";
 import Home from "./components/Home";
 import CreateMoves from "./components/CreateMoves";
 import CreatePokemon from "./components/CreatePokemon";
-import AddMovePokemon from "./components/AddMovePokemon";
+import EditPokemonMoves from "./components/EditPokemonMoves";
 import Logout from "./components/LoginComponents/Logout";
 import Navbar from "./components/Navbar";
 import SearchPokemon from "./components/SearchPokemon";
@@ -57,7 +57,7 @@ function App() {
               path="/pokemon/create/:id"
               element={
                 <ProtectedRoute>
-                  <AddMovePokemon />
+                  <EditPokemonMoves />
                 </ProtectedRoute>
               }
             />

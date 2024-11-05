@@ -1,10 +1,13 @@
 import { Type, SimplePokemonData } from "../interfaces/PokemonInterfaces";
 import { useNavigate } from "react-router-dom";
 import { capitalizeFirstCharacter } from "../utilities/helpers";
+import axios, { Axios } from "axios";
+import { deletePokemon } from "../utilities/fetchPokemonInfo";
 
 interface Props {
   pokemonData: SimplePokemonData[];
   creator: boolean;
+  axiosInstance?: Axios;
 }
 
 function PokemonListData(props: Props) {
@@ -77,7 +80,18 @@ function PokemonListData(props: Props) {
                 >
                   <i className="bi bi-pencil"></i>
                 </button>
-                <button type="button" className="btn btn-danger mx-4">
+                <button
+                  type="button"
+                  className="btn btn-danger mx-4"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    deletePokemon(
+                      props.axiosInstance!,
+                      pokemon.pokemon_id.toString()
+                    );
+                    navigate(0);
+                  }}
+                >
                   <i className="bi bi-trash"></i>
                 </button>
               </div>

@@ -87,9 +87,10 @@ function ProfilePage() {
               <PokemonListData
                 pokemonData={userPokemon}
                 creator={currentProfile}
+                axiosInstance={axiosFetch}
               />
             ) : (
-              <MoveListData moveData={userMoves} />
+              <MoveListData moveData={userMoves} mode="default" />
             )}
           </div>
         </div>

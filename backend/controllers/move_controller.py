@@ -1,7 +1,7 @@
 from flask import Blueprint, abort, request, jsonify
 from services.account_service import get_account_name
 from services.jwt_token_service import token_required
-from services.move_service import delete_move, get_all_moves, get_move_by_id, validate_data, add_move 
+from services.move_service import delete_move, get_all_moves, get_move_by_id, learnable_moves_by_pokemon, validate_data, add_move 
 
 move_bp = Blueprint("move_bp", __name__)
 
@@ -29,6 +29,13 @@ def manage_user_move(user_data):
         add_move(name, power, description, accuracy, pp, type, user_data.username)
 
         return jsonify({"message": "move successfully added!"})
+
+@move_bp.route("/user/move/learnable/<int:id>", methods=["GET"])
+def manage_learnable_move(id):
+    if request.method == "GET":
+        move_data = learnable_moves_by_pokemon(id)
+
+        return move_data
 
 # Get Move from other users
 @move_bp.route("/user/move/<string:username>", methods=["POST", "GET"])

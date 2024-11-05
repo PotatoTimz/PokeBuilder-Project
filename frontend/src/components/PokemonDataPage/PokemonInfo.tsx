@@ -37,7 +37,10 @@ function PokemonInfo() {
         <div className="row justify-content-center my-5">
           <div className="col-10">
             <div className="fs-4 mb-3">{pokemonInfo?.pokemon_name}'s Moves</div>
-            <MoveListData moveData={pokemonInfo?.pokemon_moves!} />
+            <MoveListData
+              moveData={pokemonInfo?.pokemon_moves!}
+              mode="default"
+            />
           </div>
         </div>
       </div>

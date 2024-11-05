@@ -1,12 +1,13 @@
 from models.account import Account
 from models.move import Move
 from models.type import Type
+from models.association_pokemon_move import PokemonMove
 
 from services.type_service import valid_type
 
 from extensions import db
 from flask import abort, jsonify
-from sqlalchemy import func
+from sqlalchemy import and_, func
 
 def get_all_moves(name, creator):
     moves = (db.session.query(Move, Account)
@@ -57,6 +58,36 @@ def get_move_by_id(id):
                 "type_name": db.session.query(Type).filter(Type.id==move.type_id).first().name
             } 
         }
+    )
+    
+    return move_data
+
+def learnable_moves_by_pokemon(id):
+    moves = (db.session.query(Move)
+            .with_entities(Move.id, Move.name, Account.username.label("creator"), Move.power, Move.description, Move.accuracy, Move.pp, Move.type_id)
+            .outerjoin(PokemonMove, and_(Move.id == PokemonMove.move_id, PokemonMove.pokemon_id == id)).
+            filter(PokemonMove.move_id == None)
+            .join(Account)
+            .all()
+            )
+        
+
+    move_data = jsonify(
+        [
+            {
+                "move_id": move[0],
+                "move_name": move[1],
+                "move_creator": move[2],
+                "move_power": move[3],
+                "move_description": move[4],
+                "move_accuracy": move[5],
+                "move_pp": move[6],
+                "type":{
+                    "type_id": move[7],
+                    "name": db.session.query(Type).filter(Type.id==move[7]).first().name
+                }
+            } for move in moves
+        ] 
     )
     
     return move_data

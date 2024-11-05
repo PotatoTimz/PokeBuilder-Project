@@ -47,3 +47,11 @@ export async function fetchPokemonByUser(
   }
   return [];
 }
+
+export async function deletePokemon(axiosInstance: Axios, pokemonId: string) {
+  try {
+    await axiosInstance.delete("pokemon/" + pokemonId);
+  } catch (error) {
+    console.log(error);
+  }
+}
