@@ -21,7 +21,7 @@ function PokemonBaseStats(props: Props) {
   return (
     <div className="row justify-content-center">
       <div className="col-11 pb-4 my-4 bg-white">
-        <div className="fs-3 text-center mt-2">Base Stats</div>
+        <div className="fs-3 text-center mt-2 fw-medium">Base Stats</div>
         <div className="fs-5 my-4">
           HP:{` (${props.pokemonInfo?.base_stats.hp})`}
           <ProgressBar
@@ -82,7 +82,7 @@ function PokemonBaseStats(props: Props) {
           ></ProgressBar>
         </div>
 
-        <div className="fs-4 fw-bold">Total:{` ${totalStats}`}</div>
+        <div className="fs-4 fw-medium">Total:{` ${totalStats}`}</div>
       </div>
     </div>
   );

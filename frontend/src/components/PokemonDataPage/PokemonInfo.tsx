@@ -6,7 +6,7 @@ import { fetchPokemonById } from "../../utilities/fetchPokemonInfo";
 import PokemonInfoCard from "./PokemonInfoCard";
 import PokemonBaseStats from "./PokemonBaseStats";
 import MoveListData from "../MoveListData";
-import PokemonCompare from "./PokemonCompare";
+import PokemonCompare from "./PokemonCompareComponents/PokemonCompare";
 
 function PokemonInfo() {
   const { id } = useParams();

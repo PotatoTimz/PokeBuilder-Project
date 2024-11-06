@@ -60,15 +60,18 @@ function EditPokemonMoves() {
     <>
       <div className="container-fluid">
         <div className="row justify-content-center mt-5 mb-3">
-          <div className="col-lg-8 col-md-10 col-sm-11 mx-4 bg-secondary">
+          <div className="col-lg-8 col-md-10 col-sm-11 mx-4 bg-secondary rounded-pill">
             <div className="row justify-content-center">
               <div className="col-lg-6 col-md-10 col-sm-11 p-4">
+                <div className="text-white fs-3 fw-medium text-center my-2">
+                  Move Editor
+                </div>
                 <div className="text-white fs-6 text-center my-2">
                   Good work creating your Pokemon! All that's left to do is to
                   add some moves on your pokemon. Once that is done you've
                   completed building your own pokemon!
                 </div>
-                <div className="text-white fs-6 text-center my-2">
+                <div className="text-white fs-6 text-center fw-medium mt-5">
                   All done? Let's take a look at what you just created!
                 </div>
                 <div className="text-center mt-3 mb-2">

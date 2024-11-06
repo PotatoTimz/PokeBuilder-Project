@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { ExtensivePokemonData } from "../../interfaces/PokemonInterfaces";
+import { ExtensivePokemonData } from "../../../interfaces/PokemonInterfaces";
 import PokemonCompareBlock from "./PokemonCompareBlock";
-import { fetchPokeAPI } from "../../utilities/fetchPokeAPI";
+import { fetchPokeAPI } from "../../../utilities/fetchPokeAPI";
 import { Axios } from "axios";
-import { fetchPokemonById } from "../../utilities/fetchPokemonInfo";
+import { fetchPokemonById } from "../../../utilities/fetchPokemonInfo";
 
 interface Props {
   axiosInstance: Axios;
@@ -50,18 +50,19 @@ function PokemonCompare(props: Props) {
   return (
     <>
       <div className="row justify-content-center bg-secondary mb-5">
-        <div className="col-8 py-1">
+        <div className="col-lg-8 col-md-9 col-12 py-1">
           <div className="text-center text-white fs-2 fw-bold">
             Compare Pokemon
           </div>
-          <div className="text-center text-white fs-6 mt-3">
-            Want to compare stat lines with other pokemon? You can compare{" "}
+          <div className="text-center text-white fs-5 mt-3 fw-medium">
+            Want to compare stat lines with other pokemon? What stats are
+            higher? Which are lower? Lets take a look! You can compare{" "}
             {props.pokemon?.pokemon_name} pokemon with other custom pokemon on
             the site or official pokemon!
           </div>
-          <div className="d-flex flex-row justify-content-center my-5">
+          <div className="d-flex flex-row justify-content-center my-5 ">
             <button
-              className={`btn btn-light mx-5 ${
+              className={`btn btn-light mx-5 fw-medium ${
                 compareMode !== "official" ? "disabled" : ""
               }`}
               onClick={(e) => setCompareMode("custom")}
@@ -69,7 +70,7 @@ function PokemonCompare(props: Props) {
               PokeBuilder
             </button>
             <button
-              className={`btn btn-light mx-5 ${
+              className={`btn btn-light mx-5 fw-medium ${
                 compareMode === "official" ? "disabled" : ""
               }`}
               onClick={(e) => setCompareMode("official")}

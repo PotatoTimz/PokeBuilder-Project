@@ -17,7 +17,7 @@ function Login() {
   const submitLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     await loginUser(username, password);
-    navigate("/");
+    await navigate("/");
   };
 
   return (
