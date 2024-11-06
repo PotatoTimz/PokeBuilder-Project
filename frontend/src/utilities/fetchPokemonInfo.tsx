@@ -13,7 +13,7 @@ export async function fetchPokemonById(
     const data: ExtensivePokemonData = await response.data;
     return data;
   } catch (error) {
-    console.log(error);
+    return "error";
   }
 }
 

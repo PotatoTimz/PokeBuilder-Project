@@ -6,6 +6,7 @@ import { fetchPokemonById } from "../../utilities/fetchPokemonInfo";
 import PokemonInfoCard from "./PokemonInfoCard";
 import PokemonBaseStats from "./PokemonBaseStats";
 import MoveListData from "../MoveListData";
+import PokemonCompare from "./PokemonCompare";
 
 function PokemonInfo() {
   const { id } = useParams();
@@ -27,10 +28,10 @@ function PokemonInfo() {
     <>
       <div className="container-fluid">
         <div className="row justify-content-center my-5">
-          <div className="col-lg-3 col-sm-11 mx-3" id="pokemonInfoCard">
+          <div className="col-lg-3 col-sm-11 mx-5" id="pokemonInfoCard">
             <PokemonInfoCard pokemonInfo={pokemonInfo!} />
           </div>
-          <div className="col-lg-5 col-sm-11 mx-3" id="pokemonInfoCard">
+          <div className="col-lg-5 col-sm-11 mx-5" id="pokemonInfoCard">
             <PokemonBaseStats pokemonInfo={pokemonInfo!} />
           </div>
         </div>
@@ -43,6 +44,7 @@ function PokemonInfo() {
             />
           </div>
         </div>
+        <PokemonCompare pokemon={pokemonInfo!} axiosInstance={axiosFetch} />
       </div>
     </>
   ) : (
