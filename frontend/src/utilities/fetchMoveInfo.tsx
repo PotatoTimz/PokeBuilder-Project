@@ -52,7 +52,7 @@ export async function fetchLearnableMoves(
   }
 }
 
-export async function addMove(
+export async function addMovePokemon(
   axiosInstance: Axios,
   pokemonId: string,
   moveName: string
@@ -66,7 +66,7 @@ export async function addMove(
   }
 }
 
-export async function deleteMove(
+export async function deleteMovePokemon(
   axiosInstance: Axios,
   pokemonId: string,
   moveName: string

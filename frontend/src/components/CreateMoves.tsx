@@ -1,11 +1,18 @@
 import { useContext, useEffect, useState } from "react";
 import { Move, Type } from "../interfaces/PokemonInterfaces";
 import { UserContext } from "../context/UserAuth";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { AxiosError } from "axios";
 import { fetchTypes } from "../utilities/fetchTypes";
+import { capitalizeFirstCharacter } from "../utilities/helpers";
+import { fetchMoveById } from "../utilities/fetchMoveInfo";
+
+interface Props {
+  updateMode: boolean;
+}
 
 function CreateMoves() {
+  const { id } = useParams();
   const { axiosFetch } = useContext(UserContext);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [types, setTypes] = useState<Type[]>([]);
@@ -25,7 +32,13 @@ function CreateMoves() {
       const response = await fetchTypes(axiosFetch);
       setTypes(response);
     }
+    async function getMoveData() {
+      const response = await fetchMoveById(axiosFetch, id as string);
+      console.log(response);
+      setMoveData({ ...response, type: response.type.type_name });
+    }
     getAllTypes();
+    getMoveData();
     setIsLoading(true);
   }, []);
 
@@ -62,6 +75,7 @@ function CreateMoves() {
               <div className="form-group my-3">
                 <label>Name</label>
                 <input
+                  value={moveData.move_name}
                   type="text"
                   className="form-control"
                   onChange={(e) =>
@@ -73,6 +87,7 @@ function CreateMoves() {
                 <label>Description</label>
                 <input
                   type="text"
+                  value={moveData.move_description}
                   className="form-control"
                   onChange={(e) =>
                     setMoveData({
@@ -86,6 +101,7 @@ function CreateMoves() {
                 <label>Power</label>
                 <input
                   type="number"
+                  value={moveData.move_power}
                   className="form-control"
                   onChange={(e) =>
                     setMoveData({
@@ -99,6 +115,7 @@ function CreateMoves() {
                 <label>Accuracy</label>
                 <input
                   type="number"
+                  value={moveData.move_accuracy}
                   className="form-control"
                   onChange={(e) =>
                     setMoveData({
@@ -112,6 +129,7 @@ function CreateMoves() {
                 <label>PP</label>
                 <input
                   type="number"
+                  value={moveData.move_pp}
                   className="form-control"
                   onChange={(e) =>
                     setMoveData({
@@ -125,6 +143,7 @@ function CreateMoves() {
                 <label>Type</label>
                 <select
                   className="form-control"
+                  value={moveData.type as string}
                   onChange={(e) =>
                     setMoveData({
                       ...moveData,
@@ -135,7 +154,7 @@ function CreateMoves() {
                   {types.map((type, index) => {
                     return (
                       <option value={`${type.name}`} key={index}>
-                        {type.name}
+                        {capitalizeFirstCharacter(type.name)}
                       </option>
                     );
                   })}

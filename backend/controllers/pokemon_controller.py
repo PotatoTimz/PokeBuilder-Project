@@ -70,9 +70,10 @@ def manage_other_user_pokemon(username):
         return jsonify(pokemon_data)
 
 # Add a new move to pokemon
-@token_required
 @pokemon_bp.route("/user/pokemon/<int:pokemon_id>/move", methods=["POST", "DELETE"])
+@token_required
 def manage_pokemon_moves(pokemon_id):
+    
     if request.method == "POST":
         data = request.json
         add_moves(data, pokemon_id)

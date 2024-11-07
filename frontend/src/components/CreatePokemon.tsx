@@ -2,7 +2,6 @@ import { useContext, useEffect, useState } from "react";
 import { ExtensivePokemonData, Type } from "../interfaces/PokemonInterfaces";
 import { UserContext } from "../context/UserAuth";
 import { useNavigate, useParams } from "react-router-dom";
-import { AxiosError } from "axios";
 import { fetchTypes } from "../utilities/fetchTypes";
 import { capitalizeFirstCharacter } from "../utilities/helpers";
 import {
@@ -17,7 +16,7 @@ interface Props {
 
 function CreatePokemon(props: Props) {
   const { id } = useParams();
-  const { axiosFetch, isLoggedIn } = useContext(UserContext);
+  const { axiosFetch } = useContext(UserContext);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [types, setTypes] = useState<Type[]>([]);
   const [pokemonData, setPokemonData] = useState<ExtensivePokemonData>({

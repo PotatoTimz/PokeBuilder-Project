@@ -46,6 +46,14 @@ function App() {
               }
             />
             <Route
+              path="/move/edit/:id"
+              element={
+                <ProtectedRoute>
+                  <CreateMoves />
+                </ProtectedRoute>
+              }
+            />
+            <Route
               path="/pokemon/edit/:id"
               element={
                 <ProtectedRoute>

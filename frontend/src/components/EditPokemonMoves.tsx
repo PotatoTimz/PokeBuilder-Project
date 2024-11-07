@@ -5,8 +5,8 @@ import { fetchPokemonById } from "../utilities/fetchPokemonInfo";
 import { UserContext } from "../context/UserAuth";
 import { Axios, AxiosError } from "axios";
 import {
-  addMove,
-  deleteMove,
+  addMovePokemon,
+  deleteMovePokemon,
   fetchLearnableMoves,
   fetchMoves,
 } from "../utilities/fetchMoveInfo";
@@ -42,7 +42,7 @@ function EditPokemonMoves() {
 
   const learnMove = async (moveName: string) => {
     setIsLoaded(false);
-    await addMove(axiosFetch, id as string, moveName);
+    await addMovePokemon(axiosFetch, id as string, moveName);
     await getPokemonData();
     await getLearnableMoves();
     await setIsLoaded(true);
@@ -50,7 +50,7 @@ function EditPokemonMoves() {
 
   const removeMove = async (moveName: string) => {
     setIsLoaded(false);
-    await deleteMove(axiosFetch, id as string, moveName);
+    await deleteMovePokemon(axiosFetch, id as string, moveName);
     await getPokemonData();
     await getLearnableMoves();
     await setIsLoaded(true);

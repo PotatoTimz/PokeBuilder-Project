@@ -2,7 +2,10 @@ import { useContext, useEffect, useState } from "react";
 import { Move, SimplePokemonData } from "../../interfaces/PokemonInterfaces";
 import { UserContext } from "../../context/UserAuth";
 import { fetchPokemonByUser } from "../../utilities/fetchPokemonInfo";
-import { fetchMoveByUser } from "../../utilities/fetchMoveInfo";
+import {
+  deleteMovePokemon,
+  fetchMoveByUser,
+} from "../../utilities/fetchMoveInfo";
 import { useParams } from "react-router-dom";
 import ProfileMessage from "./ProfileMessage";
 import PokemonListData from "../PokemonListData";
@@ -36,6 +39,11 @@ function ProfilePage() {
     };
     fetchUserInfo();
   }, []);
+
+  const removeMove = async (moveName: string) => {
+    setIsLoading(false);
+    await setIsLoading(true);
+  };
 
   return isLoading ? (
     <>
@@ -97,7 +105,7 @@ function ProfilePage() {
                 axiosInstance={axiosFetch}
               />
             ) : (
-              <MoveListData moveData={userMoves} mode="default" />
+              <MoveListData moveData={userMoves} mode="edit" />
             )}
           </div>
         </div>

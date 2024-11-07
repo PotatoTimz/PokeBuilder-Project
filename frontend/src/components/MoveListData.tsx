@@ -1,6 +1,6 @@
-import { useContext, useEffect, useState } from "react";
-import { Move, SimplePokemonData, Type } from "../interfaces/PokemonInterfaces";
+import { Move, Type } from "../interfaces/PokemonInterfaces";
 import { capitalizeFirstCharacter } from "../utilities/helpers";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   moveData: Move[];
@@ -10,6 +10,8 @@ interface Props {
 }
 
 function MoveListData(props: Props) {
+  const navigate = useNavigate();
+
   return (
     <table className="table" id="moveTable">
       <thead>
@@ -61,8 +63,27 @@ function MoveListData(props: Props) {
                         <i className="bi bi-plus-lg"></i>
                       </button>
                     </td>
+                  ) : props.mode == "delete" ? (
+                    <td className="text-center">
+                      <button
+                        className="button btn-danger"
+                        onClick={(e) => {
+                          props.removeMove!(move.move_name);
+                        }}
+                      >
+                        <i className="bi bi-trash3"></i>
+                      </button>
+                    </td>
                   ) : (
                     <td className="text-center">
+                      <button
+                        className="button btn-success"
+                        onClick={(e) => {
+                          navigate("/move/edit/" + move.move_id);
+                        }}
+                      >
+                        <i className="bi bi-pencil"></i>
+                      </button>
                       <button
                         className="button btn-danger"
                         onClick={(e) => {

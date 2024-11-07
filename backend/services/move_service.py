@@ -103,7 +103,7 @@ def validate_data(data):
 def add_move(name, power, description, accuracy, pp, type, username):
 
     if not valid_type(type):
-        abort(400, type, "not found")
+        abort(400, "Type not found. Invalid Input")
 
     account_id = Account.query.filter_by(username=username).first().id
     type_id = Type.query.filter(Type.name==type).first().id
@@ -111,6 +111,23 @@ def add_move(name, power, description, accuracy, pp, type, username):
     new_move = Move(name=name, account_id=account_id, power=power, description=description, accuracy=accuracy, pp=pp, type_id=type_id)
 
     db.session.add(new_move)
+    db.session.commit()
+    
+def update_move(id, name, power, description, accuracy, pp, type):
+    
+    if not valid_type(type):
+        abort(400, "Type not found. Invalid Input")
+    
+    current_move = Move.query.filter_by(id=id).first()
+    current_move.name = name
+    current_move.power = power
+    current_move.description = description
+    current_move.accuracy = accuracy
+    current_move.pp = pp
+    
+    type_id = Type.query.filter(Type.name==type).first().id
+    current_move.type_id = type_id
+    
     db.session.commit()
 
 def delete_move(id):
