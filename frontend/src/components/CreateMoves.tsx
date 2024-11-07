@@ -11,7 +11,7 @@ interface Props {
   updateMode: boolean;
 }
 
-function CreateMoves() {
+function CreateMoves(props: Props) {
   const { id } = useParams();
   const { axiosFetch } = useContext(UserContext);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -38,7 +38,9 @@ function CreateMoves() {
       setMoveData({ ...response, type: response.type.type_name });
     }
     getAllTypes();
-    getMoveData();
+    if (props.updateMode) {
+      getMoveData();
+    }
     setIsLoading(true);
   }, []);
 

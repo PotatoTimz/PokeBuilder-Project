@@ -79,3 +79,52 @@ export async function deleteMovePokemon(
     console.log(error);
   }
 }
+
+export async function createMove(
+  axiosInstance: Axios,
+  moveData: Move
+): Promise<any> {
+  try {
+    const response = await axiosInstance.post("user/move", {
+      name: moveData.move_name,
+      power: moveData.move_power,
+      description: moveData.move_description,
+      accuracy: moveData.move_accuracy,
+      pp: moveData.move_pp,
+      type: moveData.type,
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function updateMove(
+  axiosInstance: Axios,
+  moveId: string,
+  moveData: Move
+): Promise<any> {
+  try {
+    const response = await axiosInstance.put("user/move/" + moveId, {
+      data: {
+        name: moveData.move_name,
+        power: moveData.move_power,
+        description: moveData.move_description,
+        accuracy: moveData.move_accuracy,
+        pp: moveData.move_pp,
+        type: moveData.type,
+      },
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function deleteMove(axiosInstance: Axios, moveId: string) {
+  try {
+    await axiosInstance.delete("/user/pokemon/" + moveId);
+  } catch (error) {
+    console.log(error);
+  }
+}
