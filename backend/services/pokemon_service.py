@@ -9,7 +9,7 @@ from services.type_service import valid_type
 from services.move_service import valid_move
 
 from extensions import db
-from flask import abort, jsonify
+from flask import abort
 from sqlalchemy import func
 
 def get_all_pokemons(name, creator, checkUser):
@@ -22,6 +22,7 @@ def get_all_pokemons(name, creator, checkUser):
                             .filter(Account.username.like(creator + "%"))
                             .join(PokemonType)
                             .group_by(Pokemon.name)
+                            .order_by(Pokemon.id)
                             .all()
                 )
     else:
@@ -32,10 +33,11 @@ def get_all_pokemons(name, creator, checkUser):
                     .filter(Account.username == creator)
                     .join(PokemonType)
                     .group_by(Pokemon.name)
+                    .order_by(Pokemon.id)
                     .all()
         )
 
-    pokemon_data = jsonify(
+    pokemon_data = (
         [
             {
                 "pokemon_id": pokemon[0], 
@@ -82,25 +84,25 @@ def get_pokemon_by_id(id):
                 }
                 for type in db.session.query(Type).join(PokemonType).join(Pokemon).filter(PokemonType.pokemon_id==id).all()
                 ],
-                "pokemon_moves": [
-                    {
-                        "move_id": move.id,
-                        "move_name": move.name,
-                        "move_power": move.power,
-                        "move_description": move.description,
-                        "move_accuracy": move.accuracy,
-                        "move_pp": move.pp,
-                        "type":{
-                            "type_id": move.type_id,
-                            "name": db.session.query(Type).filter(Type.id==move.type_id).first().name
-                        }
+            "pokemon_moves": [
+                {
+                    "move_id": move.id,
+                    "move_name": move.name,
+                    "move_power": move.power,
+                    "move_description": move.description,
+                    "move_accuracy": move.accuracy,
+                    "move_pp": move.pp,
+                    "type":{
+                        "type_id": move.type_id,
+                        "name": db.session.query(Type).filter(Type.id==move.type_id).first().name
                     }
-                    for move in db.session.query(Move).join(PokemonMove).join(Pokemon).filter(PokemonMove.pokemon_id==id).all()
-                ]
+                }
+                for move in db.session.query(Move).join(PokemonMove).join(Pokemon).filter(PokemonMove.pokemon_id==id).all()
+            ]
         } 
     )
 
-    return jsonify(pokemon_data)
+    return pokemon_data
 
 def validate_data(data):
     if not data or not data.get("types") or not data.get("name") or not data.get("image") or not data.get("hp") or not data.get("attack") or not data.get("defense") or not data.get("sp_attack") or not data.get("sp_defense") or not data.get("speed"):
@@ -140,8 +142,9 @@ def is_created_by_user(pokemon_id, username):
 
 def update_pokemon(types, name, image, pokemon_id, hp, attack, defense, sp_attack, sp_defense, speed): 
     for type in types:
-        if not valid_type(type):
-            abort(400, type, "not found")
+        if type != "":
+            if not valid_type(type):
+                abort(400, "Type not found")
 
     updated_pokemon = Pokemon.query.filter_by(id=pokemon_id).first()
     updated_pokemon.name = name
@@ -162,8 +165,9 @@ def update_pokemon(types, name, image, pokemon_id, hp, attack, defense, sp_attac
 
     pokemonType = []
     for type in types:
-        type_id = Type.query.filter_by(name=type).first().id
-        pokemonType.append(PokemonType(pokemon_id=updated_pokemon.id, type_id=type_id))
+            if type != "":
+                type_id = Type.query.filter_by(name=type).first().id
+                pokemonType.append(PokemonType(pokemon_id=updated_pokemon.id, type_id=type_id))
     
     db.session.add_all(pokemonType)
     db.session.commit()

@@ -3,18 +3,18 @@ import { Move, SimplePokemonData } from "../../interfaces/PokemonInterfaces";
 import { UserContext } from "../../context/UserAuth";
 import { fetchPokemonByUser } from "../../utilities/fetchPokemonInfo";
 import { fetchMoveByUser } from "../../utilities/fetchMoveInfo";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import ProfileMessage from "./ProfileMessage";
 import PokemonListData from "../PokemonListData";
 import MoveListData from "../MoveListData";
 
 function ProfilePage() {
-  const { userId } = useParams();
+  const { profileName } = useParams();
   const { axiosFetch, username } = useContext(UserContext);
 
   // Check if we are on the currently logged in profile
   let currentProfile: boolean;
-  if (username == userId) {
+  if (username == profileName) {
     currentProfile = true;
   } else {
     currentProfile = false;
@@ -27,10 +27,10 @@ function ProfilePage() {
 
   useEffect(() => {
     const fetchUserInfo = async () => {
-      const response = await fetchPokemonByUser(axiosFetch, userId!);
+      const response = await fetchPokemonByUser(axiosFetch, profileName!);
       console.log(response);
       setUserPokemon(response);
-      const response2 = await fetchMoveByUser(axiosFetch, userId!);
+      const response2 = await fetchMoveByUser(axiosFetch, profileName!);
       setUserMoves(response2);
       setIsLoading(true);
     };
@@ -41,11 +41,18 @@ function ProfilePage() {
     <>
       <div className="container-fluid">
         <div className="row justify-content-center mt-5 mb-3">
+          <div className="col-11">
+            <div className="text-center fs-3 fw-medium border-bottom">
+              {profileName}'s Profile
+            </div>
+          </div>
+        </div>
+        <div className="row justify-content-center mt-5 mb-3">
           {currentProfile ? (
             <ProfileMessage
               pokemonCreated={userPokemon.length}
               movesCreated={userMoves.length}
-              profileName={userId!}
+              profileName={profileName!}
             />
           ) : null}
         </div>
@@ -77,7 +84,7 @@ function ProfilePage() {
         <div className="row justify-content-center mb-5">
           <div className="col-lg-11 mx-4">
             <div className="row fs-4 fw-bold">
-              {userId}'s {displayState}
+              {profileName}'s {displayState}
             </div>
           </div>
         </div>

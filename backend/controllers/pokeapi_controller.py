@@ -1,5 +1,8 @@
+from collections import defaultdict
 from flask import Blueprint, abort, request, jsonify
 import requests, json
+
+from services.pokemon_service import get_pokemon_by_id
 
 pokeapi_bp = Blueprint("pokeapi_bp", __name__)
 
@@ -25,3 +28,42 @@ def get_pokemon_info(pokemon):
                 "name": type.get("type").get("name")
             }for type in data.get("types")]
         })
+    
+@pokeapi_bp.route("/pokeapi/pokemon/<string:pokemon>/typechart", methods=["GET"])
+def get_pokemon_typechart(pokemon):
+    if request.method == "GET":
+        pokemon_data = get_pokemon_by_id(pokemon)
+
+        types = ['bug', 'dark', 'dragon', 'electric', 'fairy', 'fighting', 'fire', 'flying', 'ghost', 'grass', 'ground', 'ice', 'normal', 'poison', 'psychic', 'rock', 'steel', 'water']
+        type_chart = {type: 1 for type in types}
+
+        for type in pokemon_data.get("pokemon_types"):
+            res = requests.get("https://pokeapi.co/api/v2/type/" + type.get("name"))
+            data = res.json().get("damage_relations")
+
+            for t in data.get("double_damage_from"):
+                type_chart[t.get("name")] = type_chart[t.get("name")] * 2
+            
+            for t in data.get("half_damage_from"):
+                type_chart[t.get("name")] = type_chart[t.get("name")] * 0.5
+
+            for t in data.get("no_damage_from"):
+                type_chart[t.get("name")] = type_chart[t.get("name")] * 0
+
+        damage_taken_chart = defaultdict(list)
+
+        for type in type_chart:
+            if type_chart[type] == 0:
+                damage_taken_chart["0"].append(type)
+            elif type_chart[type] == 1/4:
+                damage_taken_chart["1/4"].append(type)
+            elif type_chart[type] == 1/2:
+                damage_taken_chart["1/2"].append(type)
+            elif type_chart[type] == 1:
+                damage_taken_chart["1"].append(type)
+            elif type_chart[type] == 2:
+                damage_taken_chart["2"].append(type)
+            elif type_chart[type] == 4:
+                damage_taken_chart["4"].append(type)
+
+        return jsonify({"type_chart": damage_taken_chart})

@@ -30,7 +30,7 @@ function App() {
             <Route path="/pokemon" element={<SearchPokemon />} />
             <Route path="/move" element={<SearchMove />} />
             <Route
-              path="/user/:userId"
+              path="/user/:profileName"
               element={
                 <ProtectedRoute>
                   <UserPage />
@@ -46,10 +46,18 @@ function App() {
               }
             />
             <Route
+              path="/pokemon/edit/:id"
+              element={
+                <ProtectedRoute>
+                  <CreatePokemon updateMode={true} />
+                </ProtectedRoute>
+              }
+            />
+            <Route
               path="/pokemon/create"
               element={
                 <ProtectedRoute>
-                  <CreatePokemon />
+                  <CreatePokemon updateMode={false} />
                 </ProtectedRoute>
               }
             />

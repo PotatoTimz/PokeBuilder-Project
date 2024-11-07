@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { ExtensivePokemonData } from "../../../interfaces/PokemonInterfaces";
 import PokemonCompareBlock from "./PokemonCompareBlock";
-import { fetchPokeAPI } from "../../../utilities/fetchPokeAPI";
+import { fetchPokemonPokeAPI } from "../../../utilities/fetchPokeAPI";
 import { Axios } from "axios";
 import { fetchPokemonById } from "../../../utilities/fetchPokemonInfo";
 
@@ -22,7 +22,10 @@ function PokemonCompare(props: Props) {
   const getOfficialPokemon = async () => {
     setDoneLoading(false);
     setSearchError(false);
-    const response = await fetchPokeAPI(props.axiosInstance, pokemonQuery);
+    const response = await fetchPokemonPokeAPI(
+      props.axiosInstance,
+      pokemonQuery
+    );
     if (response == "error") {
       setSearchError(true);
     } else {
@@ -51,16 +54,16 @@ function PokemonCompare(props: Props) {
     <>
       <div className="row justify-content-center bg-secondary mb-5">
         <div className="col-lg-8 col-md-9 col-12 py-1">
-          <div className="text-center text-white fs-2 fw-bold">
+          <div className="text-center text-white fs-2 fw-light">
             Compare Pokemon
           </div>
-          <div className="text-center text-white fs-5 mt-3 fw-medium">
+          <div className="text-center text-white fs-5 mt-3 fw-light">
             Want to compare stat lines with other pokemon? What stats are
             higher? Which are lower? Lets take a look! You can compare{" "}
             {props.pokemon?.pokemon_name} pokemon with other custom pokemon on
             the site or official pokemon!
           </div>
-          <div className="d-flex flex-row justify-content-center my-5 ">
+          <div className="d-flex flex-row justify-content-center my-3">
             <button
               className={`btn btn-light mx-5 fw-medium ${
                 compareMode !== "official" ? "disabled" : ""

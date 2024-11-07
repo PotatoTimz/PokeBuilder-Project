@@ -45,6 +45,12 @@ export interface PokemonSearchQuery {
   creator: string;
 }
 
+export interface TypeChart {
+  type_chart: {
+    [key: string]: string[];
+  };
+}
+
 const defaultBaseStats: BaseStats = {
   hp: 0,
   attack: 0,

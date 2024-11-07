@@ -1,12 +1,22 @@
 import { useContext, useEffect, useState } from "react";
 import { ExtensivePokemonData, Type } from "../interfaces/PokemonInterfaces";
 import { UserContext } from "../context/UserAuth";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { AxiosError } from "axios";
 import { fetchTypes } from "../utilities/fetchTypes";
 import { capitalizeFirstCharacter } from "../utilities/helpers";
+import {
+  createPokemon,
+  fetchPokemonById,
+  updatePokemon,
+} from "../utilities/fetchPokemonInfo";
 
-function CreatePokemon() {
+interface Props {
+  updateMode: boolean;
+}
+
+function CreatePokemon(props: Props) {
+  const { id } = useParams();
   const { axiosFetch, isLoggedIn } = useContext(UserContext);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [types, setTypes] = useState<Type[]>([]);
@@ -33,32 +43,36 @@ function CreatePokemon() {
       const response = await fetchTypes(axiosFetch);
       setTypes(response);
     }
-
+    async function getPokemonData() {
+      const response = await fetchPokemonById(axiosFetch, id as string);
+      setPokemonData({
+        ...response,
+        pokemon_types: [
+          response.pokemon_types[0].name,
+          response.pokemon_types && response.pokemon_types[1]
+            ? response.pokemon_types[1].name
+            : "",
+        ],
+      });
+      console.log(response);
+    }
     getAllTypes();
+    if (props.updateMode) {
+      getPokemonData();
+    }
     setIsLoading(true);
   }, []);
 
   const submitPokemon = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    axiosFetch
-      .post("/user/pokemon", {
-        name: pokemonData.pokemon_name,
-        types: pokemonData.pokemon_types,
-        image: pokemonData.pokemon_image,
-        hp: pokemonData.base_stats.hp,
-        attack: pokemonData.base_stats.attack,
-        defense: pokemonData.base_stats.defense,
-        sp_attack: pokemonData.base_stats.sp_attack,
-        sp_defense: pokemonData.base_stats.sp_defense,
-        speed: pokemonData.base_stats.speed,
-      })
-      .then((response) => {
-        navigate("/pokemon/create/" + response.data.id);
-      })
-      .catch((err: AxiosError) => {
-        console.log(err.response);
-      });
+    if (!props.updateMode) {
+      const response = await createPokemon(axiosFetch, pokemonData);
+      navigate("/pokemon/create/" + response.data.id);
+    } else {
+      await updatePokemon(axiosFetch, pokemonData, id as string);
+      navigate(("/pokemon/" + id) as string);
+    }
   };
 
   return isLoading ? (
@@ -66,7 +80,11 @@ function CreatePokemon() {
       <div className="container-fluid">
         <div className="row fs-3 justify-content-center ">
           <div className="col-lg-6">
-            <div className="text-center fw-bold mt-3">Create Your Pokemon!</div>
+            <div className="text-center fw-bold mt-3">
+              {props.updateMode
+                ? "Update Your Pokemon!"
+                : "Create Your Pokemon!"}
+            </div>
           </div>
         </div>
         <div className="row justify-content-center mt-1 mb-5">
@@ -78,6 +96,7 @@ function CreatePokemon() {
                 <input
                   type="text"
                   className="form-control"
+                  value={pokemonData.pokemon_name}
                   onChange={(e) =>
                     setPokemonData({
                       ...pokemonData,
@@ -91,6 +110,7 @@ function CreatePokemon() {
                 <input
                   type="text"
                   className="form-control"
+                  value={pokemonData.pokemon_image}
                   onChange={(e) =>
                     setPokemonData({
                       ...pokemonData,
@@ -107,6 +127,7 @@ function CreatePokemon() {
                     <label>Type 1</label>
                     <select
                       className="form-control"
+                      value={pokemonData.pokemon_types[0] as string}
                       onChange={(e) => {
                         setPokemonData({
                           ...pokemonData,
@@ -133,6 +154,7 @@ function CreatePokemon() {
                     <label>Type 2</label>
                     <select
                       className="form-control"
+                      value={pokemonData.pokemon_types[1] as string}
                       onChange={(e) => {
                         setPokemonData({
                           ...pokemonData,
@@ -147,7 +169,7 @@ function CreatePokemon() {
                       {types.map((type, index) => {
                         return (
                           <option value={`${type.name}`} key={index}>
-                            {type.name}
+                            {capitalizeFirstCharacter(type.name)}
                           </option>
                         );
                       })}
@@ -162,6 +184,7 @@ function CreatePokemon() {
                 <input
                   type="number"
                   className="form-control"
+                  value={pokemonData.base_stats.hp}
                   onChange={(e) =>
                     setPokemonData({
                       ...pokemonData,
@@ -178,6 +201,7 @@ function CreatePokemon() {
                 <input
                   type="number"
                   className="form-control"
+                  value={pokemonData.base_stats.attack}
                   onChange={(e) =>
                     setPokemonData({
                       ...pokemonData,
@@ -194,6 +218,7 @@ function CreatePokemon() {
                 <input
                   type="number"
                   className="form-control"
+                  value={pokemonData.base_stats.defense}
                   onChange={(e) =>
                     setPokemonData({
                       ...pokemonData,
@@ -210,6 +235,7 @@ function CreatePokemon() {
                 <input
                   type="number"
                   className="form-control"
+                  value={pokemonData.base_stats.sp_attack}
                   onChange={(e) =>
                     setPokemonData({
                       ...pokemonData,
@@ -226,6 +252,7 @@ function CreatePokemon() {
                 <input
                   type="number"
                   className="form-control"
+                  value={pokemonData.base_stats.sp_defense}
                   onChange={(e) =>
                     setPokemonData({
                       ...pokemonData,
@@ -242,6 +269,7 @@ function CreatePokemon() {
                 <input
                   type="number"
                   className="form-control"
+                  value={pokemonData.base_stats.speed}
                   onChange={(e) =>
                     setPokemonData({
                       ...pokemonData,
@@ -258,6 +286,7 @@ function CreatePokemon() {
                   className="form-control btn btn-primary"
                   type="submit"
                   onClick={submitPokemon}
+                  value={props.updateMode ? "Update" : "Create"}
                 />
               </div>
             </form>

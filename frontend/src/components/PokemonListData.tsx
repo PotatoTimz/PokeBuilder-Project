@@ -72,17 +72,30 @@ function PokemonListData(props: Props) {
               <div className="d-flex flex-row justify-content-center">
                 <button
                   type="button"
-                  className="btn btn-info mx-4"
+                  title="Edit Pokemon"
+                  className="btn btn-primary mx-4"
                   onClick={(e) => {
                     e.stopPropagation();
-                    navigate("/pokemon/create/" + pokemon.pokemon_id);
+                    navigate("/pokemon/edit/" + pokemon.pokemon_id);
                   }}
                 >
                   <i className="bi bi-pencil"></i>
                 </button>
                 <button
                   type="button"
+                  title="Edit Moveset"
+                  className="btn btn-success mx-4"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigate("/pokemon/create/" + pokemon.pokemon_id);
+                  }}
+                >
+                  <i className="bi bi-journal"></i>
+                </button>
+                <button
+                  type="button"
                   className="btn btn-danger mx-4"
+                  title="Delete Pokemon"
                   onClick={(e) => {
                     e.stopPropagation();
                     deletePokemon(

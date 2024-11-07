@@ -14,17 +14,17 @@ def manage_pokemon():
         
         pokemon_data = get_all_pokemons(name, creator, False)
         
-        return pokemon_data
+        return jsonify(pokemon_data)
     
 # Get pokemon from id
 @pokemon_bp.route("/pokemon/<int:pokemon_id>", methods=["GET"])
 def manage_by_id_pokemon(pokemon_id):
     if request.method == "GET":
         pokemon_data = get_pokemon_by_id(pokemon_id)
-        return  pokemon_data
+        return  jsonify(pokemon_data)
     
 # Update and Delete Pokemon
-@pokemon_bp.route("/pokemon/<int:pokemon_id>", methods=["PUT", "DELETE"])
+@pokemon_bp.route("/user/pokemon/<int:pokemon_id>", methods=["PUT", "DELETE"])
 @token_required
 def modify_delete_pokemon(user_data, pokemon_id):
     if request.method == "PUT":
@@ -32,9 +32,9 @@ def modify_delete_pokemon(user_data, pokemon_id):
             abort(400, "You cannot edit a pokemon you didn't create")
 
         data = request.json
-        types, name, image = validate_data(data)
+        types, name, image, hp, attack, defense, sp_attack, sp_defense, speed = validate_data(data)
 
-        update_pokemon(types, name, image, pokemon_id)
+        update_pokemon(types, name, image, pokemon_id, hp, attack, defense, sp_attack, sp_defense, speed )
 
         return jsonify({"message": "pokemon successfully updated!"})
     if request.method == "DELETE":
@@ -50,6 +50,7 @@ def manage_user_pokemon(user_data):
         # Check user body
         data = request.json
         types, name, image, hp, attack, defense, sp_attack, sp_defense, speed = validate_data(data)
+
         # Check if types are valid
         id = add_pokemon(types, name, image, user_data.username, hp, attack, defense, sp_attack, sp_defense, speed)
 
@@ -59,14 +60,14 @@ def manage_user_pokemon(user_data):
         print(user_data.username)
         pokemon_data = get_all_pokemons("", user_data.username, True)
 
-        return pokemon_data
+        return jsonify(pokemon_data)
     
 # Get pokemon from other users
 @pokemon_bp.route("/user/pokemon/<string:username>", methods=["GET"])
 def manage_other_user_pokemon(username):
     if request.method == "GET":
         pokemon_data = get_all_pokemons("", username, True)
-        return pokemon_data
+        return jsonify(pokemon_data)
 
 # Add a new move to pokemon
 @token_required

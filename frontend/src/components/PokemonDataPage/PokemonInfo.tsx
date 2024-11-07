@@ -7,6 +7,7 @@ import PokemonInfoCard from "./PokemonInfoCard";
 import PokemonBaseStats from "./PokemonBaseStats";
 import MoveListData from "../MoveListData";
 import PokemonCompare from "./PokemonCompareComponents/PokemonCompare";
+import PokemonTypeChart from "./PokemonTypeChart";
 
 function PokemonInfo() {
   const { id } = useParams();
@@ -44,6 +45,7 @@ function PokemonInfo() {
             />
           </div>
         </div>
+        <PokemonTypeChart id={id as string} axiosFetch={axiosFetch} />
         <PokemonCompare pokemon={pokemonInfo!} axiosInstance={axiosFetch} />
       </div>
     </>

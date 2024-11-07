@@ -21,5 +21,5 @@ def create_type(name):
     return jsonify({"id": new_type.id, "name": new_type.name})
 
 def get_all_types():
-    types = Type.query.all()
+    types = Type.query.order_by(Type.name).all()
     return jsonify([{"id": type.id, "name": type.name} for type in types])
