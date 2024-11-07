@@ -47,7 +47,6 @@ def manage_other_user_move(username):
 
     
 @move_bp.route("/move/<int:move_id>", methods=["GET"])
-@token_required
 def manage_moves_by_id(move_id):
     if request.method == "GET":
         move_data = get_move_by_id(move_id)

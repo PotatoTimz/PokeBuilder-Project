@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
-import { SimplePokemonData } from "../interfaces/PokemonInterfaces";
-import { fetchAllPokemon } from "../utilities/fetchPokemonInfo";
-import { UserContext } from "../context/UserAuth";
+import { UserContext } from "../../context/UserAuth";
+import { SimplePokemonData } from "../../interfaces/PokemonInterfaces";
+import { fetchAllPokemon } from "../../utilities/fetchPokemonInfo";
 
 function Home() {
   const { axiosFetch } = useContext(UserContext);

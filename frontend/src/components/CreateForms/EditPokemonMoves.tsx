@@ -1,16 +1,14 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { ExtensivePokemonData, Move } from "../interfaces/PokemonInterfaces";
-import { fetchPokemonById } from "../utilities/fetchPokemonInfo";
-import { UserContext } from "../context/UserAuth";
-import { Axios, AxiosError } from "axios";
+import { UserContext } from "../../context/UserAuth";
+import { ExtensivePokemonData, Move } from "../../interfaces/PokemonInterfaces";
 import {
+  fetchLearnableMoves,
   addMovePokemon,
   deleteMovePokemon,
-  fetchLearnableMoves,
-  fetchMoves,
-} from "../utilities/fetchMoveInfo";
-import MoveListData from "./MoveListData";
+} from "../../utilities/fetchMoveInfo";
+import { fetchPokemonById } from "../../utilities/fetchPokemonInfo";
+import MoveListData from "../DisplayData/MoveListData";
 
 function EditPokemonMoves() {
   const { axiosFetch } = useContext(UserContext);
@@ -97,7 +95,7 @@ function EditPokemonMoves() {
               </div>
               <MoveListData
                 moveData={pokemonData?.pokemon_moves!}
-                mode="delete"
+                mode="delete_pokemon"
                 removeMove={removeMove}
               />
             </div>
@@ -111,7 +109,7 @@ function EditPokemonMoves() {
               </div>
               <MoveListData
                 moveData={learnableMoveData}
-                mode="add"
+                mode="add_pokemon"
                 learnMove={learnMove}
               />
             </div>

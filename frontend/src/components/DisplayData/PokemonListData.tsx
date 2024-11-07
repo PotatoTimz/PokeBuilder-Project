@@ -1,8 +1,8 @@
-import { Type, SimplePokemonData } from "../interfaces/PokemonInterfaces";
+import { Type, SimplePokemonData } from "../../interfaces/PokemonInterfaces";
 import { useNavigate } from "react-router-dom";
-import { capitalizeFirstCharacter } from "../utilities/helpers";
+import { capitalizeFirstCharacter } from "../../utilities/helpers";
 import axios, { Axios } from "axios";
-import { deletePokemon } from "../utilities/fetchPokemonInfo";
+import { deletePokemon } from "../../utilities/fetchPokemonInfo";
 
 interface Props {
   pokemonData: SimplePokemonData[];

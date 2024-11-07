@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from "react";
-import { Move, SimplePokemonData, Type } from "../interfaces/PokemonInterfaces";
-import { UserContext } from "../context/UserAuth";
 import { useNavigate } from "react-router-dom";
-import { fetchMoves } from "../utilities/fetchMoveInfo";
-import MoveListData from "./MoveListData";
+import { UserContext } from "../../context/UserAuth";
+import { Move } from "../../interfaces/PokemonInterfaces";
+import { fetchMoves } from "../../utilities/fetchMoveInfo";
+import MoveListData from "../DisplayData/MoveListData";
 
 function SearchPokemon() {
   const { axiosFetch } = useContext(UserContext);

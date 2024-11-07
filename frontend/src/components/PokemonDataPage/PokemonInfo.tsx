@@ -5,7 +5,7 @@ import { UserContext } from "../../context/UserAuth";
 import { fetchPokemonById } from "../../utilities/fetchPokemonInfo";
 import PokemonInfoCard from "./PokemonInfoCard";
 import PokemonBaseStats from "./PokemonBaseStats";
-import MoveListData from "../MoveListData";
+import MoveListData from "../DisplayData/MoveListData";
 import PokemonCompare from "./PokemonCompareComponents/PokemonCompare";
 import PokemonTypeChart from "./PokemonTypeChart";
 

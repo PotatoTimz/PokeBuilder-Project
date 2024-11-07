@@ -1,28 +1,31 @@
 import { useContext, useEffect, useState } from "react";
-import { Move, Type } from "../interfaces/PokemonInterfaces";
-import { UserContext } from "../context/UserAuth";
+import { Move, Type } from "../../interfaces/PokemonInterfaces";
+import { UserContext } from "../../context/UserAuth";
 import { useNavigate, useParams } from "react-router-dom";
-import { AxiosError } from "axios";
-import { fetchTypes } from "../utilities/fetchTypes";
-import { capitalizeFirstCharacter } from "../utilities/helpers";
-import { fetchMoveById } from "../utilities/fetchMoveInfo";
+import { fetchTypes } from "../../utilities/fetchTypes";
+import { capitalizeFirstCharacter } from "../../utilities/helpers";
+import {
+  createMove,
+  fetchMoveById,
+  updateMove,
+} from "../../utilities/fetchMoveInfo";
 
 interface Props {
   updateMode: boolean;
 }
 
 function CreateMoves(props: Props) {
-  const { id } = useParams();
+  const { id, username } = useParams();
   const { axiosFetch } = useContext(UserContext);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [types, setTypes] = useState<Type[]>([]);
   const [moveData, setMoveData] = useState<Move>({
     move_id: 0,
-    move_accuracy: 0,
+    move_accuracy: 1,
     move_description: "",
     move_name: "",
     move_power: 0,
-    move_pp: 0,
+    move_pp: 1,
     type: "normal",
   });
   const navigate = useNavigate();
@@ -34,9 +37,13 @@ function CreateMoves(props: Props) {
     }
     async function getMoveData() {
       const response = await fetchMoveById(axiosFetch, id as string);
-      console.log(response);
       setMoveData({ ...response, type: response.type.type_name });
+
+      if (username != response.move_creator) {
+        navigate("/");
+      }
     }
+
     getAllTypes();
     if (props.updateMode) {
       getMoveData();
@@ -46,39 +53,31 @@ function CreateMoves(props: Props) {
 
   const submitMove = async (e: React.FormEvent) => {
     e.preventDefault();
-    axiosFetch
-      .post("user/move", {
-        name: moveData.move_name,
-        power: moveData.move_power,
-        description: moveData.move_description,
-        accuracy: moveData.move_accuracy,
-        pp: moveData.move_pp,
-        type: moveData.type,
-      })
-      .then((response) => {
-        navigate("/");
-      })
-      .catch((err: AxiosError) => {
-        console.log(err.response);
-      });
+    if (props.updateMode) {
+      await updateMove(axiosFetch, id as string, moveData);
+      navigate("/move");
+    } else {
+      await createMove(axiosFetch, moveData);
+      navigate("/move");
+    }
   };
 
   return isLoading ? (
     <>
-      <div className="container-fluid">
-        <div className="row fs-3 justify-content-center ">
-          <div className="col-lg-6">
-            <div className="text-center fw-bold mt-3">Create Your Move!</div>
-          </div>
-        </div>
-        <div className="row justify-content-center mt-1 mb-5">
-          <div className="col-lg-6">
+      <div className="container-fluid bg-gradient py-5">
+        <div className="row justify-content-center mt-1 py-5">
+          <div className="col-lg-6 bg-light shadow-sm card px-5 py-3">
+            <div className="text-center fw-bold fs-1 mt-3">
+              Create Your Move!
+            </div>
+
             <form>
               <div className="form-group my-3">
                 <label>Name</label>
                 <input
                   value={moveData.move_name}
                   type="text"
+                  maxLength={20}
                   className="form-control"
                   onChange={(e) =>
                     setMoveData({ ...moveData, move_name: e.target.value })
@@ -90,6 +89,7 @@ function CreateMoves(props: Props) {
                 <input
                   type="text"
                   value={moveData.move_description}
+                  maxLength={200}
                   className="form-control"
                   onChange={(e) =>
                     setMoveData({
@@ -104,6 +104,8 @@ function CreateMoves(props: Props) {
                 <input
                   type="number"
                   value={moveData.move_power}
+                  max={200}
+                  min={0}
                   className="form-control"
                   onChange={(e) =>
                     setMoveData({
@@ -118,6 +120,8 @@ function CreateMoves(props: Props) {
                 <input
                   type="number"
                   value={moveData.move_accuracy}
+                  max={100}
+                  min={1}
                   className="form-control"
                   onChange={(e) =>
                     setMoveData({
@@ -132,6 +136,8 @@ function CreateMoves(props: Props) {
                 <input
                   type="number"
                   value={moveData.move_pp}
+                  max={50}
+                  min={1}
                   className="form-control"
                   onChange={(e) =>
                     setMoveData({

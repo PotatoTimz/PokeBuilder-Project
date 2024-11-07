@@ -1,6 +1,9 @@
-import { Move, Type } from "../interfaces/PokemonInterfaces";
-import { capitalizeFirstCharacter } from "../utilities/helpers";
+import { Move, Type } from "../../interfaces/PokemonInterfaces";
+import { capitalizeFirstCharacter } from "../../utilities/helpers";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { UserContext } from "../../context/UserAuth";
+import { deleteMove } from "../../utilities/fetchMoveInfo";
 
 interface Props {
   moveData: Move[];
@@ -10,12 +13,14 @@ interface Props {
 }
 
 function MoveListData(props: Props) {
+  const { axiosFetch } = useContext(UserContext);
   const navigate = useNavigate();
 
   return (
     <table className="table" id="moveTable">
       <thead>
         <tr className="table-secondary">
+          <th>#</th>
           <th scope="col">Name</th>
           <th className="text-center" scope="col">
             Type
@@ -43,6 +48,7 @@ function MoveListData(props: Props) {
             const curr_type: Type = move.type as Type;
             return (
               <tr key={i} className="table-light">
+                <td>{move.move_id}</td>
                 <td>{move.move_name}</td>
                 <td id="pokemonType" className={`bg-${curr_type.name} px-3`}>
                   {capitalizeFirstCharacter(curr_type.name)}
@@ -52,7 +58,7 @@ function MoveListData(props: Props) {
                 <td className="text-center">{move.move_pp}</td>
                 <td>{move.move_description}</td>
                 {props.mode != "default" ? (
-                  props.mode == "add" ? (
+                  props.mode == "add_pokemon" ? (
                     <td className="text-center">
                       <button
                         className="button btn-success"
@@ -63,7 +69,7 @@ function MoveListData(props: Props) {
                         <i className="bi bi-plus-lg"></i>
                       </button>
                     </td>
-                  ) : props.mode == "delete" ? (
+                  ) : props.mode == "delete_pokemon" ? (
                     <td className="text-center">
                       <button
                         className="button btn-danger"
@@ -87,7 +93,8 @@ function MoveListData(props: Props) {
                       <button
                         className="button btn-danger"
                         onClick={(e) => {
-                          props.removeMove!(move.move_name);
+                          deleteMove(axiosFetch, move.move_id.toString());
+                          navigate(0);
                         }}
                       >
                         <i className="bi bi-trash3"></i>

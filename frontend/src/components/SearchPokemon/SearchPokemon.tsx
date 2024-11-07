@@ -1,13 +1,12 @@
 import { useContext, useEffect, useState } from "react";
-import {
-  PokemonSearchQuery,
-  SimplePokemonData,
-  Type,
-} from "../interfaces/PokemonInterfaces";
-import { UserContext } from "../context/UserAuth";
 import { useNavigate } from "react-router-dom";
-import PokemonListData from "./PokemonListData";
-import { fetchAllPokemon } from "../utilities/fetchPokemonInfo";
+import { UserContext } from "../../context/UserAuth";
+import {
+  SimplePokemonData,
+  PokemonSearchQuery,
+} from "../../interfaces/PokemonInterfaces";
+import { fetchAllPokemon } from "../../utilities/fetchPokemonInfo";
+import PokemonListData from "../DisplayData/PokemonListData";
 
 function SearchPokemon() {
   const { axiosFetch } = useContext(UserContext);
