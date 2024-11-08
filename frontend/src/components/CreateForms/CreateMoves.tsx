@@ -9,6 +9,8 @@ import {
   fetchMoveById,
   updateMove,
 } from "../../utilities/fetchMoveInfo";
+import SearchOfficialMove from "./SearchOfficialMove";
+import { fetchMovePokeApi } from "../../utilities/fetchPokeAPI";
 
 interface Props {
   updateMode: boolean;
@@ -60,6 +62,13 @@ function CreateMoves(props: Props) {
       await createMove(axiosFetch, moveData);
       navigate("/move");
     }
+  };
+
+  const searchResult = async (moveData: Move) => {
+    setMoveData({
+      ...moveData,
+      move_name: capitalizeFirstCharacter(moveData.move_name),
+    });
   };
 
   return isLoading ? (
@@ -176,6 +185,14 @@ function CreateMoves(props: Props) {
                 />
               </div>
             </form>
+          </div>
+        </div>
+        <div className="row justify-content-center">
+          <div className="col-lg-6 bg-danger shadow-sm card px-5 py-3">
+            <SearchOfficialMove
+              searchResult={searchResult}
+              axiosFetch={axiosFetch}
+            />
           </div>
         </div>
       </div>

@@ -52,7 +52,7 @@ function PokemonCompare(props: Props) {
 
   return (
     <>
-      <div className="row justify-content-center bg-secondary mb-5">
+      <div className="row justify-content-center bg-danger mb-5">
         <div className="col-lg-8 col-md-9 col-12 py-1">
           <div className="text-center text-white fs-2 fw-light">
             Compare Pokemon

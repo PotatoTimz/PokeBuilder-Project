@@ -37,7 +37,7 @@ function Login() {
               <div className="form-group my-3">
                 <label>Password</label>
                 <input
-                  type="text"
+                  type="password"
                   className="form-control"
                   onChange={(e) => setPassword(e.target.value)}
                 ></input>

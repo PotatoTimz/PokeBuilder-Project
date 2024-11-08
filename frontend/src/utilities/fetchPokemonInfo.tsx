@@ -98,5 +98,6 @@ export async function deletePokemon(axiosInstance: Axios, pokemonId: string) {
     await axiosInstance.delete("/user/pokemon/" + pokemonId);
   } catch (error) {
     console.log(error);
+    return error;
   }
 }
