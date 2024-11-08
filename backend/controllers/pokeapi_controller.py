@@ -67,3 +67,17 @@ def get_pokemon_typechart(pokemon):
                 damage_taken_chart["4"].append(type)
 
         return jsonify({"type_chart": damage_taken_chart})
+
+@pokeapi_bp.route("/pokeapi/move/<string:move>", methods=["GET"])
+def get_move_info(move):
+    if request.method == "GET":
+        res = requests.get("https://pokeapi.co/api/v2/move/" + move)
+        data = res.json()
+        
+        return jsonify({"move_name": data.get("name"),
+                        "move_accuracy": data.get("accuracy"),
+                        "move_description": data.get("flavor_text_entries")[0].get("flavor_text").replace("\n", " "),
+                        "move_power": data.get("power"),
+                        "move_pp": data.get("pp"),
+                        "type": data.get("type").get("name")
+                        })
