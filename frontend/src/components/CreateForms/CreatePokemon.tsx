@@ -1,14 +1,14 @@
 import { useContext, useEffect, useState } from "react";
-import { ExtensivePokemonData, Type } from "../interfaces/PokemonInterfaces";
-import { UserContext } from "../context/UserAuth";
+import { ExtensivePokemonData, Type } from "../../interfaces/PokemonInterfaces";
+import { UserContext } from "../../context/UserAuth";
 import { useNavigate, useParams } from "react-router-dom";
-import { fetchTypes } from "../utilities/fetchTypes";
-import { capitalizeFirstCharacter } from "../utilities/helpers";
+import { fetchTypes } from "../../utilities/fetchTypes";
+import { capitalizeFirstCharacter } from "../../utilities/helpers";
 import {
   createPokemon,
   fetchPokemonById,
   updatePokemon,
-} from "../utilities/fetchPokemonInfo";
+} from "../../utilities/fetchPokemonInfo";
 
 interface Props {
   updateMode: boolean;
@@ -16,7 +16,7 @@ interface Props {
 
 function CreatePokemon(props: Props) {
   const { id } = useParams();
-  const { axiosFetch } = useContext(UserContext);
+  const { axiosFetch, username } = useContext(UserContext);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [types, setTypes] = useState<Type[]>([]);
   const [pokemonData, setPokemonData] = useState<ExtensivePokemonData>({
@@ -44,6 +44,9 @@ function CreatePokemon(props: Props) {
     }
     async function getPokemonData() {
       const response = await fetchPokemonById(axiosFetch, id as string);
+      if (username != response.creator) {
+        navigate("/");
+      }
       setPokemonData({
         ...response,
         pokemon_types: [
@@ -53,7 +56,6 @@ function CreatePokemon(props: Props) {
             : "",
         ],
       });
-      console.log(response);
     }
     getAllTypes();
     if (props.updateMode) {
@@ -76,24 +78,25 @@ function CreatePokemon(props: Props) {
 
   return isLoading ? (
     <>
-      <div className="container-fluid">
-        <div className="row fs-3 justify-content-center ">
-          <div className="col-lg-6">
-            <div className="text-center fw-bold mt-3">
+      <div
+        className="container-fluid bg-white bg-gradient"
+        id={"buildPokemonPage"}
+      >
+        <div className="row justify-content-center mt-1 py-5">
+          <div className="col-lg-6 bg-light shadow-sm card px-5 py-3">
+            <div className="text-center fw-bold fs-1 mt-3">
               {props.updateMode
                 ? "Update Your Pokemon!"
                 : "Create Your Pokemon!"}
             </div>
-          </div>
-        </div>
-        <div className="row justify-content-center mt-1 mb-5">
-          <div className="col-lg-6">
             <form>
               <div className="form-group my-3">
                 <div className="fw-bold mb-2 fs-5">General Info</div>
                 <label>Name</label>
                 <input
                   type="text"
+                  maxLength={12}
+                  minLength={3}
                   className="form-control"
                   value={pokemonData.pokemon_name}
                   onChange={(e) =>
@@ -104,6 +107,17 @@ function CreatePokemon(props: Props) {
                   }
                 />
               </div>
+
+              <div className="row justify-content-center">
+                <div className="col text-center">
+                  <img
+                    src={pokemonData.pokemon_image}
+                    alt={"No Image Found"}
+                    id={"pokemonImage"}
+                  />
+                </div>
+              </div>
+
               <div className="form-group my-3">
                 <label>Image URL</label>
                 <input
@@ -147,8 +161,8 @@ function CreatePokemon(props: Props) {
                     </select>
                   </div>
                 </div>
+
                 <div className="col">
-                  {" "}
                   <div className="form-group my-3">
                     <label>Type 2</label>
                     <select
@@ -184,6 +198,8 @@ function CreatePokemon(props: Props) {
                   type="number"
                   className="form-control"
                   value={pokemonData.base_stats.hp}
+                  max={255}
+                  min={10}
                   onChange={(e) =>
                     setPokemonData({
                       ...pokemonData,
@@ -200,6 +216,8 @@ function CreatePokemon(props: Props) {
                 <input
                   type="number"
                   className="form-control"
+                  max={255}
+                  min={10}
                   value={pokemonData.base_stats.attack}
                   onChange={(e) =>
                     setPokemonData({
@@ -218,6 +236,8 @@ function CreatePokemon(props: Props) {
                   type="number"
                   className="form-control"
                   value={pokemonData.base_stats.defense}
+                  max={255}
+                  min={10}
                   onChange={(e) =>
                     setPokemonData({
                       ...pokemonData,
@@ -235,6 +255,8 @@ function CreatePokemon(props: Props) {
                   type="number"
                   className="form-control"
                   value={pokemonData.base_stats.sp_attack}
+                  max={255}
+                  min={10}
                   onChange={(e) =>
                     setPokemonData({
                       ...pokemonData,
@@ -252,6 +274,8 @@ function CreatePokemon(props: Props) {
                   type="number"
                   className="form-control"
                   value={pokemonData.base_stats.sp_defense}
+                  max={255}
+                  min={10}
                   onChange={(e) =>
                     setPokemonData({
                       ...pokemonData,
@@ -263,12 +287,14 @@ function CreatePokemon(props: Props) {
                   }
                 />
               </div>
-              <div className="form-group my-3">
+              <div className="form-group">
                 <label>Speed</label>
                 <input
                   type="number"
                   className="form-control"
                   value={pokemonData.base_stats.speed}
+                  max={255}
+                  min={10}
                   onChange={(e) =>
                     setPokemonData({
                       ...pokemonData,
@@ -280,7 +306,7 @@ function CreatePokemon(props: Props) {
                   }
                 />
               </div>
-              <div className="form-group my-3">
+              <div className="form-group">
                 <input
                   className="form-control btn btn-primary"
                   type="submit"

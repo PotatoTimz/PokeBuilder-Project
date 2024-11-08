@@ -8,8 +8,8 @@ import {
 } from "../../utilities/fetchMoveInfo";
 import { useParams } from "react-router-dom";
 import ProfileMessage from "./ProfileMessage";
-import PokemonListData from "../PokemonListData";
-import MoveListData from "../MoveListData";
+import PokemonListData from "../DisplayData/PokemonListData";
+import MoveListData from "../DisplayData/MoveListData";
 
 function ProfilePage() {
   const { profileName } = useParams();

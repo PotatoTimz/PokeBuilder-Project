@@ -7,14 +7,14 @@ import ProtectedRoute from "./components/LoginComponents/Protected";
 import Login from "./components/LoginComponents/Login";
 import PokemonInfo from "./components/PokemonDataPage/PokemonInfo";
 import PageNotFound from "./components/PageNotFound";
-import Home from "./components/Home";
-import CreateMoves from "./components/CreateMoves";
-import CreatePokemon from "./components/CreatePokemon";
-import EditPokemonMoves from "./components/EditPokemonMoves";
+import Navbar from "./components/Navbar/Navbar";
 import Logout from "./components/LoginComponents/Logout";
-import Navbar from "./components/Navbar";
-import SearchPokemon from "./components/SearchPokemon";
-import SearchMove from "./components/SearchMove";
+import Home from "./components/HomePage/Home";
+import SearchPokemon from "./components/SearchPokemon/SearchPokemon";
+import SearchMove from "./components/SearchMove/SearchMove";
+import CreateMoves from "./components/CreateForms/CreateMoves";
+import CreatePokemon from "./components/CreateForms/CreatePokemon";
+import EditPokemonMoves from "./components/CreateForms/EditPokemonMoves";
 
 function App() {
   return (
@@ -41,7 +41,7 @@ function App() {
               path="/move/create"
               element={
                 <ProtectedRoute>
-                  <CreateMoves />
+                  <CreateMoves updateMode={false} />
                 </ProtectedRoute>
               }
             />
@@ -49,7 +49,7 @@ function App() {
               path="/move/edit/:id"
               element={
                 <ProtectedRoute>
-                  <CreateMoves />
+                  <CreateMoves updateMode={true} />
                 </ProtectedRoute>
               }
             />

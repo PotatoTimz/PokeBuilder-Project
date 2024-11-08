@@ -105,15 +105,14 @@ export async function updateMove(
   moveData: Move
 ): Promise<any> {
   try {
+    console.log(moveData);
     const response = await axiosInstance.put("user/move/" + moveId, {
-      data: {
-        name: moveData.move_name,
-        power: moveData.move_power,
-        description: moveData.move_description,
-        accuracy: moveData.move_accuracy,
-        pp: moveData.move_pp,
-        type: moveData.type,
-      },
+      name: moveData.move_name,
+      power: moveData.move_power,
+      description: moveData.move_description,
+      accuracy: moveData.move_accuracy,
+      pp: moveData.move_pp,
+      type: moveData.type,
     });
     return response;
   } catch (error) {
@@ -123,7 +122,7 @@ export async function updateMove(
 
 export async function deleteMove(axiosInstance: Axios, moveId: string) {
   try {
-    await axiosInstance.delete("/user/pokemon/" + moveId);
+    await axiosInstance.delete("/user/move/" + moveId);
   } catch (error) {
     console.log(error);
   }
