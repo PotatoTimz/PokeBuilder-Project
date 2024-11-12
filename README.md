@@ -279,8 +279,8 @@ This endpoint retrieves all Pokemon associated with a specifc user's username.
   ]
   
 ### 6. **Add or Remove Pokemon Moves**
-### **POST** `/user/pokemon/<int:pokemon_id>/move`
-### **Delete** `/user/pokemon/<int:pokemon_id>/move`
+#### **POST** `/user/pokemon/<int:pokemon_id>/move`
+#### **Delete** `/user/pokemon/<int:pokemon_id>/move`
 These endpoints allow a logged-in user to add or remove moves for a specified Pokemon. Done by passing the name of the move that should be added/deleted into the body.
 #### Request Body (for POST & DELETE):
 - **Body:**
