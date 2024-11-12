@@ -170,8 +170,8 @@ The `pokemon/<int:pokemon_id>` endpoint retrives details of a specific Pokemon b
   }
 
 ### 3. **Update or Delete Pokemon**
-### **PUT** `/user/pokemon/<int:pokemon_id>`
-### **DELETE** `/user/pokemon/<int:pokemon_id>`
+#### **PUT** `/user/pokemon/<int:pokemon_id>`
+#### **DELETE** `/user/pokemon/<int:pokemon_id>`
 These endpoints allow **logged-in** users to update or delete their own Pokemon. Type must be an array with two strings (second string can be empty if the pokemon doesn't have a second type).
 #### Request Body (for PUT):
 - **Body:**
@@ -211,8 +211,8 @@ These endpoints allow **logged-in** users to update or delete their own Pokemon.
   }
 
 ### 4. **Create or Get User Pokemon**
-### **POST** `/user/pokemon`
-### **GET** `/user/pokemon`
+#### **POST** `/user/pokemon`
+#### **GET** `/user/pokemon`
 These endpoints allow a logged-in user to create new Pokémon or retrieve their own Pokémon collection
 #### Request Body (for POST):
 - **Body:**
@@ -256,7 +256,7 @@ These endpoints allow a logged-in user to create new Pokémon or retrieve their 
   ]
   
 ### 5. **Get Pokemon from Other Users**
-### **POST** `/user/pokemon/<string:username>`
+#### **POST** `/user/pokemon/<string:username>`
 This endpoint retrieves all Pokemon associated with a specifc user's username.
 #### Response:
 - **200 OK**: Returns a list of Pokemon owned by the specified user.
