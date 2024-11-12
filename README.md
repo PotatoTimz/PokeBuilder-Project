@@ -31,6 +31,40 @@ $ npm run dev
 ```
 
 ## Database Schema
-[Database Schema](https://imgur.com/rQiPQ8e)
+![Database Schema Link](https://imgur.com/rQiPQ8e.png)
 
-## PokeBuilder API Documentation
+# PokeBuilder API Documentation
+The PokeBuilder API stores account, move, type and Pokemon info. Through the PokeBuilder API you will be able to perform CRUD operations on the following 
+database tables and perform additional actions to change the relationships between tables. The API can be used to either retrieve info or perform actions
+to allow for site functionality.
+
+## Controllers
+- [Account](##Account)
+- [Pokemon](##Pokemon)
+- [Move](##Move)
+- [Type](##Type)
+- [PokeAPI](##PokeAPI)
+
+## **Account Endpoints**
+
+### 1. **Login**
+#### **POST** `/login`
+The `login` endpoint authenticates a user by verifying their username and password.
+#### Request Body:
+- **Body**:
+  ```json
+  {
+    "username": "user_example",
+    "password": "password123"
+  }
+#### Responses:
+- **200 OK**: Login successfull, returns a JWT Token
+  ```json
+  {
+    "token": "jwt_token_string"
+  }
+
+#### Pokemon
+#### Move
+#### Type
+#### PokeAPI
