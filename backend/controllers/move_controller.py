@@ -30,7 +30,7 @@ def manage_user_move(user_data):
         name, power, description, accuracy, pp, type = validate_data(data)
         add_move(name, power, description, accuracy, pp, type, user_data.username)
 
-        return jsonify({"message": "move successfully added!"})
+        return jsonify({"message": "move successfully added!"}), 201
 
 @move_bp.route("/user/move/learnable/<int:id>", methods=["GET"])
 def manage_learnable_move(id):
@@ -41,7 +41,7 @@ def manage_learnable_move(id):
         return move_data
 
 # Get Move from other users
-@move_bp.route("/user/move/<string:username>", methods=["POST", "GET"])
+@move_bp.route("/user/move/<string:username>", methods=["GET"])
 def manage_other_user_move(username):
     # Get all moves from other users ("not current login")
     if request.method == "GET":
