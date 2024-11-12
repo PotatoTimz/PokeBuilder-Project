@@ -98,7 +98,8 @@ The `register` endpoint creates a new account with the provided username and pas
   ```json
   {
     "token": "Username already exists. Please enter a unique username!"
-  }  
+  }
+  
 ## **Pokemon Endpoints**
 This documentation outlines the API endpoints used for manging Pokemon data including searching, creating, updating and deleting Pokemon data.
 
@@ -306,3 +307,29 @@ These endpoints allow a logged-in user to add or remove moves for a specified Po
 ## **Type Endpoints**
 
 ## **PokeAPI Endpoints**
+
+## Authentication
+All endpoints that /user generally requires you to be logged in with a **valid** JWT token. An endpoint will requires a JWT Token if @token_required is annotated within the endpoint. The passed bearer token will be authenticated. Invalid tokens will not allow you to proceed forwards.
+#### Header:
+- **Header Body**
+  ```json
+  {
+    "Authorization": "Bearer token"
+  }
+
+#### Response:
+- **403 FORBIDDEN**: Token is not passed.
+  ```json
+  {
+    'message': 'Token is missing!'
+  }
+- **403 FORBIDDEN**: Token has expired.
+  ```json
+  {
+    'message': 'Token has expired!'
+  }
+- **403 FORBIDDEN**: Token failed authentication.
+  ```json
+  {
+    'message': 'Invalid or expired token!'
+  }
