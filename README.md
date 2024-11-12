@@ -1,5 +1,5 @@
 # PokeBuilder
-##### Created By: Andre Alix & 
+**Created By:** Andre Alix & 
 
 ## Introduction
 Pokebuilder is a full-stack website that allows you to create, customize, and view other people's custom-built Pokemon. Using Pokebuilder
