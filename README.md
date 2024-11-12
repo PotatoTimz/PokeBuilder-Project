@@ -49,6 +49,7 @@ to allow for site functionality.
 - [PokeAPI](##PokeAPI)
 
 ## **Account Endpoints**
+This outlines the API endpoints used for managing Account data, including endpoints that authenticate users to allow them to use other endpoints.
 
 ### 1. **Login**
 #### **POST** `/login`
@@ -77,7 +78,7 @@ The `login` endpoint authenticates a user by verifying their username and passwo
     "message": "Invalid Userrname"
   }
 
-### 1. **Register**
+### 2. **Register**
 #### **POST** `/register`
 The `register` endpoint creates a new account with the provided username and password. 
 #### Request Body:
@@ -99,6 +100,93 @@ The `register` endpoint creates a new account with the provided username and pas
     "token": "Username already exists. Please enter a unique username!"
   }  
 ## **Pokemon Endpoints**
+This documentation outlines the API endpoints used for manging Pokemon data including searching, creating, updating and deleting Pokemon data.
+
+### 1. **Get All Pokémon**
+#### **GET** `/pokemon`
+The `pokemon` endpoint retrieves some information about all Pokemon in the database, with optional filter for "name" and "creator" (account name) 
+#### Request Parameters:
+- `name` (optional): Filter Pokémon by name.
+- `creator` (optional): Filter Pokémon by creator's username.
+#### Response:
+- **200 OK**: Returns a list of Pokémon matching the filters (if any).
+  ```json
+  [
+    {
+      "pokemon_id": 1,
+      "pokemon_name": "Pikachu",
+      "creator": "trainer1",
+      "pokemon_image": "pokemon_image.png",
+      "pokemon_types" : [
+        {
+          "type_id": 1,
+          "name": "electric"
+        },
+        ...
+      ]
+    },
+    ...
+  ]
+  
+### 2. **Get Pokemon by ID**
+#### **GET** `/pokemon/<int:pokemon_id>`  
+The `pokemon/<int:pokemon_id>` endpoint retrives details of a specific Pokemon based on ts ID
+#### Response:
+- **200 OK**: Returns the data of a specified Pokemon.
+  ```json
+  {
+    "pokemon_id": 1,
+    "pokemon_name": "Pikachu",
+    "creator": "trainer1",
+    "pokemon_image": "pokemon_image.png",
+    "base_stats":{
+      "hp": 35,
+      "attack": 55,
+      "defense": 40,
+      "sp_attack": 50,
+      "sp_defense": 50,
+      "speed": 90
+    }
+    "pokemon_types" : [
+      {
+        "type_id": 1,
+        "name": "electric"
+      },
+    ],
+    "pokemon_moves": [
+      {
+        "move_id": 1,
+        "move_name": "thunderbolt",
+        "move_power": 80,
+        "move_description": "The pokemon discharges some lightning."
+        "move_accuracy": 100,
+        "move_pp": 20,
+        "type":{
+          "type_id": 1,
+          "name": electric
+        }
+      }
+    ]
+  }
+
+### 3. **Update or Delete Pokemon**
+### **PUT** `/user/pokemon/<int:pokemon_id>`
+### **DELETE** `/user/pokemon/<int:pokemon_id>`
+These endpoints allow **logged-in** users to update or delete their own Pokemon
+#### Request Body (for PUT):
+- **Body:**
+  ```json
+  {
+    "types": ["Electric"],
+    "name": "Pikachu",
+  
+    "hp": 35,
+    "attack": 55,
+    "defense": 40,
+    "sp_attack": 50,
+    "sp_defense": 50,
+    "speed": 90
+  }
 
 ## **Move Endpoints**
 
