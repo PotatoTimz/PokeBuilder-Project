@@ -37,6 +37,9 @@ $ npm run dev
 The PokeBuilder API stores account, move, type and Pokemon info. Through the PokeBuilder API you will be able to perform CRUD operations on the following 
 database tables and perform additional actions to change the relationships between tables. The API can be used to either retrieve info or perform actions
 to allow for site functionality.
+<br>
+<br>
+**NOTE:** There are a few endpoints that exists but are not in use in the project (used for testing) that are are not mentioned in the documentation but are documented within the code
 
 ## Controllers
 - [Account](##Account)
@@ -63,7 +66,38 @@ The `login` endpoint authenticates a user by verifying their username and passwo
   {
     "token": "jwt_token_string"
   }
+- **401 Unauthorized**: Invalid username
+  ```json
+  {
+    "message": "Invalid Userrname"
+  }
+- **401 Unauthorized**: Invalid password
+  ```json
+  {
+    "message": "Invalid Userrname"
+  }
 
+### 1. **Register**
+#### **POST** `/register`
+The `register` endpoint creates a new account with the provided username and password. 
+#### Request Body:
+- **Body**:
+  ```json
+  {
+    "username": "new_user",
+    "password": "new_password123"
+  }
+#### Responses:
+- **201 Created**: Account was successfully created
+  ```json
+  {
+    "token": "Account successfully created"
+  }
+- **400 Bad Request**: Account with username already exists
+  ```json
+  {
+    "token": "Username already exists. Please enter a unique username!"
+  }  
 ## **Pokemon Endpoints**
 
 ## **Move Endpoints**
