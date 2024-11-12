@@ -98,7 +98,8 @@ The `register` endpoint creates a new account with the provided username and pas
   ```json
   {
     "token": "Username already exists. Please enter a unique username!"
-  }  
+  }
+  
 ## **Pokemon Endpoints**
 This documentation outlines the API endpoints used for manging Pokemon data including searching, creating, updating and deleting Pokemon data.
 
@@ -163,23 +164,23 @@ The `pokemon/<int:pokemon_id>` endpoint retrives details of a specific Pokemon b
         "move_pp": 20,
         "type":{
           "type_id": 1,
-          "name": electric
+          "name": "electric"
         }
       }
     ]
   }
 
 ### 3. **Update or Delete Pokemon**
-### **PUT** `/user/pokemon/<int:pokemon_id>`
-### **DELETE** `/user/pokemon/<int:pokemon_id>`
-These endpoints allow **logged-in** users to update or delete their own Pokemon
+#### **PUT** `/user/pokemon/<int:pokemon_id>`
+#### **DELETE** `/user/pokemon/<int:pokemon_id>`
+These endpoints allow **logged-in** users to update or delete their own Pokemon. Type must be an array with two strings (second string can be empty if the pokemon doesn't have a second type).
 #### Request Body (for PUT):
 - **Body:**
   ```json
   {
-    "types": ["Electric"],
     "name": "Pikachu",
-  
+    "types": ["Electric", ""],
+    "image": "pokemon_image.png"
     "hp": 35,
     "attack": 55,
     "defense": 40,
@@ -187,9 +188,148 @@ These endpoints allow **logged-in** users to update or delete their own Pokemon
     "sp_defense": 50,
     "speed": 90
   }
+#### Response:
+- **200 OK**: If the update or deletion is successful.
+- `(PUT)`:
+  ```json
+  {
+  "message": "pokemon successfully updated!"
+  }
+- `(DELETE)`:
+  ```json
+  {
+  "message": "pokemon successfully deleted!"
+  }
+- **400 BAD REQUEST** Invaid input
+  ```json
+  {
+  "message": "Invalid Input!"
+  }
+- **401 BAD REQUEST** Updating / Deleting a Pokemon you didn't create
+  ```json
+  {
+  "message": "You cannot edit a pokemon you didn't create"
+  }
+
+### 4. **Create or Get User Pokemon**
+#### **POST** `/user/pokemon`
+#### **GET** `/user/pokemon`
+These endpoints allow a logged-in user to create new Pokémon or retrieve their own Pokémon collection
+#### Request Body (for POST):
+- **Body:**
+  ```json
+  {
+    "name": "Pikachu",
+    "types": ["Electric", ""],
+    "image": "pokemon_image.png"
+    "hp": 35,
+    "attack": 55,
+    "defense": 40,
+    "sp_attack": 50,
+    "sp_defense": 50,
+    "speed": 90
+  }
+#### Response:
+- **200 OK**: If successfull retrieval or creation'
+- `(POST)`:
+  ```json
+    {
+      "message": "pokemon succesfully added!",
+      "id": 2
+    }
+- `(GET)`:
+  ```json
+  [
+    {
+      "pokemon_id": 1,
+      "pokemon_name": "Pikachu",
+      "creator": "trainer1",
+      "pokemon_image": "pokemon_image.png",
+      "pokemon_types" : [
+        {
+          "type_id": 1,
+          "name": "electric"
+        },
+        ...
+      ]
+    },
+    ...
+  ]
+  
+### 5. **Get Pokemon from Other Users**
+#### **POST** `/user/pokemon/<string:username>`
+This endpoint retrieves all Pokemon associated with a specifc user's username.
+#### Response:
+- **200 OK**: Returns a list of Pokemon owned by the specified user.
+  ```json
+  [
+    {
+      "pokemon_id": 1,
+      "pokemon_name": "Pikachu",
+      "creator": "trainer1",
+      "pokemon_image": "pokemon_image.png",
+      "pokemon_types" : [
+        {
+          "type_id": 1,
+          "name": "electric"
+        },
+        ...
+      ]
+    },
+    ...
+  ]
+  
+### 6. **Add or Remove Pokemon Moves**
+#### **POST** `/user/pokemon/<int:pokemon_id>/move`
+#### **Delete** `/user/pokemon/<int:pokemon_id>/move`
+These endpoints allow a logged-in user to add or remove moves for a specified Pokemon. Done by passing the name of the move that should be added/deleted into the body.
+#### Request Body (for POST & DELETE):
+- **Body:**
+  ```json
+  {
+    "move": "Thunderbolt"
+  }
+#### Response:
+- **200 OK**: If the move is successfully added or removed.
+- `(POST)`:
+  ```json
+  {
+  "message": "move successfully added to pokemon!"
+  }
+- `(DELETE)`:
+  ```json
+  {
+  "message": "move successfully removed!"
+  }
 
 ## **Move Endpoints**
 
 ## **Type Endpoints**
 
 ## **PokeAPI Endpoints**
+
+## Authentication
+All endpoints that /user generally requires you to be logged in with a **valid** JWT token. An endpoint will requires a JWT Token if @token_required is annotated within the endpoint. The passed bearer token will be authenticated. Invalid tokens will not allow you to proceed forwards.
+#### Header:
+- **Header Body**
+  ```json
+  {
+    "Authorization": "Bearer token"
+  }
+
+#### Response:
+- **403 FORBIDDEN**: Token is not passed.
+  ```json
+  {
+    "message": "Token is missing!"
+  }
+- **403 FORBIDDEN**: Token has expired.
+  ```json
+  {
+    "message": "Token has expired!"
+  }
+- **403 FORBIDDEN**: Token failed authentication.
+  ```json
+  {
+    "message": "Invalid or expired token!"
+  }
