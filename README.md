@@ -236,6 +236,7 @@ These endpoints allow a logged-in user to create new Pokémon or retrieve their 
     "message": "pokemon succesfully added!",
     "id": 2
   }
+
 - `(GET)`:
 ```json
  {
