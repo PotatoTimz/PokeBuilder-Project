@@ -16,16 +16,29 @@ from controllers.pokeapi_controller import pokeapi_bp
 sys.dont_write_bytecode = True
 
 def create_app():
+    """
+    Create and configure Flask App.
+
+    Initializes the database, controllers and the blueprints 
+    for each of the controllers. Returning the Flask Application
+
+    """
+
     app = Flask(__name__)
+
+    # Enables CORS
     CORS(app, supports_credentials=True)
     
-    app.config.from_object(Config)  # Load configuration from Config class
+    app.config.from_object(Config) 
 
+    # Sets SQLAlchemy database URI
     app.config['SQLALCHEMY_DATABASE_URI'] = Config.SQLALCHEMY_DATABASE_URI
     
+    # Intializes the database 
     db.init_app(app)
     migrate.init_app(app, db)
 
+    # Registers blueprints for the controllers.
     app.register_blueprint(account_bp)
     app.register_blueprint(test_bp)
     app.register_blueprint(type_bp)
@@ -35,8 +48,8 @@ def create_app():
 
     return app
 
+# Creates the app
 app = create_app()
 
 if __name__ == "__main__":
     app.run(debug=True)
-    
