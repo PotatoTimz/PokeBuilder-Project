@@ -64,7 +64,10 @@ The `login` endpoint authenticates a user by verifying their username and passwo
     "token": "jwt_token_string"
   }
 
-#### Pokemon
-#### Move
-#### Type
-#### PokeAPI
+## **Pokemon Endpoints**
+
+## **Move Endpoints**
+
+## **Type Endpoints**
+
+## **PokeAPI Endpoints**
