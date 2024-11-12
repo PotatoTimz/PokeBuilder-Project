@@ -163,7 +163,7 @@ The `pokemon/<int:pokemon_id>` endpoint retrives details of a specific Pokemon b
         "move_pp": 20,
         "type":{
           "type_id": 1,
-          "name": electric
+          "name": "electric"
         }
       }
     ]
@@ -172,14 +172,14 @@ The `pokemon/<int:pokemon_id>` endpoint retrives details of a specific Pokemon b
 ### 3. **Update or Delete Pokemon**
 ### **PUT** `/user/pokemon/<int:pokemon_id>`
 ### **DELETE** `/user/pokemon/<int:pokemon_id>`
-These endpoints allow **logged-in** users to update or delete their own Pokemon
+These endpoints allow **logged-in** users to update or delete their own Pokemon. Type must be an array with two strings (second string can be empty if the pokemon doesn't have a second type).
 #### Request Body (for PUT):
 - **Body:**
   ```json
   {
-    "types": ["Electric"],
     "name": "Pikachu",
-  
+    "types": ["Electric", ""],
+    "image": "pokemon_image.png"
     "hp": 35,
     "attack": 55,
     "defense": 40,
@@ -187,7 +187,91 @@ These endpoints allow **logged-in** users to update or delete their own Pokemon
     "sp_defense": 50,
     "speed": 90
   }
+#### Response:
+- **200 OK**: If the update or deletion is successful.
+- `(PUT)`:
+  ```json
+  {
+  "message": "pokemon successfully updated!"
+  }
+- `(DELETE)`:
+  ```json
+  {
+  "message": "pokemon successfully deleted!"
+  }
+- **400 BAD REQUEST** Invaid input
+  ```json
+  {
+  "message": "Invalid Input!"
+  }
+- **401 BAD REQUEST** Updating / Deleting a Pokemon you didn't create
+  ```json
+  {
+  "message": "You cannot edit a pokemon you didn't create"
+  }
 
+### 4. **Create or Get User Pokemon**
+### **POST** `/user/pokemon`
+### **GET** `/user/pokemon`
+These endpoints allow a logged-in user to create new Pokémon or retrieve their own Pokémon collection
+#### Request Body (for POST):
+- **Body:**
+  ```json
+  {
+    "name": "Pikachu",
+    "types": ["Electric", ""],
+    "image": "pokemon_image.png"
+    "hp": 35,
+    "attack": 55,
+    "defense": 40,
+    "sp_attack": 50,
+    "sp_defense": 50,
+    "speed": 90
+  }
+#### Response:
+- **200 OK**: If successfull retrieval or creation'
+- `(POST)`:
+```json
+  {
+    "message": "pokemon succesfully added!",
+    "id": 2
+  }
+- `(GET)`:
+```json
+ {
+    "pokemon_id": 1,
+    "pokemon_name": "Pikachu",
+    "creator": "trainer1",
+    "pokemon_image": "pokemon_image.png",
+    "base_stats":{
+      "hp": 35,
+      "attack": 55,
+      "defense": 40,
+      "sp_attack": 50,
+      "sp_defense": 50,
+      "speed": 90
+    }
+    "pokemon_types" : [
+      {
+        "type_id": 1,
+        "name": "electric"
+      },
+    ],
+    "pokemon_moves": [
+      {
+        "move_id": 1,
+        "move_name": "thunderbolt",
+        "move_power": 80,
+        "move_description": "The pokemon discharges some lightning."
+        "move_accuracy": 100,
+        "move_pp": 20,
+        "type":{
+          "type_id": 1,
+          "name": "electric"
+        }
+      }
+    ]
+  }
 ## **Move Endpoints**
 
 ## **Type Endpoints**
