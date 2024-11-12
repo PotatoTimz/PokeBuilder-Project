@@ -25,7 +25,7 @@ def login():
     # Verify password by checking the hashed version to the stored version in the database
     if verify_password(password, account.hashed_password, account.salt):
         token = generate_token(username)
-        return jsonify({"token": token})
+        return jsonify({"token": token}), 200
     else:
         return jsonify({"message": "Invalid Password"}), 401
     
@@ -44,7 +44,7 @@ def register():
     hashed_password, salt = hash_password(password)
     
     # Create the account with given parameters
-    return create_account(username, hashed_password, salt)
+    return create_account(username, hashed_password, salt), 201
 
 @account_bp.route("/users", methods=["GET"])
 def get_users():

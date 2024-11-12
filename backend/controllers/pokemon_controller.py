@@ -32,7 +32,7 @@ def modify_delete_pokemon(user_data, pokemon_id):
     # Update Pokemon data based on id
     if request.method == "PUT":
         if not is_created_by_user(pokemon_id, user_data.username):
-            abort(400, "You cannot edit a pokemon you didn't create")
+            abort(401, "You cannot edit a pokemon you didn't create")
 
         data = request.json
         types, name, image, hp, attack, defense, sp_attack, sp_defense, speed = validate_data(data)
