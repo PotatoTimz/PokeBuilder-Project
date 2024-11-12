@@ -321,15 +321,15 @@ All endpoints that /user generally requires you to be logged in with a **valid**
 - **403 FORBIDDEN**: Token is not passed.
   ```json
   {
-    'message': 'Token is missing!'
+    "message": "Token is missing!"
   }
 - **403 FORBIDDEN**: Token has expired.
   ```json
   {
-    'message': 'Token has expired!'
+    "message": "Token has expired!"
   }
 - **403 FORBIDDEN**: Token failed authentication.
   ```json
   {
-    'message': 'Invalid or expired token!'
+    "message": "Invalid or expired token!"
   }
