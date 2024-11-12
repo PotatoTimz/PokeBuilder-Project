@@ -7,6 +7,7 @@ move_bp = Blueprint("move_bp", __name__)
 
 @move_bp.route("/move", methods=["GET"])
 def manage_moves():
+    # Get all Moves with given filters
     if request.method == "GET":
         name = "" if not request.args.get("name") else request.args.get("name")
         creator = "" if not request.args.get("creator") else request.args.get("creator")
@@ -18,11 +19,12 @@ def manage_moves():
 @move_bp.route("/user/move", methods=["POST", "GET"])
 @token_required
 def manage_user_move(user_data):
+    # Get all Moves with the current user
     if request.method == "GET":
            move_data = get_all_moves("", user_data.username)
 
            return move_data
-    
+    # Add move given the move parameters
     if request.method == "POST":
         data = request.json
         name, power, description, accuracy, pp, type = validate_data(data)
@@ -32,6 +34,7 @@ def manage_user_move(user_data):
 
 @move_bp.route("/user/move/learnable/<int:id>", methods=["GET"])
 def manage_learnable_move(id):
+    # Get all moves that a pokemon does not have
     if request.method == "GET":
         move_data = learnable_moves_by_pokemon(id)
 
@@ -40,6 +43,7 @@ def manage_learnable_move(id):
 # Get Move from other users
 @move_bp.route("/user/move/<string:username>", methods=["POST", "GET"])
 def manage_other_user_move(username):
+    # Get all moves from other users ("not current login")
     if request.method == "GET":
         move_data = get_all_moves("", username)
 
@@ -48,6 +52,7 @@ def manage_other_user_move(username):
     
 @move_bp.route("/move/<int:move_id>", methods=["GET"])
 def manage_moves_by_id(move_id):
+    # Get info about specific move (based on id)
     if request.method == "GET":
         move_data = get_move_by_id(move_id)
 
@@ -56,11 +61,12 @@ def manage_moves_by_id(move_id):
 @move_bp.route("/user/move/<int:move_id>", methods=["DELETE", "PUT"])
 @token_required
 def modify_delete_move(user_data, move_id):
-    print(move_id, "\n\n")
+    # Delete move based on id
     if request.method == "DELETE":
         delete_move(move_id)
         
         return jsonify({"message": "successfully deleted move!"})
+    # Update move based on id
     if request.method == "PUT":
         data = request.json
         name, power, description, accuracy, pp, type = validate_data(data)

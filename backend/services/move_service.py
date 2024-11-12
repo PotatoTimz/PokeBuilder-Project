@@ -14,7 +14,7 @@ def get_all_moves(name, creator):
     Retrieves all moves filtered by the specified name and creator.
 
     Queries Move table to retrieve all moves whos names match the given
-    "name" and "creator" parameter. Returning a JSON containing infromation 
+    "name" and "creator" parameter. Returning a JSON containing information
     of all the queried moves.
 
     Args:

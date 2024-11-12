@@ -7,7 +7,6 @@ from extensions import db, migrate
 from config import Config
 
 from controllers.account_controller import account_bp
-from controllers.test_controller import test_bp
 from controllers.types_controller import type_bp
 from controllers.pokemon_controller import pokemon_bp
 from controllers.move_controller import move_bp
@@ -40,7 +39,6 @@ def create_app():
 
     # Registers blueprints for the controllers.
     app.register_blueprint(account_bp)
-    app.register_blueprint(test_bp)
     app.register_blueprint(type_bp)
     app.register_blueprint(pokemon_bp)
     app.register_blueprint(move_bp)

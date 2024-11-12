@@ -7,8 +7,10 @@ type_bp = Blueprint("type_bp", __name__)
 
 @type_bp.route("/type", methods=["POST", "GET"])
 def manage_types():
+    # Get all types 
     if request.method == "GET":
         return get_all_types()
+    # Add new types
     if request.method == "POST":
         data = request.json
         name = validate_data(data)
