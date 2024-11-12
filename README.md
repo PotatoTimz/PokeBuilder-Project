@@ -231,48 +231,76 @@ These endpoints allow a logged-in user to create new Pokémon or retrieve their 
 #### Response:
 - **200 OK**: If successfull retrieval or creation'
 - `(POST)`:
-```json
-  {
-    "message": "pokemon succesfully added!",
-    "id": 2
-  }
-
-- `(GET)`:
-```json
- {
-    "pokemon_id": 1,
-    "pokemon_name": "Pikachu",
-    "creator": "trainer1",
-    "pokemon_image": "pokemon_image.png",
-    "base_stats":{
-      "hp": 35,
-      "attack": 55,
-      "defense": 40,
-      "sp_attack": 50,
-      "sp_defense": 50,
-      "speed": 90
+  ```json
+    {
+      "message": "pokemon succesfully added!",
+      "id": 2
     }
-    "pokemon_types" : [
-      {
-        "type_id": 1,
-        "name": "electric"
-      },
-    ],
-    "pokemon_moves": [
-      {
-        "move_id": 1,
-        "move_name": "thunderbolt",
-        "move_power": 80,
-        "move_description": "The pokemon discharges some lightning."
-        "move_accuracy": 100,
-        "move_pp": 20,
-        "type":{
+- `(GET)`:
+  ```json
+  [
+    {
+      "pokemon_id": 1,
+      "pokemon_name": "Pikachu",
+      "creator": "trainer1",
+      "pokemon_image": "pokemon_image.png",
+      "pokemon_types" : [
+        {
           "type_id": 1,
           "name": "electric"
-        }
-      }
-    ]
+        },
+        ...
+      ]
+    },
+    ...
+  ]
+  
+### 5. **Get Pokemon from Other Users**
+### **POST** `/user/pokemon/<string:username>`
+This endpoint retrieves all Pokemon associated with a specifc user's username.
+#### Response:
+- **200 OK**: Returns a list of Pokemon owned by the specified user.
+  ```json
+  [
+    {
+      "pokemon_id": 1,
+      "pokemon_name": "Pikachu",
+      "creator": "trainer1",
+      "pokemon_image": "pokemon_image.png",
+      "pokemon_types" : [
+        {
+          "type_id": 1,
+          "name": "electric"
+        },
+        ...
+      ]
+    },
+    ...
+  ]
+  
+### 6. **Add or Remove Pokemon Moves**
+### **POST** `/user/pokemon/<int:pokemon_id>/move`
+### **Delete** `/user/pokemon/<int:pokemon_id>/move`
+These endpoints allow a logged-in user to add or remove moves for a specified Pokemon. Done by passing the name of the move that should be added/deleted into the body.
+#### Request Body (for POST & DELETE):
+- **Body:**
+  ```json
+  {
+    "move": "Thunderbolt"
   }
+#### Response:
+- **200 OK**: If the move is successfully added or removed.
+- `(POST)`:
+  ```json
+  {
+  "message": "move successfully added to pokemon!"
+  }
+- `(DELETE)`:
+  ```json
+  {
+  "message": "move successfully removed!"
+  }
+
 ## **Move Endpoints**
 
 ## **Type Endpoints**
