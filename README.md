@@ -642,7 +642,133 @@ Updates / deletes the specified move. Move determined by the given `move_id` par
 
 ## **Type Endpoints**
 
+This documentation outlines the API endpoints used for manging Type data.
+
+### 1. **Add / Get Types**
+
+#### **GET** `/type`
+
+#### **POST** `/type`
+
+Adds new type or retrieves all type data. Used only for testing purposes.
+
+#### Request Body (for POST):
+
+- **Body:**
+  ```json
+  {
+    "name": "electric"
+  }
+  ```
+
+#### Response:
+
+- **200 OK**: Returns all of the types in the database.
+  <br> `(GET)`:
+
+  ```json
+  {
+    [
+      {
+        "name": "electric",
+        "id": 1
+      },
+      ...
+    ]
+  }
+
+  ```
+
+- **200 OK**: Returns information of newly made type
+  <br> `(POST)`:
+
+  ```json
+  {
+    "name": "electric",
+    "id": 1
+  }
+  ```
+
+- **400 BAD REQUEST** Invalid body, missing parameters for type creation.
+  <br> `(POST)`
+
+  ```json
+  {
+    "message": "Invalid Input!"
+  }
+  ```
+
 ## **PokeAPI Endpoints**
+
+This documentation outlines the API endpoints used to interact with the PokeAPI. Not information is needed from PokeAPI calls so the pokebuilder website makes a seperate call to the PokeAPI to filter the needed information and send it directly to the client.
+
+### 1. **Get Official Pokemon Data**
+
+#### **GET** `/pokeapi/pokemon/<string:pokemon>`
+
+Converts information about official pokemon from the PokeAPI to mimic the Pokemon model found in the database. Parameter `pokemon` is used to determine which Pokemon to get info about.
+
+- **200 OK**: Returns all of information of the desired pokemon
+  ```json
+    {
+      "pokemon_id": 1,
+      "pokemon_name": "Pikachu",
+      "creator": "trainer1",
+      "pokemon_image": "pokemon_image.png",
+      "base_stats":{
+        "hp": 35,
+        "attack": 55,
+        "defense": 40,
+        "sp_attack": 50,
+        "sp_defense": 50,
+        "speed": 90
+      }
+      "pokemon_types" : [
+        {
+          "type_id": 1,
+          "name": "electric"
+        },
+      ],
+    }
+  ```
+
+### 2. **Generate Matchup Chart**
+
+#### **GET** `/pokeapi/pokemon/<string:pokemon>/typechart`
+
+Generate the matchup chart for the desired pokemon. Pokemon determined via parameter `pokemon` passed. Information about types matchup is determined through the PokeAPI and than sent back to the user categorizing each damage effectiveness within lists. Only determine damage effectiveness (weaknesses) of the pokemon.
+
+- **200 OK**: Returns type matchups. Each in game type should pre represented within the matchup chart
+  ```json
+  {
+    "type_chart": {
+      "0": ["fire"],
+      "1/4": ["water"],
+      "1/2": ["grass"],
+      "1": ["normal"],
+      "2": ["ghost"],
+      "4": ["electric"]
+    }
+  }
+  ```
+
+### 3. **Get Official Move Data**
+
+#### **GET** `/pokeapi/move/<string:move>`
+
+Converts information about official pokemon from the PokeAPI to mimic the Move model found in the database. Parameter `move` is used to determine which move to get info about.
+
+- **200 OK**: Returns all of information of the desired pokemon
+  ```json
+  {
+    "move_name": "flamethrower",
+    "move_accuracy": 100,
+    "move_description": "The Pokemon excerts fire from it's mouth",
+    "move_power": 100,
+    "move_pp": 10,
+    "type": ["fire"]
+  }
+  ```
 
 ## Authentication
 
