@@ -2,6 +2,14 @@
 
 **Created By:** Andre Alix &
 
+## Table of Contents
+
+- [Introduction](##Introduction)
+- [Set-up](##Set-up)
+- [Database Schema](##DatabaseSchema)
+- [Type](##Type)
+- [PokeBuilder API Documentation](##PokeBuilderAPIDocumentation)
+
 ## Introduction
 
 Pokebuilder is a full-stack website that allows you to create, customize, and view other people's custom-built Pokemon. Using Pokebuilder
@@ -42,7 +50,7 @@ $ npm run dev
 
 ![Database Schema Link](https://imgur.com/rQiPQ8e.png)
 
-# PokeBuilder API Documentation
+## PokeBuilder API Documentation
 
 The PokeBuilder API stores account, move, type and Pokemon info. Through the PokeBuilder API you will be able to perform CRUD operations on the following
 database tables and perform additional actions to change the relationships between tables. The API can be used to either retrieve info or perform actions
