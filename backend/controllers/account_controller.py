@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify
 from models.account import Account
 from services.account_service import validate_user_input, check_account_created, create_account, get_all_accounts, update_password, get_account, delete_account
 from services.hashing_service import hash_password, verify_password
-from services.jwt_token_service import generate_token
+from services.jwt_token_service import generate_token, token_required
 
 account_bp = Blueprint("account_bp", __name__)
 
@@ -61,3 +61,8 @@ def manage_users(account_id):
     elif request.method == "DELETE":
         return delete_account(account)
 
+# Authenticates the users login token
+@account_bp.route("/protected", methods=["GET"])
+@token_required
+def protected(user_data):
+    return jsonify({'message': f'Welcome, {user_data.username}! This is a protected route.'})

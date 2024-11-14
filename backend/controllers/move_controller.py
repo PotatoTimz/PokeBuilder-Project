@@ -26,8 +26,10 @@ def manage_user_move(user_data):
            return move_data
     # Add move given the move parameters
     if request.method == "POST":
+        print(request.json)
         data = request.json
         name, power, description, accuracy, pp, type = validate_data(data)
+        print(request.json)
         add_move(name, power, description, accuracy, pp, type, user_data.username)
 
         return jsonify({"message": "move successfully added!"}), 201

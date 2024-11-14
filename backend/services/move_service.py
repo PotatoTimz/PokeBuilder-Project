@@ -129,7 +129,7 @@ def validate_data(data):
                      keys 'name', 'power', 'description', 'accuracy',
                      'pp' and 'type'.
     """
-    if not data or not data.get("name") or not data.get("power") or not data.get("description") or not data.get("accuracy") or not data.get("pp") or not data.get("type"):
+    if not data or not data.get("name") or not "power" in data or not data.get("description") or not data.get("accuracy") or not data.get("pp") or not data.get("type"):
         abort(400, "Invalid Input!")
     
     name, power, description, accuracy, pp, type = data.get("name"), data.get("power"), data.get("description"), data.get("accuracy"), data.get("pp"), data.get("type")

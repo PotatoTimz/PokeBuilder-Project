@@ -59,6 +59,7 @@ function CreateMoves(props: Props) {
       await updateMove(axiosFetch, id as string, moveData);
       navigate("/move");
     } else {
+      console.log(moveData);
       await createMove(axiosFetch, moveData);
       navigate("/move");
     }
@@ -68,6 +69,7 @@ function CreateMoves(props: Props) {
     setMoveData({
       ...moveData,
       move_name: capitalizeFirstCharacter(moveData.move_name),
+      move_power: moveData.move_power == null ? 0 : moveData.move_power,
     });
   };
 
