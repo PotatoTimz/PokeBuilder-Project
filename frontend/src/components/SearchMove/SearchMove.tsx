@@ -23,6 +23,9 @@ function SearchPokemon() {
   return (
     <>
       <div className="container-fluid">
+        <div className="row my-5 border-bottom">
+          <div className="fs-1 fw-bold text-center">Moves</div>
+        </div>
         <div className="row justify-content-center">
           <div className="col-8">
             <MoveListData moveData={moveData} mode="default" />
