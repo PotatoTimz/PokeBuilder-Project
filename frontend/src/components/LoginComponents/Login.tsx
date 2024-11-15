@@ -2,6 +2,11 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../context/UserAuth";
 import { useNavigate } from "react-router-dom";
 
+/*
+  Login Page Component.
+
+  Page that allows users to login. 
+*/
 function Login() {
   const { loginUser, isLoggedIn } = useContext(UserContext);
   const [username, setUsername] = useState<string>("");

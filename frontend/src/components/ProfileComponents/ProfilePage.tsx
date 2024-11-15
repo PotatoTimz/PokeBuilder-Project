@@ -2,26 +2,25 @@ import { useContext, useEffect, useState } from "react";
 import { Move, SimplePokemonData } from "../../interfaces/PokemonInterfaces";
 import { UserContext } from "../../context/UserAuth";
 import { fetchPokemonByUser } from "../../utilities/fetchPokemonInfo";
-import {
-  deleteMovePokemon,
-  fetchMoveByUser,
-} from "../../utilities/fetchMoveInfo";
+import { fetchMoveByUser } from "../../utilities/fetchMoveInfo";
 import { useParams } from "react-router-dom";
 import ProfileMessage from "./ProfileMessage";
 import PokemonListData from "../DisplayData/PokemonListData";
 import MoveListData from "../DisplayData/MoveListData";
 
+/*
+  Profile Page Component
+
+  Page to display information about the account (determined by URL Parameters). Displays 
+  moves and pokemon that are associated with the currently displayed account. 
+  Additionally allows users to edit / delete their Pokemon and moves.
+*/
 function ProfilePage() {
   const { profileName } = useParams();
   const { axiosFetch, username } = useContext(UserContext);
 
   // Check if we are on the currently logged in profile
-  let currentProfile: boolean;
-  if (username == profileName) {
-    currentProfile = true;
-  } else {
-    currentProfile = false;
-  }
+  let currentProfile: boolean = username == profileName ? true : false;
 
   const [userPokemon, setUserPokemon] = useState<SimplePokemonData[]>([]);
   const [userMoves, setUserMoves] = useState<Move[]>([]);
@@ -40,17 +39,12 @@ function ProfilePage() {
     fetchUserInfo();
   }, []);
 
-  const removeMove = async (moveName: string) => {
-    setIsLoading(false);
-    await setIsLoading(true);
-  };
-
   return isLoading ? (
     <>
       <div className="container-fluid">
         <div className="row justify-content-center mt-5 mb-3">
           <div className="col-11">
-            <div className="text-center fs-3 fw-medium border-bottom">
+            <div className="text-center fs-3 fw-bold border-bottom">
               {profileName}'s Profile
             </div>
           </div>
@@ -67,7 +61,7 @@ function ProfilePage() {
         <div className="row justify-content-center mb-2">
           <div className="col-lg-11 mx-4">
             <div className="row fs-3 text-center">
-              <p className="border-bottom">Toggle Creation Viewer</p>
+              <p className="border-bottom fw-medium">Toggle Creation Viewer</p>
             </div>
             <div className="d-flex flex-row justify-content-center">
               <p

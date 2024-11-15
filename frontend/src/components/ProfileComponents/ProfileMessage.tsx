@@ -6,6 +6,10 @@ interface Props {
   profileName: string;
 }
 
+/*
+  Profile Message Component
+  Message to display to the user, informing them about how many pokemon & moves they have created
+*/
 function ProfileMessage(props: Props) {
   const navigate = useNavigate();
 

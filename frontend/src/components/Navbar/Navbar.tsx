@@ -1,8 +1,14 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { UserContext } from "../../context/UserAuth";
 
 type Props = { children: React.ReactNode };
 
+/*
+  Navbar Component.
+
+  Menu bar that allows user to navigate between multiple components.
+  Always displayed at the top of the screen.
+*/
 function Navbar({ children }: Props) {
   const { isLoggedIn, username } = useContext(UserContext);
 

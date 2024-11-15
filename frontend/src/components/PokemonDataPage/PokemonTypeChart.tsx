@@ -8,6 +8,12 @@ interface Props {
   id: string;
   axiosFetch: Axios;
 }
+
+/*
+  Type Chart Component
+  Displays a Pokemon's type chart based of information retrieved from
+  the PokeAPI
+*/
 function PokemonTypeChart(props: Props) {
   const [typeChart, setTypeChart] = useState<TypeChart>({ type_chart: {} });
   const [doneLoading, setDoneLoading] = useState<boolean>(false);

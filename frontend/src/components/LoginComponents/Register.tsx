@@ -2,6 +2,12 @@ import { useContext, useState } from "react";
 import { UserContext } from "../../context/UserAuth";
 import { useNavigate } from "react-router-dom";
 
+/*
+  Register Component
+
+  Allows users to register an account. Automatically logging them in
+  if the accounts creation was successful.
+*/
 function Register() {
   const { registerUser } = useContext(UserContext);
   const [username, setUsername] = useState<string>("");

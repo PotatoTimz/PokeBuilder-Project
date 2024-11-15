@@ -10,6 +10,14 @@ import {
 import { fetchPokemonById } from "../../utilities/fetchPokemonInfo";
 import MoveListData from "../DisplayData/MoveListData";
 
+/*
+  Edit Pokemon Moveset Component.
+  Allows users to edit the moveset of their pokemon (determined by their parameters).
+  Learnable moves and existing mvoes are displayed as a table. Buttons are beside them to either remove or 
+  add the moves to the current pokemon. Once a move is added/removed from a pokemon both tables will
+  refresh updating the moves the reflect the pokemon's current move list.
+*/
+
 function EditPokemonMoves() {
   const { axiosFetch } = useContext(UserContext);
   const { id } = useParams();
@@ -17,18 +25,25 @@ function EditPokemonMoves() {
     null
   );
   const [learnableMoveData, setLearnableMoveData] = useState<Move[]>([]);
+
+  // Checks if prerequisite API calls have been made
   const [isLoading, setIsLoaded] = useState<boolean>(false);
+
   const navigate = useNavigate();
 
+  // Gets pokemon's current moveset
   async function getPokemonData() {
     const response = await fetchPokemonById(axiosFetch, id as string);
     setPokemonData(response);
   }
+
+  // Gets pokemon's learnable moves. Moves that the pokemon doesn't currently have learnt
   async function getLearnableMoves() {
     const response = await fetchLearnableMoves(axiosFetch, id as string);
     setLearnableMoveData(response);
   }
 
+  // Retrieves prerequisite data from the API
   useEffect(() => {
     const initialFetch = async () => {
       await getPokemonData();
@@ -38,6 +53,7 @@ function EditPokemonMoves() {
     initialFetch();
   }, []);
 
+  // Adds move to the Pokemon and than refresh movesets
   const learnMove = async (moveName: string) => {
     setIsLoaded(false);
     await addMovePokemon(axiosFetch, id as string, moveName);
@@ -46,6 +62,7 @@ function EditPokemonMoves() {
     await setIsLoaded(true);
   };
 
+  // Delete move from a Pokemon than refreshes movesets
   const removeMove = async (moveName: string) => {
     setIsLoaded(false);
     await deleteMovePokemon(axiosFetch, id as string, moveName);
@@ -54,6 +71,7 @@ function EditPokemonMoves() {
     await setIsLoaded(true);
   };
 
+  // Loads form only if the prerequisite API calls were made.
   return isLoading ? (
     <>
       <div className="container-fluid">

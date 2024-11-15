@@ -1,7 +1,7 @@
 import { Type, SimplePokemonData } from "../../interfaces/PokemonInterfaces";
 import { useNavigate } from "react-router-dom";
 import { capitalizeFirstCharacter } from "../../utilities/helpers";
-import axios, { Axios } from "axios";
+import { Axios } from "axios";
 import { deletePokemon } from "../../utilities/fetchPokemonInfo";
 
 interface Props {
@@ -9,6 +9,15 @@ interface Props {
   creator: boolean;
   axiosInstance?: Axios;
 }
+
+/*
+  Pokemon List Component
+
+  Displays data based on the list of pokemon sent. 
+
+  Edit Mode:
+  Displays 3 buttons allowing the user to update, delete and mange moves
+*/
 
 function PokemonListData(props: Props) {
   const navigate = useNavigate();
@@ -68,6 +77,7 @@ function PokemonListData(props: Props) {
                 alt={pokemon.pokemon_name}
               />
             </div>
+            {/* Edit move buttons */}
             {props.creator ? (
               <div className="d-flex flex-row justify-content-center">
                 <button

@@ -8,10 +8,17 @@ interface Props {
   searchResult: (moveData: Move) => void;
 }
 
+/*
+  Search Official Move Component
+  Given a move to search grabs the mvoe data from POKEApi and fills forms
+  according to the retrieved data.
+*/
 function SearchOfficialMove(props: Props) {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [error, setError] = useState<boolean>(false);
 
+  // Searches PokeAPI for the move queried. If the move doesn't exist
+  // an error is displayed to the user
   const searchMove = async (moveName: string) => {
     const response = await fetchMovePokeApi(props.axiosFetch, moveName);
     console.log(response);

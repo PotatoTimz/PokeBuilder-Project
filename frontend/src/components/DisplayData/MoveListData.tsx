@@ -12,6 +12,17 @@ interface Props {
   removeMove?: (moveName: string) => {};
 }
 
+/*
+  Mist List Component
+  Displays a table of all moves given (sent as a list). An extra column
+  is added if the table is on editing/updating mode.
+
+  Learn Mode:
+  Button displayed to add or remove move from Pokemon.
+
+  Edit Mode:
+  Button displayed to update or delete move from an Account.
+*/
 function MoveListData(props: Props) {
   const { axiosFetch } = useContext(UserContext);
   const navigate = useNavigate();
@@ -35,6 +46,7 @@ function MoveListData(props: Props) {
             PP.
           </th>
           <th scope="col">Description</th>
+          {/* Settings row only displays if table is put to editing mode */}
           {props.mode != "default" ? (
             <th className="text-center" scope="col">
               <i className="bi bi-gear-fill"></i>
@@ -57,10 +69,16 @@ function MoveListData(props: Props) {
                 <td className="text-center">{move.move_accuracy}</td>
                 <td className="text-center">{move.move_pp}</td>
                 <td>{move.move_description}</td>
+                {/* "default" = no column
+                    "add_pokemon" = add move to a pokemon
+                    "delete_pokemon" = delete move from a pokemon
+                    "edit" = update or delet emove
+                */}
                 {props.mode != "default" ? (
                   props.mode == "add_pokemon" ? (
                     <td className="text-center">
                       <button
+                        title="Add move to Pokemon"
                         className="button btn-success"
                         onClick={(e) => {
                           props.learnMove!(move.move_name);
@@ -72,6 +90,7 @@ function MoveListData(props: Props) {
                   ) : props.mode == "delete_pokemon" ? (
                     <td className="text-center">
                       <button
+                        title="Remove move from Pokemon"
                         className="button btn-danger"
                         onClick={(e) => {
                           props.removeMove!(move.move_name);
@@ -84,6 +103,7 @@ function MoveListData(props: Props) {
                     <td className="text-center">
                       <button
                         className="button btn-success"
+                        title="Edit Move"
                         onClick={(e) => {
                           navigate("/move/edit/" + move.move_id);
                         }}
@@ -92,6 +112,7 @@ function MoveListData(props: Props) {
                       </button>
                       <button
                         className="button btn-danger"
+                        title="Delete Move"
                         onClick={(e) => {
                           deleteMove(axiosFetch, move.move_id.toString());
                           navigate(0);

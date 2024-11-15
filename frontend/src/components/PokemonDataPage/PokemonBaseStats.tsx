@@ -8,6 +8,10 @@ interface Props {
   pokemonInfo: ExtensivePokemonData;
 }
 
+/*
+  Base Stat Components.
+  Display Pokemon's base stats using progress bars
+*/
 function PokemonBaseStats(props: Props) {
   const baseStats: BaseStats = props.pokemonInfo.base_stats;
   const totalStats =

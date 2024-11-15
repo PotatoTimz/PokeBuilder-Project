@@ -5,6 +5,10 @@ interface Props {
   pokemonInfo: ExtensivePokemonData;
 }
 
+/*
+  Pokemon Info Card Component.
+  Displays general info of a Pokemon. Including it's name, image, type, creator and id
+*/
 function PokemonInfoCard(props: Props) {
   return (
     <div className="row justify-content-center">

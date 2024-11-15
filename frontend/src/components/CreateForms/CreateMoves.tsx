@@ -10,16 +10,27 @@ import {
   updateMove,
 } from "../../utilities/fetchMoveInfo";
 import SearchOfficialMove from "./SearchOfficialMove";
-import { fetchMovePokeApi } from "../../utilities/fetchPokeAPI";
 
 interface Props {
   updateMode: boolean;
 }
 
+/*
+  Create / Update Move Component.
+  Component mode (update/create) changed depending on the page URL 
+
+  Create Component:
+  Form to create move. Using the PokeBuilder API. Additional functionality to look and take details from
+  official pokemon moves. Provided from the PokeAPI
+
+  Update Component:
+  Form to update move. Fills inputs with prexisiting data. Allows users to change the data of a prexisting move.
+
+*/
 function CreateMoves(props: Props) {
-  const { id, username } = useParams();
-  const { axiosFetch } = useContext(UserContext);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  // Parameters needed for form functionality
+  const { id } = useParams();
+  const { axiosFetch, username } = useContext(UserContext);
   const [types, setTypes] = useState<Type[]>([]);
   const [moveData, setMoveData] = useState<Move>({
     move_id: 0,
@@ -30,13 +41,19 @@ function CreateMoves(props: Props) {
     move_pp: 1,
     type: "normal",
   });
+
+  // Checks if prerequisite API calls have been made
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const navigate = useNavigate();
 
+  // On load gets all types. Update mode, gets previous move data.
   useEffect(() => {
     async function getAllTypes() {
       const response = await fetchTypes(axiosFetch);
       setTypes(response);
     }
+
     async function getMoveData() {
       const response = await fetchMoveById(axiosFetch, id as string);
       setMoveData({ ...response, type: response.type.type_name });
@@ -53,6 +70,7 @@ function CreateMoves(props: Props) {
     setIsLoading(true);
   }, []);
 
+  // Submit move data to update / create
   const submitMove = async (e: React.FormEvent) => {
     e.preventDefault();
     if (props.updateMode) {
@@ -65,6 +83,7 @@ function CreateMoves(props: Props) {
     }
   };
 
+  // Searches PokeAPI for move existing move
   const searchResult = async (moveData: Move) => {
     setMoveData({
       ...moveData,
@@ -73,6 +92,7 @@ function CreateMoves(props: Props) {
     });
   };
 
+  // Loads form only if the prerequisite API calls were made.
   return isLoading ? (
     <>
       <div className="container-fluid bg-gradient py-5">
@@ -82,6 +102,7 @@ function CreateMoves(props: Props) {
               Create Your Move!
             </div>
 
+            {/* Move form */}
             <form>
               <div className="form-group my-3">
                 <label>Name</label>
@@ -191,6 +212,7 @@ function CreateMoves(props: Props) {
         </div>
         <div className="row justify-content-center">
           <div className="col-lg-6 bg-danger shadow-sm card px-5 py-3">
+            {/* Search official move */}
             <SearchOfficialMove
               searchResult={searchResult}
               axiosFetch={axiosFetch}

@@ -3,6 +3,7 @@ import { UserContext } from "../../context/UserAuth";
 
 type Props = { children: React.ReactNode };
 
+// Authenticates JWT token. If rejected than returns user to login page.
 function ProtectedRoute({ children }: Props) {
   const { checkToken } = useContext(UserContext);
   const [checkedToken, setCheckedToken] = useState<boolean>(false);

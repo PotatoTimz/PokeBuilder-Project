@@ -19,6 +19,7 @@ function Home() {
     setIsLoaded(true);
   }, []);
 
+  // Default Page
   return (
     <>
       {isLoaded ? (

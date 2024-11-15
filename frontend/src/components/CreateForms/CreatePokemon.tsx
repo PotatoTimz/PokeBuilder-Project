@@ -14,10 +14,21 @@ interface Props {
   updateMode: boolean;
 }
 
+/*
+  Create / Update Pokemon Component.
+  Component mode (update/create) changed depending on the page URL 
+
+  Create Component:
+  Form to create Pokemon. Using the PokeBuilder API. 
+
+  Update Component:
+  Form to update Pokemon. Fills inputs with prexisiting data. Allows users to change the data of a prexisting Pokemon.
+
+*/
 function CreatePokemon(props: Props) {
+  // Parameters needed for form functionality
   const { id } = useParams();
   const { axiosFetch, username } = useContext(UserContext);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [types, setTypes] = useState<Type[]>([]);
   const [pokemonData, setPokemonData] = useState<ExtensivePokemonData>({
     base_stats: {
@@ -35,8 +46,13 @@ function CreatePokemon(props: Props) {
     pokemon_types: ["normal", ""],
     pokemon_moves: [],
   });
+
+  // Checks if prerequisite API calls have been made
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const navigate = useNavigate();
 
+  // On load gets all types. Update mode, gets previous pokemon data.
   useEffect(() => {
     async function getAllTypes() {
       const response = await fetchTypes(axiosFetch);
@@ -64,6 +80,7 @@ function CreatePokemon(props: Props) {
     setIsLoading(true);
   }, []);
 
+  // Submit pokemon data to update / create
   const submitPokemon = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -76,6 +93,7 @@ function CreatePokemon(props: Props) {
     }
   };
 
+  // Loads form only if the prerequisite API calls were made.
   return isLoading ? (
     <>
       <div

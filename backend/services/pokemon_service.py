@@ -309,7 +309,8 @@ def remove_move(data, pokemon_id):
     # Gets PokemonMove association and deletes it
     move_id = Move.query.filter_by(name=move_name).first().id
     delete_move = PokemonMove.query.filter_by(pokemon_id=pokemon_id).filter_by(move_id=move_id).first()
-
+    print(move_id)
+    
     # If the association was not found return error
     if not delete_move:
         abort(400, "Pokemon does not have this move!")

@@ -1,6 +1,10 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+/*
+ Page not found component.
+ When route that doesn't exist is entered page will automatically return to the home page.
+*/
 function PageNotFound() {
   const navigate = useNavigate();
   useEffect(() => {
