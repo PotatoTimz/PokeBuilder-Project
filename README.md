@@ -1,6 +1,6 @@
 # PokeBuilder
 
-**Created By:** Andre Alix &
+**Created By:** Andre Alix & Ayman Zahid
 
 ## Table of Contents
 
