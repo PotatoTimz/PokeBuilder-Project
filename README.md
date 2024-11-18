@@ -7,6 +7,7 @@
 - [Introduction](##Introduction)
 - [Set-up](##Set-up)
 - [Database Schema](##DatabaseSchema)
+- [UML] (##UML)
 - [Type](##Type)
 - [PokeBuilder API Documentation](##PokeBuilderAPIDocumentation)
 
@@ -49,6 +50,9 @@ $ npm run dev
 ## Database Schema
 
 ![Database Schema Link](https://imgur.com/rQiPQ8e.png)
+
+## UML
+![UML](https://imgur.com/Ty8q14w.png)
 
 ## PokeBuilder API Documentation
 
