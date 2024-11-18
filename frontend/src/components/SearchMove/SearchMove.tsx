@@ -5,7 +5,7 @@ import { Move } from "../../interfaces/PokemonInterfaces";
 import { fetchMoves } from "../../utilities/fetchMoveInfo";
 import MoveListData from "../DisplayData/MoveListData";
 
-function SearchPokemon() {
+function SearchMove() {
   const { axiosFetch } = useContext(UserContext);
   const [moveData, setMoveData] = useState<Move[]>([]);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
@@ -36,4 +36,4 @@ function SearchPokemon() {
   );
 }
 
-export default SearchPokemon;
+export default SearchMove;
