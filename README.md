@@ -8,8 +8,7 @@
 - [Set-up](#set-up)
 - [Database Schema](#database-schema)
 - [UML](#uml)
-- [Type](#type)
-- [PokeBuilder API Documentation](##pokebuilder-api-documentation)
+- [PokeBuilder API Route Documentation](#pokebuilder-api-route-documentation)
 
 ## Introduction
 
@@ -54,7 +53,7 @@ $ npm run dev
 ## UML
 ![UML](https://imgur.com/Ty8q14w.png)
 
-## PokeBuilder API Documentation
+## PokeBuilder API Route Documentation
 
 The PokeBuilder API stores account, move, type and Pokemon info. Through the PokeBuilder API you will be able to perform CRUD operations on the following
 database tables and perform additional actions to change the relationships between tables. The API can be used to either retrieve info or perform actions
@@ -65,11 +64,11 @@ to allow for site functionality.
 
 ## Controllers
 
-- [Account](##Account)
-- [Pokemon](##Pokemon)
-- [Move](##Move)
-- [Type](##Type)
-- [PokeAPI](##PokeAPI)
+- [Account](#account-endpoints)
+- [Pokemon](#pokemon-endpoints)
+- [Move](#move-endpoints)
+- [Type](#type-endpoints)
+- [PokeAPI](#pokeapi-endpoints)
 
 ## **Account Endpoints**
 
