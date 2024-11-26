@@ -1,124 +1,136 @@
-import { Move, Type } from "../../interfaces/PokemonInterfaces";
-import { capitalizeFirstCharacter } from "../../utilities/helpers";
-import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
-import { UserContext } from "../../context/UserAuth";
-import { deleteMove } from "../../utilities/fetchMoveInfo";
+import { Move, Type } from "../../interfaces/PokemonInterfaces"; // Importing Move and Type interfaces for move data structure
+import { capitalizeFirstCharacter } from "../../utilities/helpers"; // Utility function to capitalize the first character of a string
+import { useNavigate } from "react-router-dom"; // Importing useNavigate to allow for programmatic navigation
+import { useContext } from "react"; // Importing useContext to access context values (specifically for authentication here)
+import { UserContext } from "../../context/UserAuth"; // Importing UserContext for user authentication information
+import { deleteMove } from "../../utilities/fetchMoveInfo"; // Function to handle deleting a move
 
 interface Props {
-  moveData: Move[];
-  mode: string;
-  learnMove?: (moveName: string) => {};
-  removeMove?: (moveName: string) => {};
+  moveData: Move[]; // The array of moves passed as a prop to be displayed
+  mode: string; // The mode that determines the actions available in the table ("default", "add_pokemon", "delete_pokemon", "edit")
+  learnMove?: (moveName: string) => {}; // Optional function to add a move to a Pokémon (only in "add_pokemon" mode)
+  removeMove?: (moveName: string) => {}; // Optional function to remove a move from a Pokémon (only in "delete_pokemon" mode)
 }
 
 /*
-  Mist List Component
-  Displays a table of all moves given (sent as a list). An extra column
-  is added if the table is on editing/updating mode.
+  Move List Component
 
-  Learn Mode:
-  Button displayed to add or remove move from Pokemon.
+  This component renders a table of moves and their attributes.
+  Depending on the mode, additional action buttons are shown.
 
-  Edit Mode:
-  Button displayed to update or delete move from an Account.
+  Modes:
+  - Learn Mode ("add_pokemon"): Button to add a move to a Pokémon.
+  - Edit Mode ("edit"): Buttons to edit or delete a move.
 */
+
 function MoveListData(props: Props) {
-  const { axiosFetch } = useContext(UserContext);
-  const navigate = useNavigate();
+  const { axiosFetch } = useContext(UserContext); // Get axiosFetch function from UserContext for making authenticated API requests
+  const navigate = useNavigate(); // Get navigate function to programmatically navigate to different routes
 
   return (
     <table className="table" id="moveTable">
       <thead>
         <tr className="table-secondary">
-          <th>#</th>
-          <th scope="col">Name</th>
+          {/* Table headers for each column */}
+          <th>#</th> {/* Move ID */}
+          <th scope="col">Name</th> {/* Move name */}
           <th className="text-center" scope="col">
             Type
-          </th>
+          </th>{" "}
+          {/* Move type */}
           <th className="text-center" scope="col">
             Pow.
-          </th>
+          </th>{" "}
+          {/* Move power */}
           <th className="text-center" scope="col">
             Acc.
-          </th>
+          </th>{" "}
+          {/* Move accuracy */}
           <th className="text-center" scope="col">
             PP.
-          </th>
-          <th scope="col">Description</th>
-          {/* Settings row only displays if table is put to editing mode */}
-          {props.mode != "default" ? (
+          </th>{" "}
+          {/* Move PP (power points) */}
+          <th scope="col">Description</th> {/* Move description */}
+          {/* Additional settings column only shows if mode is not "default" */}
+          {props.mode !== "default" ? (
             <th className="text-center" scope="col">
-              <i className="bi bi-gear-fill"></i>
+              <i className="bi bi-gear-fill"></i> {/* Settings icon */}
             </th>
           ) : null}
         </tr>
       </thead>
       <tbody>
         {props.moveData ? (
+          // Iterate over the list of moves and render a row for each
           props.moveData.map((move, i) => {
-            const curr_type: Type = move.type as Type;
+            const curr_type: Type = move.type as Type; // Casting move type to the Type type for correct styling
             return (
               <tr key={i} className="table-light">
-                <td>{move.move_id}</td>
-                <td>{move.move_name}</td>
+                {/* Render each move's attributes in the table */}
+                <td>{move.move_id}</td> {/* Display move ID */}
+                <td>{move.move_name}</td> {/* Display move name */}
                 <td id="pokemonType" className={`bg-${curr_type.name} px-3`}>
-                  {capitalizeFirstCharacter(curr_type.name)}
+                  {/* Display move type with styling based on the type */}
+                  {capitalizeFirstCharacter(curr_type.name)}{" "}
+                  {/* Capitalize the first letter of the type name */}
                 </td>
-                <td className="text-center">{move.move_power}</td>
-                <td className="text-center">{move.move_accuracy}</td>
-                <td className="text-center">{move.move_pp}</td>
-                <td>{move.move_description}</td>
-                {/* "default" = no column
-                    "add_pokemon" = add move to a pokemon
-                    "delete_pokemon" = delete move from a pokemon
-                    "edit" = update or delet emove
-                */}
-                {props.mode != "default" ? (
-                  props.mode == "add_pokemon" ? (
+                <td className="text-center">{move.move_power}</td>{" "}
+                {/* Display move power */}
+                <td className="text-center">{move.move_accuracy}</td>{" "}
+                {/* Display move accuracy */}
+                <td className="text-center">{move.move_pp}</td>{" "}
+                {/* Display move PP */}
+                <td>{move.move_description}</td>{" "}
+                {/* Display move description */}
+                {/* Action buttons (only shown if mode is not "default") */}
+                {props.mode !== "default" ? (
+                  props.mode === "add_pokemon" ? (
+                    // "add_pokemon" mode: Button to add move to a Pokémon
                     <td className="text-center">
                       <button
                         title="Add move to Pokemon"
                         className="button btn-success"
                         onClick={(e) => {
-                          props.learnMove!(move.move_name);
+                          props.learnMove!(move.move_name); // Call learnMove function to add the move
                         }}
                       >
-                        <i className="bi bi-plus-lg"></i>
+                        <i className="bi bi-plus-lg"></i> {/* Plus icon */}
                       </button>
                     </td>
-                  ) : props.mode == "delete_pokemon" ? (
+                  ) : props.mode === "delete_pokemon" ? (
+                    // "delete_pokemon" mode: Button to remove move from a Pokémon
                     <td className="text-center">
                       <button
                         title="Remove move from Pokemon"
                         className="button btn-danger"
                         onClick={(e) => {
-                          props.removeMove!(move.move_name);
+                          props.removeMove!(move.move_name); // Call removeMove function to delete the move
                         }}
                       >
-                        <i className="bi bi-trash3"></i>
+                        <i className="bi bi-trash3"></i> {/* Trash icon */}
                       </button>
                     </td>
                   ) : (
+                    // "edit" mode: Buttons to edit or delete a move
                     <td className="text-center">
                       <button
                         className="button btn-success"
                         title="Edit Move"
                         onClick={(e) => {
-                          navigate("/move/edit/" + move.move_id);
+                          navigate("/move/edit/" + move.move_id); // Navigate to the edit page for the move
                         }}
                       >
-                        <i className="bi bi-pencil"></i>
+                        <i className="bi bi-pencil"></i> {/* Pencil icon */}
                       </button>
                       <button
                         className="button btn-danger"
                         title="Delete Move"
                         onClick={(e) => {
-                          deleteMove(axiosFetch, move.move_id.toString());
-                          navigate(0);
+                          deleteMove(axiosFetch, move.move_id.toString()); // Call deleteMove function to delete the move
+                          navigate(0); // Reload the page after deletion
                         }}
                       >
-                        <i className="bi bi-trash3"></i>
+                        <i className="bi bi-trash3"></i> {/* Trash icon */}
                       </button>
                     </td>
                   )
@@ -134,4 +146,4 @@ function MoveListData(props: Props) {
   );
 }
 
-export default MoveListData;
+export default MoveListData; // Exporting the component to use it elsewhere in the application

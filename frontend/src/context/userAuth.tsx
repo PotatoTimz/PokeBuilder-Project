@@ -96,6 +96,7 @@ export const UserProvider = ({ children }: Props) => {
         setToken(response?.data.token);
         setToken(username); // Mistakenly setting token as username, should be username here
         axios.defaults.headers.common = { Authorization: `Bearer ${token}` }; // Setting default headers for all axios requests
+        navigate("/"); // After successful login, redirect to the homepage
       })
       .catch((err: AxiosError) => {
         // Handle login errors (e.g., invalid credentials)
