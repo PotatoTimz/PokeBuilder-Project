@@ -4,7 +4,7 @@
 
 ## Table of Contents
 
-- [Introduction](##Introduction)
+- [Introduction](##introduction)
 - [Set-up](##Set-up)
 - [Database Schema](##DatabaseSchema)
 - [UML] (##UML)
