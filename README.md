@@ -5,11 +5,11 @@
 ## Table of Contents
 
 - [Introduction](##introduction)
-- [Set-up](##Set-up)
-- [Database Schema](##DatabaseSchema)
-- [UML] (##UML)
-- [Type](##Type)
-- [PokeBuilder API Documentation](##PokeBuilderAPIDocumentation)
+- [Set-up](##set-up)
+- [Database Schema](##databaseschema)
+- [UML](##uml)
+- [Type](##type)
+- [PokeBuilder API Documentation](##pokebuilderapidocumentation)
 
 ## Introduction
 
@@ -47,7 +47,7 @@ $ npm i
 $ npm run dev
 ```
 
-## Database Schema
+## DatabaseSchema
 
 ![Database Schema Link](https://imgur.com/rQiPQ8e.png)
 
