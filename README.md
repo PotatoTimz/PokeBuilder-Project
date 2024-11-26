@@ -46,6 +46,17 @@ $ npm i
 $ npm run dev
 ```
 
+### Docker
+```
+$ //backend setup
+$ docker build -t pokebuilder-backend .
+$ docker run -it --rm pokebuilder-backend
+
+$ //frontend setup
+$ docker build -t pokebuilder-frontend .
+$ docker run -it --rm pokebuilder-frontend 
+```
+
 ## Database Schema
 
 ![Database Schema Link](https://imgur.com/rQiPQ8e.png)
