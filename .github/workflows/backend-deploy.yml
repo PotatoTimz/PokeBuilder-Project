@@ -21,4 +21,6 @@ jobs:
     - name: Install Dependencies
       run: |
         cd backend
+        pip install --upgrade pip
+        pip install numpy==2.1.1
         pip install -r requirements.txt
