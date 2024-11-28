@@ -64,16 +64,11 @@ export const UserProvider = ({ children }: Props) => {
   const registerUser = async (username: string, password: string) => {
     await axiosFetch
       .post("/register", {
-        // Sending the username and password to the backend's /register endpoint
         username: username,
         password: password,
       })
-      .then((response) => {
-        // On successful registration, store the token and username in sessionStorage and update state
-        sessionStorage.setItem("token", response?.data.token);
-        sessionStorage.setItem("username", username);
-        setToken(response?.data.token);
-        setToken(username); // There seems to be a mistake here: this should set the username, not the token again
+      .then(() => {
+        navigate("/login");
       })
       .catch((err: AxiosError) => {
         // Log any errors (e.g., if registration fails)

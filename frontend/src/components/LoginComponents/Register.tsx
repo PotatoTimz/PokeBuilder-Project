@@ -16,13 +16,10 @@ function Register() {
   const [username, setUsername] = useState<string>(""); // Username state, initially empty
   const [password, setPassword] = useState<string>(""); // Password state, initially empty
 
-  const navigate = useNavigate(); // useNavigate hook is used for programmatic navigation after registration
-
   // Function to handle form submission (user registration)
   const submitRegister = (e: React.FormEvent) => {
     e.preventDefault(); // Preventing the default form submit action
     registerUser(username, password); // Calling registerUser function with the entered username and password
-    navigate("/"); // Navigating to the home page after successful registration
   };
 
   return (
