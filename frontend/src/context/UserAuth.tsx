@@ -37,7 +37,7 @@ export const UserProvider = ({ children }: Props) => {
 
   // Axios instance configured with the base URL and authorization token (if available)
   const axiosFetch = axios.create({
-    baseURL: "https://poke-builder-project-ysgj.vercel.app/", // Base URL of the backend API
+    baseURL: "http://127.0.0.1:5000", // Base URL of the backend API
     headers: {
       Authorization: `Bearer ${token}`, // Adding the token to the Authorization header for requests
     },
