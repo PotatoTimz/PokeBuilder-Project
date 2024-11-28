@@ -110,7 +110,6 @@ function CreatePokemon(props: Props) {
               {props.updateMode
                 ? "Update Your Pokemon!" // Display message if updating Pokémon
                 : "Create Your Pokemon!"}{" "}
-              // Display message if creating new Pokémon
             </div>
             <form>
               {/* Pokémon Name Input */}
