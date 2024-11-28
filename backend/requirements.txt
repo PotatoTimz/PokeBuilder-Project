@@ -4,9 +4,10 @@ argon2-cffi-bindings==21.2.0
 Flask==3.1.0
 bcrypt==4.2.0
 fastjsonschema==2.20.0
-Flask_Cors==5.0.0
-Flask_Migrate==4.0.7
-flask_sqlalchemy==3.1.1
+Flask==3.0.3
+Flask-Cors==5.0.0
+Flask-Migrate==4.0.7
+Flask-SQLAlchemy==3.1.1
 json5==0.9.25
 jsonpointer==3.0.0
 jsonschema==4.23.0
