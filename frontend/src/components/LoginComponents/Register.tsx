@@ -1,6 +1,5 @@
 import { useContext, useState } from "react"; // Importing React hooks for state management and context usage
 import { UserContext } from "../../context/UserAuth"; // Importing UserContext to access user-related functions like registration
-import { useNavigate } from "react-router-dom"; // Importing useNavigate hook to redirect the user after registration
 
 /*
   Register Component
