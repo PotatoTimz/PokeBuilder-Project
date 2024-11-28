@@ -17,4 +17,5 @@ PyJWT==2.10.0
 pytest==8.3.3
 #python_bcrypt==0.3.2
 Requests==2.32.3
-SQLAlchemy==2.0.35Hypercorn==0.17.3
+SQLAlchemy==2.0.35
+Hypercorn==0.17.3
