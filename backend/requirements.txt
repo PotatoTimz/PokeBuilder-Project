@@ -1,5 +1,4 @@
 alembic==1.13.3
-bcrypt==4.2.0
 Flask==3.1.0
 Flask_Cors==5.0.0
 Flask_Migrate==4.0.7
