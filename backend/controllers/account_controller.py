@@ -33,7 +33,6 @@ def login():
 def register():
     # Extra JSON data from the request
     data = request.json
-
     # Validate and retrieve data from the request
     username, password = validate_user_input(data)
 
@@ -44,7 +43,7 @@ def register():
     hashed_password, salt = hash_password(password)
     
     # Create the account with given parameters
-    return create_account(username, hashed_password, salt), 201
+    return create_account(username, hashed_password, salt)
 
 @account_bp.route("/users", methods=["GET"])
 def get_users():
