@@ -44,7 +44,6 @@ function PokemonCompareBlock(props: Props) {
         {props.primary
           ? props.pokemon.pokemon_name // Display primary Pokémon's name
           : capitalizeFirstCharacter(props.otherPokemon.pokemon_name)}{" "}
-        // Display secondary Pokémon's name, capitalized
       </div>
 
       {/* Stat comparison section */}
