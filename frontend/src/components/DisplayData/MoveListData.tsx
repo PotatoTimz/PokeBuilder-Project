@@ -90,7 +90,7 @@ function MoveListData(props: Props) {
                       <button
                         title="Add move to Pokemon"
                         className="button btn-success"
-                        onClick={(e) => {
+                        onClick={() => {
                           props.learnMove!(move.move_name); // Call learnMove function to add the move
                         }}
                       >
@@ -103,7 +103,7 @@ function MoveListData(props: Props) {
                       <button
                         title="Remove move from Pokemon"
                         className="button btn-danger"
-                        onClick={(e) => {
+                        onClick={() => {
                           props.removeMove!(move.move_name); // Call removeMove function to delete the move
                         }}
                       >
@@ -116,7 +116,7 @@ function MoveListData(props: Props) {
                       <button
                         className="button btn-success"
                         title="Edit Move"
-                        onClick={(e) => {
+                        onClick={() => {
                           navigate("/move/edit/" + move.move_id); // Navigate to the edit page for the move
                         }}
                       >
@@ -125,7 +125,7 @@ function MoveListData(props: Props) {
                       <button
                         className="button btn-danger"
                         title="Delete Move"
-                        onClick={(e) => {
+                        onClick={() => {
                           deleteMove(axiosFetch, move.move_id.toString()); // Call deleteMove function to delete the move
                           navigate(0); // Reload the page after deletion
                         }}

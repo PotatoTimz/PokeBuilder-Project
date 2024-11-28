@@ -11,7 +11,6 @@ function SearchMove() {
 
   // useState hooks to manage local state of the component
   const [moveData, setMoveData] = useState<Move[]>([]); // Holds the list of moves fetched from the API
-  const [isLoaded, setIsLoaded] = useState<boolean>(false); // State to track whether the data has finished loading
 
   // useEffect hook to fetch the list of moves once the component is mounted
   useEffect(() => {
@@ -24,9 +23,6 @@ function SearchMove() {
 
     // Call the function to fetch moves
     getAllMoves();
-
-    // After fetching data, set the isLoaded state to true
-    setIsLoaded(true);
   }, []); // Empty dependency array ensures the effect only runs once when the component is mounted
 
   return (

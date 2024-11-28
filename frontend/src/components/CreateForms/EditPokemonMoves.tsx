@@ -95,7 +95,7 @@ function EditPokemonMoves() {
                   {/* Button to proceed to Pokémon page */}
                   <button
                     className="btn btn-light px-5"
-                    onClick={(e) => {
+                    onClick={() => {
                       navigate("/pokemon/" + id); // Navigate to the page displaying the Pokémon
                     }}
                   >

@@ -122,8 +122,7 @@ export const UserProvider = ({ children }: Props) => {
     // Sending a request to a protected route to validate the token
     await axiosFetch
       .get("/protected") // Send a GET request to the /protected endpoint
-      .then((response) => {})
-      .catch((err: AxiosError) => {
+      .catch(() => {
         console.log("Your token has expired!"); // If the token is invalid, log a message
         logout(); // Log out the user
         navigate("/login"); // Redirect to the login page

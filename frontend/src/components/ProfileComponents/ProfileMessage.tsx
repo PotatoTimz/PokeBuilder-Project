@@ -57,7 +57,7 @@ function ProfileMessage(props: Props) {
               <button
                 type="button"
                 className="btn btn-primary mx-2 px-5"
-                onClick={(e) => {
+                onClick={() => {
                   navigate("/pokemon/create"); // Navigate to the Pokémon creation page
                 }}
               >
@@ -68,7 +68,7 @@ function ProfileMessage(props: Props) {
               <button
                 type="button"
                 className="btn btn-success mx-2 px-5"
-                onClick={(e) => {
+                onClick={() => {
                   navigate("/move/create"); // Navigate to the Moves creation page
                 }}
               >

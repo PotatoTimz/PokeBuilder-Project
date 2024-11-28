@@ -1,25 +1,11 @@
-import { useContext, useEffect, useState } from "react"; // Importing necessary hooks from React
-import { UserContext } from "../../context/UserAuth"; // Importing UserContext to access user-related functions (like axiosFetch)
-import { SimplePokemonData } from "../../interfaces/PokemonInterfaces"; // Importing type for Pokemon data
-import { fetchAllPokemon } from "../../utilities/fetchPokemonInfo"; // Importing the function to fetch all Pokémon data
+import { useEffect, useState } from "react"; // Importing necessary hooks from React
 
 function Home() {
-  // Accessing the axiosFetch function from UserContext to handle API requests
-  const { axiosFetch } = useContext(UserContext);
-
   // State to store the fetched Pokémon data
-  const [pokemonData, setPokemonData] = useState<SimplePokemonData[]>([]); // Initially an empty array of Pokémon data
   const [isLoaded, setIsLoaded] = useState<boolean>(false); // State to manage the loading status (true when data is loaded)
 
   // useEffect hook to fetch Pokémon data when the component is mounted
   useEffect(() => {
-    // Async function to fetch all Pokémon data
-    async function getAllPokemon() {
-      const response = await fetchAllPokemon(axiosFetch, "", ""); // Fetching data from the API using axiosFetch
-      console.log(response); // Logging the response to the console for debugging purposes
-      setPokemonData(response); // Updating the state with the fetched Pokémon data
-    }
-    getAllPokemon(); // Calling the function to fetch the Pokémon data
     setIsLoaded(true); // Setting isLoaded to true once the fetch operation starts (to show loading state)
   }, []); // Empty dependency array means this effect runs only once when the component is mounted
 

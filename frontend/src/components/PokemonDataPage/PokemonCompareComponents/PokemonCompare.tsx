@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"; // Importing React hooks
+import { useState } from "react"; // Importing React hooks
 import { ExtensivePokemonData } from "../../../interfaces/PokemonInterfaces"; // Importing the interface for Pokémon data
 import PokemonCompareBlock from "./PokemonCompareBlock"; // Importing the component that displays the Pokémon comparison block
 import { fetchPokemonPokeAPI } from "../../../utilities/fetchPokeAPI"; // Function to fetch data from PokeAPI
@@ -76,7 +76,7 @@ function PokemonCompare(props: Props) {
               className={`btn btn-light mx-5 fw-medium ${
                 compareMode !== "official" ? "disabled" : ""
               }`}
-              onClick={(e) => setCompareMode("custom")} // Switch to 'custom' mode
+              onClick={() => setCompareMode("custom")} // Switch to 'custom' mode
             >
               PokeBuilder
             </button>
@@ -84,7 +84,7 @@ function PokemonCompare(props: Props) {
               className={`btn btn-light mx-5 fw-medium ${
                 compareMode === "official" ? "disabled" : ""
               }`}
-              onClick={(e) => setCompareMode("official")} // Switch to 'official' mode
+              onClick={() => setCompareMode("official")} // Switch to 'official' mode
             >
               Official Pokemon
             </button>
