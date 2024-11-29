@@ -20,6 +20,60 @@ Additionally, the user may use data from the official Pokemon games to help them
 <br><br>
 Any information about official Pokemon, moves, and type matchups are all taken externally from **pokeapi.co**.
 
+## Website Showcase
+
+### Home Page
+The **Home Page** welcomes users to the PokeBuilder platform, providing an overview of its functionality. It invites users to explore existing Pokémon, moves, and create their own custom entries.
+
+![Home Page](https://i.ibb.co/CJ8f117/Home-Page.png)
+
+### Profile Page
+The **Profile Page** displays the user’s account information, including their created Pokémon and moves. It serves as the hub for managing and viewing their creations.
+
+![Profile Page](https://i.ibb.co/LR7NZs3/Profile-Page.png)
+
+### Create Pokémon Page
+The **Create Pokémon Page** allows users to design their own Pokémon by specifying stats, types, and an image. Users can make unique Pokémon to add to their collection.
+
+![Create Pokémon Page](https://i.ibb.co/HVn4N7y/Create-Pokemon.png)
+
+### Create Move Page
+The **Create Move Page** provides users with the ability to create custom moves, defining attributes such as power, accuracy, and type.
+
+![Create Move Page](https://i.ibb.co/p21cR1w/Create-Pokemon-Moves.png)
+
+### Pokémon List
+The **Pokémon List Page** showcases all user-created Pokémon, allowing users to browse through the creations of others.
+
+![Pokémon List](https://i.ibb.co/7vKgqh3/Pokemon-List.png)
+
+### Move List
+The **Move List Page** displays all user-created moves, helping users discover custom moves created by the community.
+
+![Move List](https://i.ibb.co/6NcPbdP/Pokemon-Moves-List.png)
+
+### How the Website Works
+
+1. **Account Management**:
+   - Users must create an account to start building and managing Pokémon and moves.
+   - Authentication is handled securely with JWT tokens.
+
+2. **Creating Pokémon**:
+   - Navigate to the "Create Pokémon" section.
+   - Input attributes like stats, types, and an image URL to craft a custom Pokémon.
+
+3. **Creating Moves**:
+   - Navigate to the "Create Move" section.
+   - Define move details such as name, type, power, accuracy, and description.
+
+4. **Browsing Pokémon and Moves**:
+   - Use the Pokémon and Move List pages to explore creations by other users.
+
+5. **Profile Management**:
+   - View and manage your own Pokémon and moves directly from your profile page.
+
+This platform offers a user-friendly interface for building and sharing custom Pokémon creations. Dive in and start creating your Pokémon universe!
+
 ### Tech Stack
 
 **Back-end:** Flask, SQLAlchemy, SQLite\
