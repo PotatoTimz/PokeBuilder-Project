@@ -80,6 +80,7 @@ This platform offers a user-friendly interface for building and sharing custom P
 
 **Back-end:** Flask, SQLAlchemy, SQLite\
 **Front-end:** React, SCSS, Bootstrap
+**Deployment:** Vercel for Front-end, Render for Back-end
 
 ## Set-up
 
