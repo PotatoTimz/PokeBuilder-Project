@@ -7,6 +7,7 @@
 ## Table of Contents
 
 - [Introduction](#introduction)
+- [Website Showcase](#website-showcase)
 - [Set-up](#set-up)
 - [Database Schema](#database-schema)
 - [UML](#uml)
