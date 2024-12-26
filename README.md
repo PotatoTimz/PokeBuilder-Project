@@ -1,9 +1,5 @@
 # PokeBuilder
 
-**Created By:** Andre Alix (100787216) & Ayman Zahid (100825254)
-</br>
-**Deployment Link:** [PokeBuilder Website](https://advanced-web-dev-project.vercel.app/)
-
 ## Table of Contents
 
 - [Introduction](#introduction)
